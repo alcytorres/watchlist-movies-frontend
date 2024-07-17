@@ -54,6 +54,13 @@ import { MoviesNew } from "./MoviesNew";
       });
     };
   
+    const handleShowAddFavorite = (movie) => {
+      console.log(movie);
+      axios.post("http://localhost:3000/favorite_movies.json", {movie_id: movie.id}).then((response) => {
+        console.log(response.data)
+      })
+    };
+
     useEffect(handleIndexMovies, []);
   
     return (
@@ -63,7 +70,7 @@ import { MoviesNew } from "./MoviesNew";
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
 
-          <Route path="/movies" element={<MoviesIndex movies={movies} onShowMovie={handleShowMovie}/>} />
+          <Route path="/movies" element={<MoviesIndex movies={movies} onShowMovie={handleShowMovie} onAddFavorite={handleShowAddFavorite}/>} />
           <Route path="/movies/new" element={<MoviesNew onCreateMovie={handleCreateMovie} />} />
 
         </Routes>

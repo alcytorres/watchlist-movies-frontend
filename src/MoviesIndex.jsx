@@ -10,6 +10,7 @@ export function MoviesIndex(props) {  //movies
           <p>director: {movie.director}</p>
           <p>release year: {movie.release_year}</p>
           <button onClick={() => props.onShowMovie(movie)}>More info</button>
+          <button onClick={() => props.onAddFavorite(movie)}>Add to Favorites</button>
         </div>
       ))}
     </div>
