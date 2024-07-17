@@ -5,7 +5,12 @@ import { MoviesShow } from "./MoviesShow";
 import { FavoriteMoviesNew } from "./FavoriteMoviesNew";
 import { Modal } from "./Modal";
 import { Routes, Route } from "react-router-dom";
+import { Signup } from './Signup';
+import { Login } from './Login';
+import { LogoutLink } from './LogoutLink';
 import { About } from "./About";
+import { MoviesNew } from "./MoviesNew";
+
 
   export function Content() {
     const [movies, setMovies] = useState([]);
@@ -40,7 +45,14 @@ import { About } from "./About";
       console.log("handleClose");
       setIsMoviesShowVisible(false);
     };
-  
+
+    const handleCreateMovie = (params, successCallback) => {
+      console.log("handleCreateMovie", params);
+      axios.post("http://localhost:3000/movies.json", params).then((response) => {
+        setMovies([...movies, response.data]);
+        successCallback();
+      });
+    };
   
     useEffect(handleIndexMovies, []);
   
@@ -48,11 +60,16 @@ import { About } from "./About";
       <div>
         <Routes>
           <Route path="/about" element={<About />}/>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+
+          <Route path="/movies" element={<MoviesIndex movies={movies} onShowMovie={handleShowMovie}/>} />
+          <Route path="/movies/new" element={<MoviesNew onCreateMovie={handleCreateMovie} />} />
+
         </Routes>
-        <FavoriteMoviesNew onCreateFavoriteMovie={handleCreateFavoriteMovie} />
-        <MoviesIndex movies={movies} onShowMovie={handleShowMovie} />
+
         <Modal show={isMoviesShowVisible} onClose={handleClose}>
-        <MoviesShow movie={currentMovie} />
+          <MoviesShow movie={currentMovie} />
         </Modal>
       </div>
     );
