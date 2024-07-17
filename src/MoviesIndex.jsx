@@ -1,4 +1,4 @@
-export function MoviesIndex(props) {
+export function MoviesIndex(props) {  //movies
   return (
     <div>
       <h1>All movies</h1>
