@@ -75,7 +75,7 @@ import { MoviesNew } from "./MoviesNew";
     useEffect(handleIndexMovies, []);   // All the movies
   
     return (
-      <div>
+      <div className="container">
         <Routes>
           <Route path="/about" element={<About />}/>
           <Route path="/signup" element={<Signup />} />
