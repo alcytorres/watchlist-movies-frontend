@@ -70,6 +70,16 @@ import { MoviesNew } from "./MoviesNew";
       });
     };
 
+    const handleDestroyFavoriteMovie = (id) => {
+      console.log("handleDestroyFavoriteMovie", id);
+      axios.delete(`http://localhost:3000/favorite_movies/${id}.json`).then((response) => {
+        setFavoriteMovies(favoriteMovies.filter((favoriteMovie) => favoriteMovie.id !== id));
+        window.location.href = "/favoritemovies";
+        handleClose();
+      });
+    };
+  
+
     useEffect(favoriteMovieIndex, []);  // Filtered movies
 
     useEffect(handleIndexMovies, []);   // All the movies
@@ -84,7 +94,7 @@ import { MoviesNew } from "./MoviesNew";
           <Route path="/movies" element={<MoviesIndex movies={movies} onShowMovie={handleShowMovie} onAddFavorite={handleShowAddFavorite}/>} />
           <Route path="/movies/new" element={<MoviesNew onCreateMovie={handleCreateMovie} />} />
 
-          <Route path="/favoritemovies" element={<FavoriteMoviesIndex favoriteMovies={favoriteMovies}/>} />
+          <Route path="/favoritemovies" element={<FavoriteMoviesIndex favoriteMovies={favoriteMovies} onDestroyFavoriteMovie={handleDestroyFavoriteMovie}/>} />
 
         </Routes>
 

@@ -15,6 +15,7 @@ console.log(props.favoriteMovies)  // What does this do?
                 <p className="card-text">Director: {movie.director}</p>
                 <p className="card-text">Release Year: {movie.release_year}</p>
                 <button className="btn btn-primary" onClick={() => props.onShowMovie(movie)}>More info</button>
+                <button className="btn btn-danger" onClick={() => props.onDestroyFavoriteMovie(movie.favoritemovie_id)}>Delete</button>
               </div >
             </div>
           </div>
