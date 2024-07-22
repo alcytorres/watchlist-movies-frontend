@@ -1,0 +1,37 @@
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.movie-card .card-img-top {
+  height: 600px; /* Increase the height for images */
+  object-fit: contain; /* Ensure the entire image is visible without distortion */
+}
+
+.movie-card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1; /* Allow card body to grow and fill the remaining space */
+}
+
+.movie-card .card-title {
+  margin-bottom: 10px; /* Adjust spacing as needed */
+}
+
+.movie-card .card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.movie-card .card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+

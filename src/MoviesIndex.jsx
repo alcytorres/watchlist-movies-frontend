@@ -1,3 +1,5 @@
+import "./MoviesIndex.css";  // Make sure to import the CSS file
+
 export function MoviesIndex(props) {  //movies
   return (
     <div>
@@ -6,7 +8,7 @@ export function MoviesIndex(props) {  //movies
       <div className="row">
         {props.movies.map((movie) => (
           <div className="col-sm-4 mb-3" key={movie.id}>
-            <div className="card">
+            <div className="card movie-card">
               <img src={movie.image_url} className="card-img-top" alt={movie.name} />
               <div className="card-body">
                 <h5 className="card-title">{movie.name}</h5>
