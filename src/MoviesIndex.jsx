@@ -15,8 +15,8 @@ export function MoviesIndex(props) {  //movies
                 <p className="card-text"> {movie.description}</p>
                 {/* <p className="card-text">Director: {movie.director}</p>
                 <p className="card-text">Release Year: {movie.release_year}</p> */}
-                <button className="btn btn-primary" onClick={() => props.onShowMovie(movie)}>More info</button>
-                <button className="btn btn-secondary" onClick={() => props.onAddFavorite(movie)}>Add to Favorites</button>
+                <button className="btn btn-primary" onClick={() => props.onAddFavorite(movie)}>Add to Favorites</button>
+                <button className="btn btn-secondary" onClick={() => props.onShowMovie(movie)}>More info</button>
               </div>
             </div>
           </div>

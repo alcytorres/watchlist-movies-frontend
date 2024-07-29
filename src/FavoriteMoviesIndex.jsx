@@ -1,3 +1,5 @@
+import "./FavoriteMoviesIndex.css";
+
 export function FavoriteMoviesIndex(props) {
 console.log(props.favoriteMovies)  // What does this do?
   return (
@@ -7,7 +9,7 @@ console.log(props.favoriteMovies)  // What does this do?
       <div className="row">
         {props.favoriteMovies.map((movie) => (
           <div className="col-sm-4 mb-3" key={movie.id}>
-            <div className="card">
+            <div className="card favorite-movie-card">
               <img src={movie.image_url} className="card-img-top" alt={movie.name} />
               <div className="card-body">
                 <h5 className="card-title">{movie.name}</h5>

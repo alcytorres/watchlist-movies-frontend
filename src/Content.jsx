@@ -94,7 +94,7 @@ import { MoviesNew } from "./MoviesNew";
           <Route path="/" element={<MoviesIndex movies={movies} onShowMovie={handleShowMovie} onAddFavorite={handleShowAddFavorite}/>} />
           <Route path="/movies/new" element={<MoviesNew onCreateMovie={handleCreateMovie} />} />
 
-          <Route path="/favoritemovies" element={<FavoriteMoviesIndex favoriteMovies={favoriteMovies} onDestroyFavoriteMovie={handleDestroyFavoriteMovie}/>} />
+          <Route path="/favoritemovies" element={<FavoriteMoviesIndex favoriteMovies={favoriteMovies} onShowMovie={handleShowMovie} onDestroyFavoriteMovie={handleDestroyFavoriteMovie}/>} />
 
         </Routes>
 
