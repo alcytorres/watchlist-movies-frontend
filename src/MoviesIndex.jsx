@@ -12,9 +12,9 @@ export function MoviesIndex(props) {  //movies
               <img src={movie.image_url} className="card-img-top" alt={movie.name} />
               <div className="card-body">
                 <h5 className="card-title">{movie.name}</h5>
-                <p className="card-text">Description: {movie.description}</p>
-                <p className="card-text">Director: {movie.director}</p>
-                <p className="card-text">Release Year: {movie.release_year}</p>
+                <p className="card-text"> {movie.description}</p>
+                {/* <p className="card-text">Director: {movie.director}</p>
+                <p className="card-text">Release Year: {movie.release_year}</p> */}
                 <button className="btn btn-primary" onClick={() => props.onShowMovie(movie)}>More info</button>
                 <button className="btn btn-secondary" onClick={() => props.onAddFavorite(movie)}>Add to Favorites</button>
               </div>
