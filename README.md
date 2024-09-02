@@ -1,6 +1,6 @@
 # README
 
-# Capstone Favorite Movies Api
+# Capstone Favorite Movies Frontend
 
 # Description
   Favorite Movies App allows users to add movies to their favorites and manage their watchlist. Users can log in or create an account, add movies to their favorites, and remove movies from their favorites watchlist. 
@@ -29,20 +29,6 @@
     - Axios
     - Bootstrap
 
-# Frontend Installation
-  1. Clone the frontend (JavaScript using the React framework) repository:
-     git clone https://github.com/alcytorres/capstone-favorite-movies-frontend.git
-
-  2. Navigate to the frontend directory:
-     cd capstone-favorite-movies-frontend
-
-  3. Install dependencies:
-     npm install
-
-# To start the React development server:
-    cd capstone-favorite-movies-frontend
-    npm run dev
-
 # Backend Installation
   1. Clone the backend (Ruby on Rails) repository:
      git clone https://github.com/alcytorres/capstone-favorite-movies-api.git
@@ -59,6 +45,20 @@
 # To start the Rails server:
   cd capstone-favorite-movies-api
   rails server
+
+# Frontend Installation
+  1. Clone the frontend (JavaScript using the React framework) repository:
+     git clone https://github.com/alcytorres/capstone-favorite-movies-frontend.git
+
+  2. Navigate to the frontend directory:
+     cd capstone-favorite-movies-frontend
+
+  3. Install dependencies:
+     npm install
+
+# To start the React development server:
+    cd capstone-favorite-movies-frontend
+    npm run dev
 
 # Usage
   1. Create an account or log in.

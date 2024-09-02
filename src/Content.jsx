@@ -15,15 +15,29 @@ import { MoviesNew } from "./MoviesNew";
 
   export function Content() {
     const [movies, setMovies] = useState([]);
-    const [favoriteMovies, setFavoriteMovies] = useState([]); // Added state for favorite movies
     const [isMoviesShowVisible, setIsMoviesShowVisible] = useState(false);
     const [currentMovie, setCurrentMovie] = useState({});
+    const [favoriteMovies, setFavoriteMovies] = useState([]); // Added state for favorite movies
 
+    //  Defines an arrow function named handleIndexMovies 
     const handleIndexMovies = () => {    // copy and paste this for user movies method in the backend movies controller  
-      console.log("handleIndexMovies");          
-      axios.get("http://localhost:3000/movies.json").then((response) => {
+      // Logs the string "handleIndexMovies" to the console for debugging purposes.   
+      console.log("handleIndexMovies");    
+      // Sends a GET request to the URL http://localhost:3000/movies.json using axios
+      // Begins a chain that executes once the GET request is successful. The response object contains the data returned from the server.
+      axios.get("http://localhost:3000/movies.json").then((response) => {  
+        // Logs the data received from the API response to the console.                                                                   
+        console.log(response.data); 
+        // Updates the state variable movies with the data received from the API, effectively storing the list of movies fetched from the server.
+        setMovies(response.data);   
+      });
+    };
+
+    const favoriteMovieIndex = () => {
+      console.log("handleIndexFavoriteMovies");          
+      axios.get("http://localhost:3000/user_movies.json").then((response) => {
         console.log(response.data);
-        setMovies(response.data);
+        setFavoriteMovies(response.data);
       });
     };
 
@@ -31,6 +45,13 @@ import { MoviesNew } from "./MoviesNew";
       console.log("handleShowMovie", movie);
       setIsMoviesShowVisible(true);
       setCurrentMovie(movie);
+    };
+
+    const handleShowAddFavorite = (movie) => {
+      console.log(movie);
+      axios.post("http://localhost:3000/favorite_movies.json", {movie_id: movie.id}).then((response) => {
+        console.log(response.data)
+      })
     };
 
     const handleCreateFavoriteMovie = (params, successCallback) => {
@@ -54,21 +75,6 @@ import { MoviesNew } from "./MoviesNew";
       console.log("handleClose");
       setIsMoviesShowVisible(false);
     };
-  
-    const handleShowAddFavorite = (movie) => {
-      console.log(movie);
-      axios.post("http://localhost:3000/favorite_movies.json", {movie_id: movie.id}).then((response) => {
-        console.log(response.data)
-      })
-    };
-
-    const favoriteMovieIndex = () => {
-      console.log("handleIndexFavoriteMovies");          
-      axios.get("http://localhost:3000/user_movies.json").then((response) => {
-        console.log(response.data);
-        setFavoriteMovies(response.data);
-      });
-    };
 
     const handleDestroyFavoriteMovie = (id) => {
       console.log("handleDestroyFavoriteMovie", id);
@@ -80,9 +86,8 @@ import { MoviesNew } from "./MoviesNew";
     };
   
 
-    useEffect(favoriteMovieIndex, []);  // Filtered movies
-
     useEffect(handleIndexMovies, []);   // All the movies
+    useEffect(favoriteMovieIndex, []);  // Filtered movies
   
     return (
       <div className="container">
@@ -94,6 +99,7 @@ import { MoviesNew } from "./MoviesNew";
           <Route path="/" element={<MoviesIndex movies={movies} onShowMovie={handleShowMovie} onAddFavorite={handleShowAddFavorite}/>} />
           <Route path="/movies/new" element={<MoviesNew onCreateMovie={handleCreateMovie} />} />
 
+          {/* should the route be user_movies instead of favoritemovies??? */}
           <Route path="/favoritemovies" element={<FavoriteMoviesIndex favoriteMovies={favoriteMovies} onShowMovie={handleShowMovie} onDestroyFavoriteMovie={handleDestroyFavoriteMovie}/>} />
 
         </Routes>
