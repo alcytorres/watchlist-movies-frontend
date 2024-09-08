@@ -33,6 +33,7 @@ import { MoviesNew } from "./MoviesNew";
       });
     };
 
+    // Fetch the user's favorite movies
     const favoriteMovieIndex = () => {
       console.log("handleIndexFavoriteMovies");          
       axios.get("http://localhost:3000/user_movies.json").then((response) => {
@@ -47,12 +48,21 @@ import { MoviesNew } from "./MoviesNew";
       setCurrentMovie(movie);
     };
 
-    const handleShowAddFavorite = (movie) => {
+     // NEW: Add movie to favorites and remove from "All Movies"
+     const handleShowAddFavorite = (movie) => {
       console.log(movie);
-      axios.post("http://localhost:3000/favorite_movies.json", {movie_id: movie.id}).then((response) => {
-        console.log(response.data)
-      })
+      axios.post("http://localhost:3000/favorite_movies.json", { movie_id: movie.id }).then((response) => {
+        setFavoriteMovies([...favoriteMovies, response.data]); // Add to favorite movies
+        setMovies(movies.filter((m) => m.id !== movie.id));  // Remove from "All Movies"
+      });
     };
+
+    // const handleShowAddFavorite = (movie) => {
+    //   console.log(movie);
+    //   axios.post("http://localhost:3000/favorite_movies.json", {movie_id: movie.id}).then((response) => {
+    //     console.log(response.data)
+    //   })
+    // };
 
     const handleCreateFavoriteMovie = (params, successCallback) => {
       console.log("handleCreateFavoriteMovie", params);
@@ -71,18 +81,28 @@ import { MoviesNew } from "./MoviesNew";
       });
     };
    
+    // NEW: Remove movie from favorites and add back to "All Movies"
+    const handleDestroyFavoriteMovie = (id, movie) => {
+      axios.delete(`http://localhost:3000/favorite_movies/${id}.json`).then(() => {
+        // Add back the movie to the general "All Movies" list
+        setMovies([...movies, movie]);
+        // Remove the movie from the favoriteMovies state
+        setFavoriteMovies(favoriteMovies.filter((m) => m.favoritemovie_id !== id));
+      });
+    };
+
+    // const handleDestroyFavoriteMovie = (id) => {
+    //   console.log("handleDestroyFavoriteMovie", id);
+    //   axios.delete(`http://localhost:3000/favorite_movies/${id}.json`).then((response) => {
+    //     setFavoriteMovies(favoriteMovies.filter((favoriteMovie) => favoriteMovie.id !== id));
+    //     window.location.href = "/favoritemovies";
+    //     handleClose();
+    //   });
+    // };
+
     const handleClose = () => {
       console.log("handleClose");
       setIsMoviesShowVisible(false);
-    };
-
-    const handleDestroyFavoriteMovie = (id) => {
-      console.log("handleDestroyFavoriteMovie", id);
-      axios.delete(`http://localhost:3000/favorite_movies/${id}.json`).then((response) => {
-        setFavoriteMovies(favoriteMovies.filter((favoriteMovie) => favoriteMovie.id !== id));
-        window.location.href = "/favoritemovies";
-        handleClose();
-      });
     };
   
 
