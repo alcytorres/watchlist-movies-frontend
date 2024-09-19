@@ -8,6 +8,19 @@ export function MoviesShow(props) {
       <p>Director: {props.movie.director}</p>
       <p>Release Year: {props.movie.release_year}</p>
 
+      {/* NEW: Display streaming availability in the US */}
+      {props.streamingSources && props.streamingSources.length > 0 && (
+        <p>
+          <strong>Streaming:</strong>{" "}
+          {props.streamingSources.map((source, index) => (
+            <span key={source.source_id}>
+              {source.name}
+              {index < props.streamingSources.length - 1 && ", "}
+            </span>
+          ))}
+        </p>
+      )}
+
     </div>
   );
 }

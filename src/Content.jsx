@@ -19,6 +19,10 @@ import { MoviesNew } from "./MoviesNew";
     const [currentMovie, setCurrentMovie] = useState({});
     const [favoriteMovies, setFavoriteMovies] = useState([]); // Added state for favorite movies
 
+    // NEW: Add state to store streaming sources for a movie
+    const [streamingSources, setStreamingSources] = useState([]); 
+
+
     //  Defines an arrow function named handleIndexMovies 
     const handleIndexMovies = () => {    // copy and paste this for user movies method in the backend movies controller  
       // Logs the string "handleIndexMovies" to the console for debugging purposes.   
@@ -46,7 +50,18 @@ import { MoviesNew } from "./MoviesNew";
       console.log("handleShowMovie", movie);
       setIsMoviesShowVisible(true);
       setCurrentMovie(movie);
-    };
+
+      // NEW: Fetch the streaming sources for the selected movie
+      axios
+      .get(`http://localhost:3000/search_tmdb?query=${encodeURIComponent(movie.name)}`)
+      .then((response) => {
+        setStreamingSources(response.data.streaming_sources || []);
+      })
+      .catch((error) => {
+        console.error("Error fetching streaming sources", error);
+        setStreamingSources([]); // Fallback to empty if no sources found
+      });
+  };
 
      // NEW: Add movie to favorites and remove from "All Movies"
      const handleShowAddFavorite = (movie) => {
@@ -116,16 +131,22 @@ import { MoviesNew } from "./MoviesNew";
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
 
-          <Route path="/" element={<MoviesIndex movies={movies} onShowMovie={handleShowMovie} onAddFavorite={handleShowAddFavorite}/>} />
+
+          {/* NEW: Route for MoviesNew with search functionality */}
           <Route path="/movies/new" element={<MoviesNew onCreateMovie={handleCreateMovie} />} />
 
+          <Route path="/" element={<MoviesIndex movies={movies} onShowMovie={handleShowMovie} onAddFavorite={handleShowAddFavorite}/>} />
+
+    
           {/* should the route be user_movies instead of favoritemovies??? */}
           <Route path="/favoritemovies" element={<FavoriteMoviesIndex favoriteMovies={favoriteMovies} onShowMovie={handleShowMovie} onDestroyFavoriteMovie={handleDestroyFavoriteMovie}/>} />
 
         </Routes>
 
         <Modal show={isMoviesShowVisible} onClose={handleClose}>
-          <MoviesShow movie={currentMovie} />
+          {/* <MoviesShow movie={currentMovie} /> */}
+          {/* NEW: Pass streamingSources prop to MoviesShow */}
+          <MoviesShow movie={currentMovie} streamingSources={streamingSources} />
         </Modal>
       </div>
     );
