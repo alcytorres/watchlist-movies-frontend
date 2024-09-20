@@ -52,16 +52,20 @@ import { MoviesNew } from "./MoviesNew";
       setCurrentMovie(movie);
 
       // NEW: Fetch the streaming sources for the selected movie
-      axios
-      .get(`http://localhost:3000/search_tmdb?query=${encodeURIComponent(movie.name)}`)
-      .then((response) => {
-        setStreamingSources(response.data.streaming_sources || []);
-      })
-      .catch((error) => {
-        console.error("Error fetching streaming sources", error);
-        setStreamingSources([]); // Fallback to empty if no sources found
-      });
-  };
+      if (movie.imdb_id) {
+        axios
+          .get(`http://localhost:3000/get_streaming_sources?imdb_id=${movie.imdb_id}`)
+          .then((response) => {
+            setStreamingSources(response.data.streaming_sources || []);
+          })
+          .catch((error) => {
+            console.error("Error fetching streaming sources", error);
+            setStreamingSources([]); // Fallback to empty if no sources found
+          });
+      } else {
+        setStreamingSources([]); // No imdb_id, so no streaming sources
+      }
+    };
 
      // NEW: Add movie to favorites and remove from "All Movies"
      const handleShowAddFavorite = (movie) => {
