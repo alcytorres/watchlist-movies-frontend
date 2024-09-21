@@ -51,6 +51,8 @@ import { MoviesNew } from "./MoviesNew";
       setIsMoviesShowVisible(true);
       setCurrentMovie(movie);
 
+      console.log("IMDB ID:", movie.imdb_id); // Add this line to debug
+
       // NEW: Fetch the streaming sources for the selected movie
       if (movie.imdb_id) {
         axios

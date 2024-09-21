@@ -1,3 +1,84 @@
+/* NEW: Styles for the release year filter section */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; /* Adjust padding for better alignment and spacing */
+}
+
+.title {
+  flex-grow: 1;
+  text-align: center; /* Center the title text */
+  margin-bottom: 20px; /* NEW: Add space below the title */
+}
+
+.reset-button {
+  background-color: #808080; /* Color grey */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.filter-section {
+  margin-bottom: 20px;
+  width: 80%; /* Adjust the width of the filter section */
+  margin-left: auto;
+  margin-right: auto; /* Center the filter section horizontally */
+}
+
+.filter-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.filter-dropdown {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px; /* NEW: Increase bottom padding */
+}
+
+.year-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px; /* NEW: Add space above the slider */
+}
+
+.slider-track {
+  flex-grow: 1;
+  height: 6px;
+  background: lightgray;
+  margin: 0 25px; /* Space around the slider */
+}
+
+.slider-thumb {
+  width: 35px;
+  height: 35px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+
+
+
+
 .movie-card {
   display: flex;
   flex-direction: column;
