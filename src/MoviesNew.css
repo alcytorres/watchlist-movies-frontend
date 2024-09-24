@@ -1,0 +1,92 @@
+/* Movie Poster and Streaming Info */
+.movie-item { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Adjust width as needed */
+  margin: 5px 0;  /* Reduces the vertical margin, adjust the value as needed */
+}
+
+.movie-title {
+  font-weight: bold;
+  font-size: 18px; /* Adjust size as needed */
+}
+
+
+.movie-item img {
+  width: 200px; /* Set the width to a larger value */
+  height: auto; /* Maintains the aspect ratio */
+  align-items: right;
+}
+
+
+.search-movie-btn {
+  background-color: #007bff; /* Blue color similar to 'add to favorites' */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 8px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  width: 100px; /* Set the width to a larger value */
+}
+
+
+/* General styles for the 'Add' button */
+.add-movie-btn {
+  background-color: #007bff; /* Blue color similar to 'add to favorites' */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 8px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  width: 1500px; /* Set the width to a larger value */
+}
+
+.add-movie-btn:hover {
+  background-color: #0056b3; /* Darker blue for hover effect */
+}
+
+.add-movie-btn:focus {
+  outline: none;
+}
+
+/* Styles for displaying streaming services inline */
+.streaming-services {
+  display: inline; /* Keep the services on one line */
+  padding-left: 0; /* Removes default padding */
+  margin-left: 5px; /* Adjust as needed, small space after colon */
+}
+
+.streaming-services li {
+  display: inline; /* Display each service inline */
+  margin-right: 5px; /* Adds space between services */
+}
+
+
+.streaming-services li::after {
+  content: ","; /* Adds a comma after each service */
+}
+
+.streaming-services li:last-child::after {
+  content: ""; /* Removes the last comma */
+}
+
+/* Specific styles for the paragraph containing 'Available on' */
+.streaming-info {
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
+  display: flex; /* Aligns text and list inline */
+  align-items: left; /* Centers items vertically */
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./MoviesNew.css";
 
 export function MoviesNew(props) {
   const [searchResults, setSearchResults] = useState([]);
@@ -46,46 +47,51 @@ export function MoviesNew(props) {
 
   return (
     <div>
-      <h1>Search and Add a New Movie</h1>
+      <h1>Add a Movie</h1>
 
       {/* Movie search form */}
       <form onSubmit={handleSearch}>
         <div>
           Search by Title: <input name="query" type="text" />
         </div>
-        <button type="submit">Search</button>
+        <button className="search-movie-btn" type="submit">
+          Search
+        </button>
       </form>
 
       {/* Display search results */}
       {searchResults.length > 0 && (
         <div>
+          <br />
           <h2>Search Results:</h2>
           <ul>
             {searchResults.map((movie) => (
-              <li key={movie.tmdb_id}>
-                <p>{movie.name}</p>
+              <li key={movie.tmdb_id} className="movie-item">
+                <p className="movie-title">{movie.name}</p>
                 <p>Release Year: {movie.release_year}</p>
                 <p>Director: {movie.director}</p>
-                {movie.image_url && (
-                  <img src={movie.image_url} alt={movie.name} width="100" />
-                )}
                 {movie.streaming_services && movie.streaming_services.length > 0 ? (
-                  <div>
-                    <p>Available on:</p>
-                    <ul>
+                  <p className="streaming-info">
+                    Available on:<ul className="streaming-services">
                       {movie.streaming_services.map((serviceId, index) => (
                         <li key={index}>{serviceId}</li>
                       ))}
                     </ul>
-                  </div>
+                  </p>
                 ) : (
                   <p>No streaming sources available</p>
                 )}
-                <button onClick={() => handleAddMovie(movie)}>Add</button>
+                {movie.image_url && (
+                  <img src={movie.image_url} alt={movie.name} width="100" />
+                )}
+                <button className="add-movie-btn" onClick={() => handleAddMovie(movie)}>
+                  Add
+                </button>
               </li>
             ))}
           </ul>
         </div>
+      
       )}
     </div>
   );
