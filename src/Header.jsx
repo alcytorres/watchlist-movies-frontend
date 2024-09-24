@@ -15,10 +15,10 @@ export function Header() {
               <a className="nav-link active" aria-current="page" href="/">All Movies</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/movies/new">Add a Movie</a>
+              <a className="nav-link" href="/favoritemovies">Favorite Movies</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/favoritemovies">Favorite Movies</a>
+              <a className="nav-link" href="/movies/new">Add a Movie</a>
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
