@@ -3,67 +3,86 @@ import { Range } from "react-range";
 import "./MoviesIndex.css";
 
 const MIN_YEAR = 1900;
-const MAX_YEAR = new Date().getFullYear(); // Ensure this captures the current year dynamically
+const MAX_YEAR = new Date().getFullYear(); // Capture the current year dynamically
 
 // Streaming service icons or names array
 const streamingServices = [
-  { id: 'max', name: 'Max', icon: '/icons/max.svg' },
+  { id: 'max', name: 'MAX', icon: '/icons/max.svg' },
   { id: 'netflix', name: 'Netflix', icon: '/icons/netflix.svg' },
-  { id: 'amazon', name: 'Amazon Prime Video', icon: '/icons/amazon.svg' },
+  { id: 'amazon', name: 'Prime Video', icon: '/icons/amazon.svg' },
   { id: 'disney', name: 'Disney+', icon: '/icons/disney.svg' },
-  { id: 'apple', name: 'Apple TV+', icon: '/icons/apple.svg' },
-  { id: 'paramount', name: 'Paramount+', icon: '/icons/paramount.svg' },
-  { id: 'hulu', name: 'Hulu', icon: '/icons/hulu.svg' }
+  { id: 'apple', name: 'AppleTV+', icon: '/icons/apple.svg' },
+  { id: 'paramount', name: 'Paramount Plus', icon: '/icons/paramount.svg' },
+  { id: 'hulu', name: 'Hulu', icon: '/icons/hulu.svg' },
+  { id: "other", name: "Other", icon: "/icons/other.svg" },
 ];
 
 export function MoviesIndex(props) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedYears, setSelectedYears] = useState([MIN_YEAR, MAX_YEAR]);
 
-  // Fix: Use 'streamingServices' instead of 'streamingServicesList'
+  // Initial state: all streaming services are selected
   const [selectedStreamingServices, setSelectedStreamingServices] = useState(
     streamingServices.map((service) => service.id)
   );
 
+  // Toggle dropdown for release year filter
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  // Handle year filter state update
   const handleYearChange = (values) => {
     setSelectedYears(values);
   };
 
-  // Fix: Use 'streamingServices' instead of 'streamingServicesList'
+  // Toggle streaming services dynamically
+  // NEW: Updated toggle logic to handle "other" category
   const toggleStreamingService = (id) => {
     if (selectedStreamingServices.includes(id)) {
-      // Deselect if already selected
-      setSelectedStreamingServices(
-        selectedStreamingServices.filter((service) => service !== id)
-      );
+      if (selectedStreamingServices.length > 1) {
+        // Deselect the service
+        setSelectedStreamingServices(
+          selectedStreamingServices.filter((service) => service !== id)
+        );
+      } else {
+        // If only one service is selected and it's being unchecked, reset to all services
+        setSelectedStreamingServices(streamingServices.map((service) => service.id));
+      }
     } else {
-      // Select it and move it to the front
-      setSelectedStreamingServices([id, ...selectedStreamingServices]);
+      // Add to selected services
+      setSelectedStreamingServices([...selectedStreamingServices, id]);
     }
   };
 
-  // Fix: Use 'streamingServices' instead of 'streamingServicesList'
+  // Dynamically filter the movies
+  // NEW: Updated filtering logic to include "other" category
   const filteredMovies = props.movies.filter((movie) => {
     const movieStreamingServices = movie.streaming_services || []; // Ensure it's an array
 
     const yearFilter =
       movie.release_year >= selectedYears[0] && movie.release_year <= selectedYears[1];
 
-    const streamingFilter =
-      selectedStreamingServices.length === streamingServices.length || // If all services are selected, show all
-      movieStreamingServices.length === 0 || // If the movie has no services, show it by default
-      movieStreamingServices.some((service) => selectedStreamingServices.includes(service));
+    const allServicesSelected = selectedStreamingServices.length === streamingServices.length;
+
+    let streamingFilter;
+
+    if (allServicesSelected) {
+      // All services are selected; show all movies
+      streamingFilter = true;
+    } else {
+      // Filter movies that have at least one streaming service in selectedStreamingServices
+      streamingFilter = movieStreamingServices.some((service) =>
+        selectedStreamingServices.includes(service)
+      );
+    }
 
     return yearFilter && streamingFilter;
   });
 
+
   return (
     <div>
-      <br />
       <h1>All Movies</h1>
 
       {/* Streaming service filter */}
@@ -88,7 +107,10 @@ export function MoviesIndex(props) {
           <div className="filter-dropdown">
             <div className="header-row">
               <h4>Release Year</h4>
-              <button className="reset-button" onClick={() => setSelectedYears([MIN_YEAR, MAX_YEAR])}>
+              <button 
+                className="reset-button" 
+                onClick={() => setSelectedYears([MIN_YEAR, MAX_YEAR])}
+              >
                 RESET
               </button>
             </div>
@@ -119,65 +141,41 @@ export function MoviesIndex(props) {
 
       {/* Movie List */}
       <div className="row">
-        {filteredMovies.map((movie) => (
-          <div className="col-sm-4 mb-3" key={movie.id}>
-            <div className="card movie-card">
-              <img src={movie.image_url} className="card-img-top" alt={movie.name} />
-              <div className="card-body">
-                <h5 className="card-title">{movie.name}</h5>
-                <p className="card-text">{movie.description}</p>
-                <button className="btn btn-primary" onClick={() => props.onAddFavorite(movie)}>
-                  Add to Favorites
-                </button>
-                <button className="btn btn-secondary" onClick={() => props.onShowMovie(movie)}>
-                  More info
-                </button>
+        {filteredMovies.length > 0 ? (
+          filteredMovies.map((movie) => (
+            <div className="col-sm-4 mb-3" key={movie.id}>
+              <div className="card movie-card">
+                <img src={movie.image_url} className="card-img-top" alt={movie.name} />
+                <div className="card-body">
+                  <h5 className="card-title">{movie.name}</h5>
+                  <p className="card-text">{movie.description}</p>
+                  <button 
+                    className="btn btn-primary" 
+                    onClick={() => props.onAddFavorite(movie)}
+                  >
+                    Add to Favorites
+                  </button>
+                  <button 
+                    className="btn btn-secondary" 
+                    onClick={() => props.onShowMovie(movie)}
+                  >
+                    More info
+                  </button>
+                </div>
               </div>
             </div>
+          ))
+        ) : (
+          <div className="no-results">
+            <p>No Results Found. Please reset filters to expand the search.</p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-// export function MoviesIndex(props) {  //movies
-//   return (
-//     <div>
-//       < br />  
-//       <h1>All Movies</h1>
-//       <div className="row">
-//         {props.movies.map((movie) => (
-//           <div className="col-sm-4 mb-3" key={movie.id}>
-//             <div className="card movie-card">
-//               <img src={movie.image_url} className="card-img-top" alt={movie.name} />
-//               <div className="card-body">
-//                 <h5 className="card-title">{movie.name}</h5>
-//                 <p className="card-text"> {movie.description}</p>
-//                 {/* <p className="card-text">Director: {movie.director}</p>
-//                 <p className="card-text">Release Year: {movie.release_year}</p> */}
-//                 <button className="btn btn-primary" onClick={() => props.onAddFavorite(movie)}>Add to Favorites</button>
-//                 <button className="btn btn-secondary" onClick={() => props.onShowMovie(movie)}>More info</button>
-//               </div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
 
 
 

@@ -1,4 +1,3 @@
-// NEW: Add state to handle movie search and streaming sources
 import { useState } from "react";
 import axios from "axios";
 
@@ -30,7 +29,8 @@ export function MoviesNew(props) {
       description: movie.description,
       director: movie.director,
       release_year: movie.release_year,
-      imdb_id: movie.imdb_id, // NEW: Include imdb_id
+      imdb_id: movie.imdb_id,
+      streaming_services: movie.streaming_services,
     };
 
     axios
@@ -66,15 +66,15 @@ export function MoviesNew(props) {
                 <p>{movie.name}</p>
                 <p>Release Year: {movie.release_year}</p>
                 <p>Director: {movie.director}</p>
-                {/* NEW: Display image if available */}
-                {movie.image_url && <img src={movie.image_url} alt={movie.name} width="100" />}
-                {/* NEW: Display streaming sources if available */}
-                {movie.streaming_sources && movie.streaming_sources.length > 0 ? (
+                {movie.image_url && (
+                  <img src={movie.image_url} alt={movie.name} width="100" />
+                )}
+                {movie.streaming_services && movie.streaming_services.length > 0 ? (
                   <div>
                     <p>Available on:</p>
                     <ul>
-                      {movie.streaming_sources.map((source, index) => (
-                        <li key={index}>{source.name}</li>
+                      {movie.streaming_services.map((serviceId, index) => (
+                        <li key={index}>{serviceId}</li>
                       ))}
                     </ul>
                   </div>
@@ -90,43 +90,3 @@ export function MoviesNew(props) {
     </div>
   );
 }
-
-
-
-
-
-
-
-// export function MoviesNew(props) {
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     const params = new FormData(event.target);
-//     props.onCreateMovie(params, () => event.target.reset());
-//   };
-  
-  
-//   return (
-//     <div>
-//       <h1>New Movie</h1>
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           Name: <input name="name" type="text" />
-//         </div>
-//         <div>
-//           Url: <input name="image_url" type="text" />
-//         </div>
-//         <div>
-//           Description: <input name="description" type="text" />
-//         </div>
-//         <div>
-//           Director: <input name="director" type="text" />
-//         </div>
-//         <div>
-//           Release year: <input name="release_year" type="text" />
-//         </div>
-//         <button type="submit">Create movie</button>
-//       </form>
-//     </div>
-//   );
-// }

@@ -33,6 +33,11 @@ const streamingServices = [
     id: 'hulu',
     name: 'Hulu',
     icon: '/icons/hulu.svg'
+  },
+  {
+    id: 'other',
+    name: 'Other',
+    icon: '/icons/other.svg' // You'll need to provide an icon for "other"
   }
 ];
 
