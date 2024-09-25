@@ -56,7 +56,6 @@ export function MoviesIndex(props) {
   };
 
   // Dynamically filter the movies
-  // NEW: Updated filtering logic to include "other" category
   const filteredMovies = props.movies.filter((movie) => {
     const movieStreamingServices = movie.streaming_services || []; // Ensure it's an array
 
@@ -91,7 +90,9 @@ export function MoviesIndex(props) {
           {streamingServices.map((service) => (
             <button
               key={service.id}
-              className={`service-icon ${selectedStreamingServices.includes(service.id) ? "selected" : ""}`}
+              className={`service-icon ${
+                selectedStreamingServices.includes(service.id) ? "selected" : ""
+              }`}
               onClick={() => toggleStreamingService(service.id)}
             >
               <img src={service.icon} alt={service.name} />
@@ -140,27 +141,34 @@ export function MoviesIndex(props) {
       </div>
 
       {/* Movie List */}
-      <div className="row">
+      {/* NEW: Change 'row' to 'movie-grid' */}
+      <div className="movie-grid">
         {filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => (
-            <div className="col-sm-4 mb-3" key={movie.id}>
+            <div className="movie-item" key={movie.id}>
               <div className="card movie-card">
-                <img src={movie.image_url} className="card-img-top" alt={movie.name} />
+                <img
+                  src={movie.image_url}
+                  className="card-img-top"
+                  alt={movie.name}
+                />
                 <div className="card-body">
                   <h5 className="card-title">{movie.name}</h5>
-                  {/* <p className="card-text">{movie.description}</p> */}
-                  <button 
-                    className="btn btn-primary" 
-                    onClick={() => props.onAddFavorite(movie)}
-                  >
-                    Add to Favorites
-                  </button>
-                  <button 
-                    className="btn btn-secondary" 
-                    onClick={() => props.onShowMovie(movie)}
-                  >
-                    More info
-                  </button>
+                  {/* NEW: Wrap buttons in a div */}
+                  <div className="button-group">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => props.onAddFavorite(movie)}
+                    >
+                      Add
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => props.onShowMovie(movie)}
+                    >
+                      Details
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
