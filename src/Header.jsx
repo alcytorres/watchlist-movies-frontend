@@ -15,7 +15,7 @@ export function Header() {
               <a className="nav-link active" aria-current="page" href="/">All Movies</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/favoritemovies">Favorite Movies</a>
+              <a className="nav-link" href="/favoritemovies">Favorites</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/movies/new">Add a Movie</a>
