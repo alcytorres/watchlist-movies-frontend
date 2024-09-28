@@ -106,98 +106,187 @@
 
 
 
+
+
+
+
+
+
 /* Existing styles... */
 
-
-
-/* Style for the movie grid to display movies per row */
-/* NEW: Set a fixed width for the movie grid to prevent cards from shrinking */
+/* Style for the movie grid to display 7 movies per row */
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start; /* Align items to the start */
-  width: calc(7 * 16.66%); /* NEW: Width for 7 cards */
-  min-width: 1200px; /* NEW: Set a minimum width to prevent shrinking */
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  gap: 15px;
 }
 
-
-/* NEW: Adjust flex-basis for 7 movies per row */
 .movie-item {
-  flex: 0 0 calc(14.2857% - 5px); /* NEW: Set width for 7 movies per row */
+  flex: 0 0 calc((100% - 90px) / 7); /* Subtract total gap width and divide by 7 */
   margin-bottom: 20px;
-  margin-right: 5px;
 }
 
-/* NEW: Remove margin-right on every 7th item */
-.movie-item:nth-child(7n) {
-  margin-right: 0;
-}
-
-/* Adjust movie card and image styles */
 .movie-card {
-  border: none;
-  overflow: hidden;
+  position: relative; /* Keep as is to maintain positioning context */
+  width: 200px; /* The entire card width as 12 units, keep as is */
+  height: 400px; /* Keep as is */
+  border: none; /* Ensure no border to interfere with image fitting */
+  overflow: hidden; /* Clips any excess from the image */
+  transition: transform 0.3s; /* Keep as is for hover effect */
 }
+
 
 .movie-card .card-img-top {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 0px;
+  width: 100%; /* Ensure the image covers the full width of the card */
+  height: auto; /* Adjust height to maintain aspect ratio */
+  object-fit: cover; /* Ensure the image covers the assigned area without distortion */
+  margin-top: 0; /* NEW: Ensure no space at the top */
+  margin-left: 0; /* NEW: Ensure no space on the left */
+  margin-right: 0; /* NEW: Ensure no space on the right */
+  display: block; /* Ensure the image is properly block level to fit width */
 }
 
-/* Adjust the card body */
-.movie-card .card-body {
-  padding: 0px;
-}
 
-/* Reduce vertical space between movie title and bottom of image */
-.movie-card .card-title {
-  margin-top: 7px;
-  margin-bottom: 5px;
-  text-align: center;
-  font-size: 10px;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* Number of lines to show */
-  line-clamp: 1; /* Standard property for compatibility */
-  -webkit-box-orient: vertical;
-}
-
-/* Adjust buttons to be side by side */
-.movie-card .button-group {
+.movie-card .movie-info {
   display: flex;
+  align-items: center;
+  justify-content: center; /* Ensures overall center alignment within the card */
+  position: relative;
+  width: 100%; /* Covers the entire width of the card */
+  padding-left: 16.67%; /* NEW: Offset for 2 units */
+  padding-right: 16.67%; /* NEW: Reserve space for the last 2 units */
+  padding-top: 5px; /* NEW: Optional, if you want some spacing from the very edge */
+  padding-bottom: 0px; /* NEW: Optional, if you want some spacing from the very edge */
+  bottom: 0;
 }
 
-.movie-card .button-group .btn {
-  flex: 1;
-  margin: 0;
-  border-radius: 0;
-  font-size: 10px;
+.movie-card .card-title {
+  /* flex: 0 0 80%; NEW: Allocates 8 units (of 12 total) */
+  flex: none; /* NEW: Override previous flex settings */
+  width: 66.67%; /* NEW: Allocates 8 units out of 12 */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center; /* Ensures the title itself is centered within the 8 units */
+  /* margin: 0 auto; Centers the title block horizontally */
+  /* padding-right: 12.5%; NEW: Leaves space for the options menu (unit 11) */
+
+  font-size: 12px;
+  font-family: 'Helvetica, Arial, sans-serif';
+  /* text-align: center; Ensure the title remains centered */
+}
+
+.movie-card .options-menu {
+  position: absolute;
+  right: 8.33%; /* Adjust to position within the 11th unit */
+  top: 0;
+  /* bottom: 0; */
+  cursor: pointer;
+  width: 8.33%; /* Approximately one unit, ensuring it's within the 12th unit */
+}
+
+
+
+.movie-card .vertical-dots {
+  cursor: pointer;
+  font-size: 20px; /* NEW: Increased font size */
+  line-height: 1;
+}
+
+.movie-card .options-modal {
+  display: none;
+  position: absolute;
+  bottom: 100%; /* Adjust vertical positioning if needed */
+  left: 100%; /* NEW: Position modal to the right of the movie card */
+  transform: translateX(-15%); /* NEW: Slightly shift modal to the left to overlap if necessary */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   padding: 5px;
+  z-index: 3; /* Ensure it's above other content */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 0.2s;
+  width: auto; /* Adjust width based on content */
+  min-width: 120px; /* Ensure minimum width to accommodate text */
 }
 
-.movie-card .button-group .btn + .btn {
-  border-left: 1px solid #fff;
+.movie-card .options-modal .modal-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #000;
+  padding: 5px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 12px;
 }
 
-/* Reduce horizontal space between movie cards */
-.movie-grid {
-  margin-left: -5px;
-  margin-right: -5px;
+.movie-card .options-modal .modal-button:hover {
+  background-color: #f0f0f0;
 }
 
-.movie-item {
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-bottom: 20px;
+.movie-card .options-modal .modal-button::before {
+  content: attr(data-icon);
+  margin-right: 5px;
+  font-size: 14px;
 }
 
-/* Hover effect for movie cards */
+.movie-card .vertical-dots:hover + .options-modal,
+.movie-card .options-modal:hover {
+  display: block;
+  opacity: 1;
+}
+
 .movie-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transform: scale(1.1) translateY(-10px);
+  z-index: 1;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  overflow: visible;
 }
+
+.movie-card .card-body {
+  padding: 0;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1400px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 75px) / 6); /* Adjust for 6 movies per row */
+  }
+}
+
+@media (max-width: 1200px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 60px) / 5); /* Adjust for 5 movies per row */
+  }
+}
+
+@media (max-width: 992px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 45px) / 4); /* Adjust for 4 movies per row */
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 30px) / 3); /* Adjust for 3 movies per row */
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 15px) / 2); /* Adjust for 2 movies per row */
+  }
+}
+
+
+/* NEW: Increase horizontal margin between movie cards by using gap */
+/* The 'gap' property in '.movie-grid' takes care of spacing */
+

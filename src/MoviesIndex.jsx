@@ -141,11 +141,11 @@ export function MoviesIndex(props) {
       </div>
 
       {/* Movie List */}
-      {/* NEW: Change 'row' to 'movie-grid' */}
       <div className="movie-grid">
         {filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => (
             <div className="movie-item" key={movie.id}>
+              {/* NEW: Modify the movie card layout */}
               <div className="card movie-card">
                 <img
                   src={movie.image_url}
@@ -153,21 +153,27 @@ export function MoviesIndex(props) {
                   alt={movie.name}
                 />
                 <div className="card-body">
-                  <h5 className="card-title">{movie.name}</h5>
-                  {/* NEW: Wrap buttons in a div */}
-                  <div className="button-group">
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => props.onAddFavorite(movie)}
-                    >
-                      Add
-                    </button>
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => props.onShowMovie(movie)}
-                    >
-                      Details
-                    </button>
+                  <div className="movie-info">
+                    <h5 className="card-title">{movie.name}</h5>
+                    {/* NEW: Three vertical dots */}
+                    <div className="options-menu">
+                      <span className="vertical-dots">⋮</span>
+                      {/* NEW: Options modal */}
+                      <div className="options-modal">
+                        <button
+                          className="modal-button"
+                          onClick={() => props.onAddFavorite(movie)}
+                        >
+                          + Add to My List
+                        </button>
+                        <button
+                          className="modal-button"
+                          onClick={() => props.onShowMovie(movie)}
+                        >
+                          ⌄ More Info
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -182,9 +188,3 @@ export function MoviesIndex(props) {
     </div>
   );
 }
-
-
-
-
-
-
