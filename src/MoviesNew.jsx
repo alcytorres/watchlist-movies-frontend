@@ -25,7 +25,7 @@ export function MoviesNew(props) {
   // Handle adding a movie when 'Add' button is clicked
   const handleAddMovie = (movie) => {
     const params = {
-      name: movie.name,
+      title: movie.title,
       image_url: movie.image_url,
       description: movie.description,
       director: movie.director,
@@ -37,7 +37,7 @@ export function MoviesNew(props) {
     axios
       .post("http://localhost:3000/movies", params)
       .then(() => {
-        alert(`${movie.name} added successfully`);
+        alert(`${movie.title} added successfully`);
         setSearchResults(searchResults.filter((m) => m.tmdb_id !== movie.tmdb_id));
       })
       .catch((error) => {
@@ -67,7 +67,7 @@ export function MoviesNew(props) {
           <ul>
             {searchResults.map((movie) => (
               <li key={movie.tmdb_id} className="movie-item">
-                <p className="movie-title">{movie.name}</p>
+                <p className="movie-title">{movie.title}</p>
                 <p>Release Year: {movie.release_year}</p>
                 <p>Director: {movie.director}</p>
                 {movie.streaming_services && movie.streaming_services.length > 0 ? (
@@ -82,7 +82,7 @@ export function MoviesNew(props) {
                   <p>No streaming sources available</p>
                 )}
                 {movie.image_url && (
-                  <img src={movie.image_url} alt={movie.name} width="100" />
+                  <img src={movie.image_url} alt={movie.title} width="100" />
                 )}
                 <button className="add-movie-btn" onClick={() => handleAddMovie(movie)}>
                   Add

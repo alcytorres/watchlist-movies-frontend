@@ -2,7 +2,7 @@ export function MoviesShow(props) {
   return (
     <div>
       <h1>Movie Information</h1>
-      <p>Name: {props.movie.name}</p>
+      <p>Title: {props.movie.title}</p>
       <p>Description: {props.movie.description}</p>
       <p>Director: {props.movie.director}</p>
       <p>Release Year: {props.movie.release_year}</p>
@@ -22,7 +22,7 @@ export function MoviesShow(props) {
       )}
 
       {props.movie.image_url && (
-        <img src={props.movie.image_url} alt={props.movie.name} width="200" />
+        <img src={props.movie.image_url} alt={props.movie.title} width="200" />
       )}
     </div>
   );

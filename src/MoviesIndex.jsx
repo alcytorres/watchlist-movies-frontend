@@ -150,11 +150,11 @@ export function MoviesIndex(props) {
                 <img
                   src={movie.image_url}
                   className="card-img-top"
-                  alt={movie.name}
+                  alt={movie.title}
                 />
                 <div className="card-body">
                   <div className="movie-info">
-                    <h5 className="card-title">{movie.name}</h5>
+                    <h5 className="card-title">{movie.title}</h5>
                     {/* NEW: Three vertical dots */}
                     <div className="options-menu">
                       <span className="vertical-dots">⋮</span>
