@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import "./Signup.css";
 
 export function Signup() {
   const [errors, setErrors] = useState([]);
@@ -23,7 +24,7 @@ export function Signup() {
 
   return (
     <div id="signup">
-      <h1>Signup</h1>
+      <h1>Sign Up</h1>
       <ul>
         {errors.map((error) => (
           <li key={error}>{error}</li>
@@ -31,19 +32,19 @@ export function Signup() {
       </ul>
       <form onSubmit={handleSubmit}>
         <div>
-          First Name: <input name="first_name" type="text" />
+          First Name <input name="first_name" type="text" />
         </div>
         <div>
-          Last Name: <input name="last_name" type="text" />
+          Last Name <input name="last_name" type="text" />
         </div>
         <div>
-          Email: <input name="email" type="email" />
+          Email <input name="email" type="email" />
         </div>
         <div>
-          Password: <input name="password" type="password" />
+          Password <input name="password" type="password" />
         </div>
         <div>
-          Password confirmation: <input name="password_confirmation" type="password" />
+          Password confirmation <input name="password_confirmation" type="password" />
         </div>
         <button type="submit">Signup</button>
       </form>
