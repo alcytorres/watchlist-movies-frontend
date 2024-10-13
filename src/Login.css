@@ -1,68 +1,73 @@
-/* Login.css */
-
-/* NEW: Styling for the login container */
+/* Container styling for the login form */
 #login {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff; /* White background */
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* shadow effect */
+}
+
+/* Header (h1) styling */
+#login h1 {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form container styling */
+#login form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #141414;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
 }
 
-/* NEW: Style for the login card */
-#login form {
-  width: 300px;
-  padding: 40px;
-  background: rgba(0, 0, 0, 0.75);
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-}
-
-/* NEW: Styling for the form elements */
+/* Form input container (div) spacing */
 #login form div {
-  margin-bottom: 20px;
-  font-size: 14px;
+  margin-bottom: 15px;
 }
 
-/* NEW: Input styling */
-#login input {
+/* Input field styling */
+#login form input {
   width: 100%;
   padding: 10px;
-  border: none;
+  font-size: 1em;
+  border: 1px solid #333;
   border-radius: 4px;
-  font-size: 14px;
+  background-color: #333;
+  color: #ffffff;
 }
 
-/* NEW: Styling for the submit button */
-#login button[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  background-color: #e50914;
-  color: #fff;
-  font-size: 16px;
+/* Placeholder text styling */
+#login form input::placeholder {
+  color: #aaa;
+}
+
+/* Submit button styling */
+#login form button {
+  background-color: #0000ff;
+  color: #ffffff;
   border: none;
+  padding: 15px;
+  font-size: 1.2em;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-#login button[type="submit"]:hover {
-  background-color: #f40612;
+/* Button hover effect */
+#login form button:hover {
+  background-color: #0000cc;
 }
 
-/* NEW: Error message styling */
+/* List of errors styling */
 #login ul {
   list-style-type: none;
   padding: 0;
-  margin: 0 0 20px 0;
-  color: #e87c03;
-  font-size: 14px;
-  text-align: center;
+  margin-bottom: 20px;
 }
 
-#login ul li {
-  margin: 5px 0;
+/* Error list item styling */
+#login li {
+  color: #e87c03;
+  font-size: 0.9em;
 }
