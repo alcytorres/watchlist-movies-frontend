@@ -78,10 +78,10 @@ export function MoviesIndex(props) {
     return yearFilter && streamingFilter;
   });
 
-  
+
   return (
     <div>
-      <h1>All Movies</h1>
+      <h1>Movies Watchlist</h1>
 
       {/* Streaming service filter */}
       <div className="filter-section">

@@ -42,7 +42,7 @@ export function Content() {
     setCurrentMovie(movie);
   };
 
-  // NEW: Add movie to favorites and remove from "All Movies"
+  // Add movie to favorites and remove from "All Movies"
   const handleShowAddFavorite = (movie) => {
     console.log(movie);
     axios.post("http://localhost:3000/favorite_movies.json", { movie_id: movie.id }).then((response) => {
@@ -67,7 +67,7 @@ export function Content() {
     });
   };
 
-  // NEW: Remove movie from favorites and add back to "All Movies"
+  // Remove movie from favorites and add back to "All Movies"
   const handleDestroyFavoriteMovie = (id, movie) => {
     axios.delete(`http://localhost:3000/favorite_movies/${id}.json`).then(() => {
       setMovies([...movies, movie]); // Add back the movie to the general "All Movies" list
@@ -90,7 +90,7 @@ export function Content() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
 
-        {/* NEW: Route for MoviesNew with search functionality */}
+        {/* Route for MoviesNew with search functionality */}
         <Route path="/movies/new" element={<MoviesNew />} />
 
         {/* <Route 
@@ -122,7 +122,7 @@ export function Content() {
       </Routes>
 
       <Modal show={isMoviesShowVisible} onClose={handleClose}>
-        {/* NEW: Pass currentMovie directly since streaming services are included */}
+        {/* Pass currentMovie directly since streaming services are included */}
         <MoviesShow movie={currentMovie} />
       </Modal>
     </div>
