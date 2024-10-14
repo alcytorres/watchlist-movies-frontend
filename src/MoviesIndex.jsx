@@ -37,7 +37,6 @@ export function MoviesIndex(props) {
   };
 
   // Toggle streaming services dynamically
-  // NEW: Updated toggle logic to handle "other" category
   const toggleStreamingService = (id) => {
     if (selectedStreamingServices.includes(id)) {
       if (selectedStreamingServices.length > 1) {
@@ -79,7 +78,7 @@ export function MoviesIndex(props) {
     return yearFilter && streamingFilter;
   });
 
-
+  
   return (
     <div>
       <h1>All Movies</h1>
@@ -108,15 +107,15 @@ export function MoviesIndex(props) {
           <div className="filter-dropdown">
             <div className="header-row">
               <h4>Release Year</h4>
-              <button 
-                className="reset-button" 
+              <button
+                className="reset-button"
                 onClick={() => setSelectedYears([MIN_YEAR, MAX_YEAR])}
               >
                 RESET
               </button>
             </div>
             <div className="year-labels">
-              <span>1990</span>
+              <span>{MIN_YEAR}</span>
               <Range
                 step={1}
                 min={MIN_YEAR}
@@ -145,37 +144,39 @@ export function MoviesIndex(props) {
         {filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => (
             <div className="movie-item" key={movie.id}>
-              {/* NEW: Modify the movie card layout */}
+              {/* Movie card */}
               <div className="card movie-card">
                 <img
                   src={movie.image_url}
                   className="card-img-top"
                   alt={movie.title}
                 />
+                {/* Title below the image */}
                 <div className="card-body">
-                  <div className="movie-info">
-                    <h5 className="card-title">{movie.title}</h5>
-                    {/* NEW: Three vertical dots */}
-                    <div className="options-menu">
-                      <span className="vertical-dots">⋮</span>
-                      {/* NEW: Options modal */}
-                      <div className="options-modal">
-                        <button
-                          className="modal-button"
-                          onClick={() => props.onAddFavorite(movie)}
-                        >
-                          + Add to My List
-                        </button>
-                        <button
-                          className="modal-button"
-                          onClick={() => props.onShowMovie(movie)}
-                        >
-                          ⌄ More Info
-                        </button>
-                      </div>
-                    </div>
+                  <h5 className="card-title">{movie.title}</h5>
+                  {/* NEW: Icons visible only on hover */}
+                  <div className="hover-icons">
+                    <button
+                      className="icon-button circle-button"
+                      onClick={() => props.onAddFavorite(movie)}
+                    >
+                      {/* NEW: Add to My List icon inside a circle */}
+                      <span className="icon">+</span>
+                      {/* NEW: Tooltip */}
+                      <span className="tooltip-text">Add to My List</span>
+                    </button>
+                    <button
+                      className="icon-button circle-button"
+                      onClick={() => props.onShowMovie(movie)}
+                    >
+                      {/* NEW: More Info icon inside a circle */}
+                      <span className="icon">i</span>
+                      {/* NEW: Tooltip */}
+                      <span className="tooltip-text">More Info</span>
+                    </button>
                   </div>
                 </div>
+                {/* REMOVE: Overlayed title and icons */}
               </div>
             </div>
           ))
