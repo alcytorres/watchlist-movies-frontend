@@ -27,7 +27,6 @@
   opacity: 0.4; /* Grey out unselected services */
 }
 
-
 /* Styles for the release year filter section */
 .header-row {
   display: flex;
@@ -108,13 +107,7 @@
 
 
 
-
-
-
-
-/* Existing styles... */
-
-/* Style for the movie grid to display 6 movies per row */
+/* Styles for the movie grid */
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
@@ -145,7 +138,6 @@
 .movie-card .card-img-top {
   width: 100%;
   height: auto;
-  /* max-height: 80%; */
   object-fit: contain;
   display: block;
   margin: 0 auto;
@@ -167,7 +159,16 @@
   color: #000;
 }
 
-/* Hover icons */
+/* Hover effect for movie cards */
+.movie-card:hover {
+  position: absolute; /* Keep the hovered card from affecting others */
+  transform: scale(1.35);
+  z-index: 1;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition-delay: 0.0s; /* No delay on shrinking back */
+}
+
+/* Hover icons for movie cards */
 .hover-icons {
   display: none; /* Hidden by default */
   margin-top: 5px;
@@ -234,18 +235,6 @@
   opacity: 1;
 }
 
-/* Hover effect for card */
-.movie-card:hover {
-  position: absolute; /* Keep the hovered card from affecting others */
-  transform: scale(1.35);
-  z-index: 1;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  transition-delay: 0.0s; /* No delay on shrinking back */
-  /* Add duration of the hover expansion */
-  transition: transform 0.3s box-shadow 0.3s;
-  /* transition: transform 0.3s ease-in-out 0.5s, box-shadow 0.3s ease-in-out 0.0s; */
-}
-
 /* Media queries for responsiveness */
 @media (max-width: 1400px) {
   .movie-item {
@@ -276,9 +265,3 @@
     flex: 0 0 calc((100% - 15px) / 2); /* Adjust for 2 movies per row */
   }
 }
-
-
-
-/* Increase horizontal margin between movie cards by using gap */
-/* The 'gap' property in '.movie-grid' takes care of spacing */
-

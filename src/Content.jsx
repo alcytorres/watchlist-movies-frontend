@@ -42,19 +42,19 @@ export function Content() {
     setCurrentMovie(movie);
   };
 
-  // Add movie to favorites and remove from "All Movies"
+  // Add movie to favorites and remove from Watchlist
   const handleShowAddFavorite = (movie) => {
     console.log(movie);
     axios.post("http://localhost:3000/favorite_movies.json", { movie_id: movie.id }).then((response) => {
       setFavoriteMovies([...favoriteMovies, response.data]); // Add to favorite movies
-      setMovies(movies.filter((m) => m.id !== movie.id)); // Remove from "All Movies"
+      setMovies(movies.filter((m) => m.id !== movie.id)); // Remove from "Watchlist"
     });
   };
 
   const handleCreateFavoriteMovie = (params, successCallback) => {
     console.log("handleCreateFavoriteMovie", params);
     axios.post("http://localhost:3000/favorite_movies.json", params).then((response) => {
-      setFavoriteMovies([...favoriteMovies, response.data]); // Corrected the state update
+      setFavoriteMovies([...favoriteMovies, response.data]); 
       successCallback();
     });
   };
@@ -67,10 +67,10 @@ export function Content() {
     });
   };
 
-  // Remove movie from favorites and add back to "All Movies"
+  // Remove movie from favorites and add back to "Watchlist"
   const handleDestroyFavoriteMovie = (id, movie) => {
     axios.delete(`http://localhost:3000/favorite_movies/${id}.json`).then(() => {
-      setMovies([...movies, movie]); // Add back the movie to the general "All Movies" list
+      setMovies([...movies, movie]); // Add back the movie to the Watchlist
       setFavoriteMovies(favoriteMovies.filter((m) => m.favoritemovie_id !== id)); // Remove from favorites
     });
   };

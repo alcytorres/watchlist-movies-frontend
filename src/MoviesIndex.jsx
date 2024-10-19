@@ -154,29 +154,28 @@ export function MoviesIndex(props) {
                 {/* Title below the image */}
                 <div className="card-body">
                   <h5 className="card-title">{movie.title}</h5>
-                  {/* NEW: Icons visible only on hover */}
+                  {/* Icons visible only on hover */}
                   <div className="hover-icons">
                     <button
                       className="icon-button circle-button"
                       onClick={() => props.onAddFavorite(movie)}
                     >
-                      {/* NEW: Add to My List icon inside a circle */}
+                      {/* Add to My List icon inside a circle */}
                       <span className="icon">+</span>
-                      {/* NEW: Tooltip */}
+                      {/* Tooltip */}
                       <span className="tooltip-text">Add to My List</span>
                     </button>
                     <button
                       className="icon-button circle-button"
                       onClick={() => props.onShowMovie(movie)}
                     >
-                      {/* NEW: More Info icon inside a circle */}
+                      {/* More Info icon inside a circle */}
                       <span className="icon">i</span>
-                      {/* NEW: Tooltip */}
+                      {/* Tooltip */}
                       <span className="tooltip-text">More Info</span>
                     </button>
                   </div>
                 </div>
-                {/* REMOVE: Overlayed title and icons */}
               </div>
             </div>
           ))
