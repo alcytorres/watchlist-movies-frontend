@@ -21,7 +21,7 @@ export function MoviesNew(props) {
         setSearchResults([]);
       });
   };
-
+  
   // Handle adding a movie when 'Add' button is clicked
   const handleAddMovie = (movie) => {
     const params = {
@@ -34,14 +34,15 @@ export function MoviesNew(props) {
       streaming_services: movie.streaming_services,
     };
 
+    // NEW: Send request to watchlist_movies endpoint
     axios
-      .post("http://localhost:3000/movies", params)
+      .post("http://localhost:3000/watchlist_movies", params)
       .then(() => {
-        alert(`${movie.title} added successfully`);
+        alert(`${movie.title} added to your Watchlist`);
         setSearchResults(searchResults.filter((m) => m.tmdb_id !== movie.tmdb_id));
       })
       .catch((error) => {
-        console.error("Error adding the movie", error);
+        console.error("Error adding the movie to your Watchlist", error);
       });
   };
 

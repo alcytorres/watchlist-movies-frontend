@@ -21,7 +21,7 @@ export function Content() {
   // Defines an arrow function named handleIndexMovies
   const handleIndexMovies = () => { // copy and paste this for user movies method in the backend movies controller
     console.log("handleIndexMovies"); // Logs the string "handleIndexMovies" to the console for debugging purposes.
-    axios.get("http://localhost:3000/movies.json").then((response) => { 
+    axios.get("http://localhost:3000/watchlist_movies.json").then((response) => { 
       console.log(response.data); // Logs the data received from the API response to the console.
       setMovies(response.data); // Updates the state variable movies with the data received from the API.
     });
@@ -30,7 +30,7 @@ export function Content() {
   // Fetch the user's favorite movies
   const favoriteMovieIndex = () => {
     console.log("handleIndexFavoriteMovies");
-    axios.get("http://localhost:3000/user_movies.json").then((response) => {
+    axios.get("http://localhost:3000/favorite_movies.json").then((response) => {
       console.log(response.data);
       setFavoriteMovies(response.data);
     });
@@ -75,6 +75,13 @@ export function Content() {
     });
   };
 
+  // NEW: Function to remove a movie from Watchlist
+  const handleDestroyWatchlistMovie = (movie) => {
+    axios.delete(`http://localhost:3000/watchlist_movies/${movie.id}.json`).then(() => {
+      setMovies(movies.filter((m) => m.id !== movie.id)); // Remove movie from Watchlist
+    });
+  };
+
   const handleClose = () => {
     console.log("handleClose");
     setIsMoviesShowVisible(false);
@@ -104,6 +111,7 @@ export function Content() {
               movies={movies} 
               onShowMovie={handleShowMovie} 
               onAddFavorite={handleShowAddFavorite} 
+              onDestroyWatchlistMovie={handleDestroyWatchlistMovie}  // NEW: Pass the function
             />
           } 
         />

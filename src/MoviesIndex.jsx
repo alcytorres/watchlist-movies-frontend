@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Range } from "react-range";
 import "./MoviesIndex.css";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const MIN_YEAR = 1900;
 const MAX_YEAR = new Date().getFullYear(); // Capture the current year dynamically
@@ -173,6 +174,14 @@ export function MoviesIndex(props) {
                       <span className="icon">i</span>
                       {/* Tooltip */}
                       <span className="tooltip-text">More Info</span>
+                    </button>
+                    {/* NEW: Delete button */}
+                    <button
+                      className="icon-button circle-button"
+                      onClick={() => props.onDestroyWatchlistMovie(movie)}
+                    >
+                      <DeleteIcon className="icon" />
+                      <span className="tooltip-text">Remove</span>
                     </button>
                   </div>
                 </div>
