@@ -58,22 +58,23 @@
 }
 
 .filter-button {
-  background-color: #007bff;
+  background-color: #333;
   color: white;
   border: none;
   padding: 10px 15px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 10px;
 }
 
 .filter-dropdown {
-  background-color: #f9f9f9;
+  background-color: #333; /* Dark grey background */
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #555; /* Adjust border color for contrast */
   display: flex;
   flex-direction: column;
   padding-bottom: 20px; /* Increase bottom padding */
+  color: white; /* NEW: Text color for visibility */
 }
 
 .year-labels {
@@ -86,7 +87,7 @@
 .slider-track {
   flex-grow: 1;
   height: 6px;
-  background: lightgray;
+  background: #777; /* Darker track color */
   margin: 0 25px; /* Space around the slider */
 }
 
@@ -102,6 +103,19 @@
   font-size: 14px;
   cursor: pointer;
 }
+
+
+
+
+
+
+
+/* Placeholder text */
+
+
+
+
+
 
 
 
@@ -147,6 +161,7 @@
 .movie-card .card-body {
   padding: 5px;
   text-align: center;
+  background-color: #181818
 }
 
 .movie-card .card-title {
@@ -156,11 +171,13 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: #000;
+  /* change color to white once the title backgroun is grey */
+  color: white
 }
 
 /* Hover effect for movie cards */
-.movie-card:hover {
+/* NEW: Apply hover effects when the card has the 'hovered' class */
+.movie-card.hovered {
   position: absolute; /* Keep the hovered card from affecting others */
   transform: scale(1.35);
   z-index: 1;
@@ -176,7 +193,8 @@
   justify-content: center;
 }
 
-.movie-card:hover .hover-icons {
+/* NEW: Show hover icons when the card has the 'hovered' class */
+.movie-card.hovered .hover-icons {
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -187,7 +205,7 @@
   border: none;
   cursor: pointer;
   color: #000; /* Icons in black */
-  font-size: 14px;
+  font-size: 16px;
   position: relative; /* For tooltip positioning */
 }
 
@@ -200,8 +218,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #fff; /* Background color for the circle */
-  border: 1px solid #000; /* Border for the circle */
+  background-color: #181818; /* Background color for the circle */
+  border: 1.5px solid #919191; /* Border for the circle */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -209,15 +227,33 @@
 
 .circle-button .icon {
   font-size: 20px;
-  color: #000;
+  color: white
 }
 
-/* Tooltip styling */
-.tooltip-text {
+/* Tooltip styling for the Add to Favorites button */
+.tooltip-text-add {
+  visibility: hidden;
+  width: 140px;
+  background-color: #e6e6e6;
+  color: #000;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 2;
+  bottom: 125%; /* Position above the button */
+  left: 80%;
+  margin-left: -50px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip styling for the More Info button */
+.tooltip-text-info {
   visibility: hidden;
   width: 100px;
-  background-color: #000;
-  color: #fff;
+  background-color: #e6e6e6;
+  color: #000;
   text-align: center;
   border-radius: 6px;
   padding: 5px;
@@ -230,10 +266,40 @@
   transition: opacity 0.3s;
 }
 
-.icon-button:hover .tooltip-text {
+/* Tooltip styling for the Remove button */
+.tooltip-text-remove {
+  visibility: hidden;
+  width: 100px;
+  background-color: #e6e6e6;
+  color: #000;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 2;
+  bottom: 125%; /* Position above the button */
+  left: 20%;
+  margin-left: -50px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltips on hover for each button */
+.icon-button:hover .tooltip-text-add {
   visibility: visible;
   opacity: 1;
 }
+
+.icon-button:hover .tooltip-text-info {
+  visibility: visible;
+  opacity: 1;
+}
+
+.icon-button:hover .tooltip-text-remove {
+  visibility: visible;
+  opacity: 1;
+}
+
 
 /* Media queries for responsiveness */
 @media (max-width: 1400px) {

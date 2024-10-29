@@ -5,12 +5,16 @@
 }
 
 body {
-  background-color: #f6f9ff;
+  /* REMOVE: background-color: #f6f9ff; */
+  /* NEW: Set background color to dark Netflix-like color */
+  background-color: #141414; /* Netflix dark background color */
   margin: 0;
   padding: 0;
 }
 
 .app-container {
-  background-color: #f6f9ff;
+  /* REMOVE: background-color: #f6f9ff; */
+  /* NEW: Set background color to dark Netflix-like color */
+  background-color: #141414; /* Netflix dark background color */
   min-height: 100vh; /* Ensures the container covers the full viewport height */
 }

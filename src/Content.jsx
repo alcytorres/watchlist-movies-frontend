@@ -44,11 +44,18 @@ export function Content() {
 
   // Add movie to favorites and remove from Watchlist
   const handleShowAddFavorite = (movie) => {
-    console.log(movie);
-    axios.post("http://localhost:3000/favorite_movies.json", { movie_id: movie.id }).then((response) => {
-      setFavoriteMovies([...favoriteMovies, response.data]); // Add to favorite movies
-      setMovies(movies.filter((m) => m.id !== movie.id)); // Remove from "Watchlist"
-    });
+    axios
+      .post("http://localhost:3000/favorite_movies.json", { movie_id: movie.id })
+      .then((response) => {
+        const favoriteMovie = response.data;
+        // NEW: Update favoriteMovies with the new favoriteMovie
+        setFavoriteMovies([...favoriteMovies, favoriteMovie]);
+        // NEW: Remove movie from Watchlist
+        setMovies(movies.filter((m) => m.id !== movie.id));
+      })
+      .catch((error) => {
+        console.error("Error adding to favorites:", error);
+      });
   };
 
   const handleCreateFavoriteMovie = (params, successCallback) => {
@@ -68,14 +75,22 @@ export function Content() {
   };
 
   // Remove movie from favorites and add back to "Watchlist"
-  const handleDestroyFavoriteMovie = (id, movie) => {
-    axios.delete(`http://localhost:3000/favorite_movies/${id}.json`).then(() => {
-      setMovies([...movies, movie]); // Add back the movie to the Watchlist
-      setFavoriteMovies(favoriteMovies.filter((m) => m.favoritemovie_id !== id)); // Remove from favorites
-    });
+  const handleDestroyFavoriteMovie = (favoriteMovie) => {
+    axios
+      .delete(`http://localhost:3000/favorite_movies/${favoriteMovie.id}.json`)
+      .then(() => {
+        const movie = favoriteMovie.movie;
+        // NEW: Add the movie back to the Watchlist
+        setMovies([...movies, movie]);
+        // NEW: Remove the movie from favoriteMovies
+        setFavoriteMovies(favoriteMovies.filter((m) => m.id !== favoriteMovie.id));
+      })
+      .catch((error) => {
+        console.error("Error removing from favorites:", error);
+      });
   };
 
-  // NEW: Function to remove a movie from Watchlist
+  // Function to remove a movie from Watchlist
   const handleDestroyWatchlistMovie = (movie) => {
     axios.delete(`http://localhost:3000/watchlist_movies/${movie.id}.json`).then(() => {
       setMovies(movies.filter((m) => m.id !== movie.id)); // Remove movie from Watchlist

@@ -84,7 +84,7 @@
   6. Remove movies from your favorites or watchlist.
 
 # Key Features 
- -  User Authentication and Authorization: Secure user registration and login.
+  -  User Authentication and Authorization: Secure user registration and login.
   - Search for Movies: Search for movies using the TMDb API.
   - Fetch Streaming Data: Retrieve streaming availability and other movie details from TMDb.
   - Add Movies to Watchlist and Favorites: Save movies to your favorites list or watchlist.

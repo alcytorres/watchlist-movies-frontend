@@ -1,0 +1,26 @@
+.navbar-custom {
+  background-color: #181818; /* NEW: Set dark background */
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  color: #d5d5d5
+}
+
+.navbar-custom .nav-link:hover {
+  color: #a6a6a6; /* Optional: Change color on hover */
+}
+
+.dropdown-menu {
+  background-color: #333; /* NEW: Darker dropdown background */
+}
+
+.dropdown-item {
+  color: white; /* NEW: Dropdown text color */
+}
+
+.dropdown-item:hover {
+  background-color: #444;
+  color: white;
+}
+

@@ -27,6 +27,10 @@ export function MoviesIndex(props) {
     streamingServices.map((service) => service.id)
   );
 
+  // NEW: State to manage hover effects with delay
+  const [hoveredMovieId, setHoveredMovieId] = useState(null);
+  const [hoverTimer, setHoverTimer] = useState(null);
+
   // Toggle dropdown for release year filter
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -79,11 +83,31 @@ export function MoviesIndex(props) {
     return yearFilter && streamingFilter;
   });
 
+  // NEW: Handle mouse enter with delay
+  const handleMouseEnter = (movieId) => {
+    // Start a timer to set the hovered movie after 0.5 seconds
+    const timer = setTimeout(() => {
+      setHoveredMovieId(movieId);
+    }, 500); // 500 milliseconds delay
+
+    setHoverTimer(timer);
+  };
+
+  // NEW: Handle mouse leave
+  const handleMouseLeave = () => {
+    // Clear any existing timer
+    if (hoverTimer) {
+      clearTimeout(hoverTimer);
+      setHoverTimer(null);
+    }
+    // Reset hovered movie
+    setHoveredMovieId(null);
+  };
 
   return (
     <div>
-      <h1>Movies Watchlist</h1>
-
+      <h1 style={{ color: "white", fontSize: '35px' }}>Watchlist</h1>
+      <br></br>
       {/* Streaming service filter */}
       <div className="filter-section">
         <div className="streaming-services-filter">
@@ -144,9 +168,19 @@ export function MoviesIndex(props) {
       <div className="movie-grid">
         {filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => (
-            <div className="movie-item" key={movie.id}>
+            <div
+              className="movie-item"
+              key={movie.id}
+              // NEW: Add mouse enter and leave handlers
+              onMouseEnter={() => handleMouseEnter(movie.id)}
+              onMouseLeave={handleMouseLeave}
+            >
               {/* Movie card */}
-              <div className="card movie-card">
+              <div
+                className={`card movie-card ${
+                  hoveredMovieId === movie.id ? "hovered" : ""
+                }`}
+              >
                 <img
                   src={movie.image_url}
                   className="card-img-top"
@@ -164,7 +198,7 @@ export function MoviesIndex(props) {
                       {/* Add to My List icon inside a circle */}
                       <span className="icon">+</span>
                       {/* Tooltip */}
-                      <span className="tooltip-text">Add to My List</span>
+                      <span className="tooltip-text-add">Add to Favorites</span>
                     </button>
                     <button
                       className="icon-button circle-button"
@@ -173,7 +207,7 @@ export function MoviesIndex(props) {
                       {/* More Info icon inside a circle */}
                       <span className="icon">i</span>
                       {/* Tooltip */}
-                      <span className="tooltip-text">More Info</span>
+                      <span className="tooltip-text-info">More Info</span>
                     </button>
                     {/* NEW: Delete button */}
                     <button
@@ -181,7 +215,7 @@ export function MoviesIndex(props) {
                       onClick={() => props.onDestroyWatchlistMovie(movie)}
                     >
                       <DeleteIcon className="icon" />
-                      <span className="tooltip-text">Remove</span>
+                      <span className="tooltip-text-remove">Remove</span>
                     </button>
                   </div>
                 </div>
