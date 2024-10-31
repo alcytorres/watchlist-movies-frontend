@@ -10,7 +10,7 @@ export function LogoutLink() {
 
   return (
     <a href="#" onClick={handleClick}>
-      Logout
+      Log Out
     </a>
   );
 }

@@ -5,7 +5,7 @@ import './Header.css';
 
 export function Header() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-custom"> {/* NEW: Use custom class */}
+    <nav className="navbar navbar-expand-lg navbar-custom"> {/* Use custom class */}
       <div className="container-fluid">
         <a className="navbar-brand" href="/">Movies App</a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,8 +27,8 @@ export function Header() {
                 Authentication
               </a>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="/signup">Signup</a></li>
-                <li><a className="dropdown-item" href="/login">Login</a></li>
+                <li><a className="dropdown-item" href="/login">Sign In</a></li>
+                <li><a className="dropdown-item" href="/signup">Sign Up</a></li>
                 <li><hr className="dropdown-divider" /></li>
                 <li className="dropdown-item"><LogoutLink /></li>
               </ul>

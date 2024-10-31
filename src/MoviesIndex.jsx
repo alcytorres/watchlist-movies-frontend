@@ -110,19 +110,19 @@ export function MoviesIndex(props) {
       <br></br>
       {/* Streaming service filter */}
       <div className="filter-section">
-        <div className="streaming-services-filter">
-          {streamingServices.map((service) => (
-            <button
-              key={service.id}
-              className={`service-icon ${
-                selectedStreamingServices.includes(service.id) ? "selected" : ""
-              }`}
-              onClick={() => toggleStreamingService(service.id)}
-            >
-              <img src={service.icon} alt={service.name} />
-            </button>
-          ))}
-        </div>
+          <div className="streaming-services-filter">
+            {streamingServices.map((service) => (
+              <button
+                key={service.id}
+                className={`service-icon ${
+                  selectedStreamingServices.includes(service.id) ? "selected" : ""
+                }`}
+                onClick={() => toggleStreamingService(service.id)}
+              >
+                <img src={service.icon} alt={service.name} />
+              </button>
+            ))}
+          </div>
 
         <button className="filter-button" onClick={toggleDropdown}>
           Release Year ▼

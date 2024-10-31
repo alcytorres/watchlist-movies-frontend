@@ -10,7 +10,7 @@ body {
   max-width: 400px;
   margin: 50px auto;
   padding: 30px;
-  background-color: "white"; /* Darker container for form */
+  background-color: #9c9999; /* Darker container for form */
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Slight shadow for depth */
 }
@@ -22,15 +22,16 @@ body {
   margin-bottom: 20px;
 }
 
+/* Style for field names */
+#signup form div {
+  color: black; /* Field labels */
+  margin-bottom: 15px;
+}
+
 /* Signup form styles */
 #signup form {
   display: flex;
   flex-direction: column;
-}
-
-/* Form input container spacing */
-#signup form div {
-  margin-bottom: 15px;
 }
 
 /* Input field styles */
@@ -41,7 +42,7 @@ body {
   border: 1px solid #333;
   border-radius: 4px;
   background-color: #ffffff;
-  color: #ffffff;
+  color: #000000;
 }
 
 /* Placeholder text color */
@@ -51,7 +52,7 @@ body {
 
 /* Signup button styles */
 #signup form button {
-  background-color: #0000ff; 
+  background-color: red; 
   color: #ffffff;
   border: none;
   padding: 15px;
@@ -63,7 +64,7 @@ body {
 
 /* Button hover effect */
 #signup form button:hover {
-  background-color: #0000cc; /* Slightly darker blue on hover */
+  background-color: #d80000; /* Slightly darker red on hover */
 }
 
 /* Error list styles */
