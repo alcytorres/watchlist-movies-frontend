@@ -3,19 +3,24 @@ import { Range } from "react-range";
 import "./MoviesIndex.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+
+// Placeholder text
+
+
 const MIN_YEAR = 1900;
 const MAX_YEAR = new Date().getFullYear(); // Capture the current year dynamically
 
 // Streaming service icons or names array
 const streamingServices = [
-  { id: 'max', name: 'MAX', icon: '/icons/max.svg' },
-  { id: 'netflix', name: 'Netflix', icon: '/icons/netflix.svg' },
-  { id: 'amazon', name: 'Prime Video', icon: '/icons/amazon.svg' },
-  { id: 'disney', name: 'Disney+', icon: '/icons/disney.svg' },
-  { id: 'apple', name: 'AppleTV+', icon: '/icons/apple.svg' },
-  { id: 'paramount', name: 'Paramount Plus', icon: '/icons/paramount.svg' },
-  { id: 'hulu', name: 'Hulu', icon: '/icons/hulu.svg' },
-  { id: "other", name: "Other", icon: "/icons/other.svg" },
+  { id: 'max', name: 'Max', icon: '/icons/max.svg', label: 'Max' },
+  { id: 'netflix', name: 'Netflix', icon: '/icons/netflix.svg', label: 'Netflix' },
+  { id: 'amazon', name: 'Prime Video', icon: '/icons/amazon.svg', label: 'Prime Video' },
+  { id: 'disney', name: 'Disney+', icon: '/icons/disney.svg', label: 'Disney+' },
+  { id: 'apple', name: 'Apple TV+', icon: '/icons/apple.svg', label: 'Apple TV+' },
+  { id: 'paramount', name: 'Paramount+', icon: '/icons/paramount.svg', label: 'Paramount+' },
+  { id: 'hulu', name: 'Hulu', icon: '/icons/hulu.svg', label: 'Hulu' },
+  { id: 'other', name: 'Other', icon: '/icons/other.svg', label: 'Other' },
+  { id: 'non-streaming', name: 'Non-streaming', icon: '/icons/non-streaming.svg', label: 'Non Streaming' }
 ];
 
 export function MoviesIndex(props) {
@@ -27,9 +32,22 @@ export function MoviesIndex(props) {
     streamingServices.map((service) => service.id)
   );
 
-  // NEW: State to manage hover effects with delay
+  // State to manage hover effects with delay
   const [hoveredMovieId, setHoveredMovieId] = useState(null);
+  const [hoveredService, setHoveredService] = useState(null); // Store hovered service
   const [hoverTimer, setHoverTimer] = useState(null);
+
+  // Hover handling for delayed modal display
+  const handleMouseEnterService = (service) => {
+    const timer = setTimeout(() => setHoveredService(service), 500); // 0.5-second delay
+    setHoverTimer(timer);
+  };
+
+  const handleMouseLeaveService = () => {
+    clearTimeout(hoverTimer);
+    setHoveredService(null);
+  };
+
 
   // Toggle dropdown for release year filter
   const toggleDropdown = () => {
@@ -74,16 +92,24 @@ export function MoviesIndex(props) {
       // All services are selected; show all movies
       streamingFilter = true;
     } else {
-      // Filter movies that have at least one streaming service in selectedStreamingServices
+      // Check if 'Non-Streaming' is selected
+      const nonStreamingSelected = selectedStreamingServices.includes('non-streaming');
+
+    if (movieStreamingServices.length === 0) {
+      // Movie is non-streaming
+      streamingFilter = nonStreamingSelected;
+    } else {
+      // Filter movies that have at least one streaming service
       streamingFilter = movieStreamingServices.some((service) =>
         selectedStreamingServices.includes(service)
       );
     }
+  }
 
-    return yearFilter && streamingFilter;
-  });
+  return yearFilter && streamingFilter;
+});
 
-  // NEW: Handle mouse enter with delay
+  // Handle mouse enter with delay
   const handleMouseEnter = (movieId) => {
     // Start a timer to set the hovered movie after 0.5 seconds
     const timer = setTimeout(() => {
@@ -93,7 +119,7 @@ export function MoviesIndex(props) {
     setHoverTimer(timer);
   };
 
-  // NEW: Handle mouse leave
+  // Handle mouse leave
   const handleMouseLeave = () => {
     // Clear any existing timer
     if (hoverTimer) {
@@ -106,26 +132,40 @@ export function MoviesIndex(props) {
 
   return (
     <div>
-      <h1 style={{ color: "white", fontSize: '35px' }}>Watchlist</h1>
-      <br></br>
-      {/* Streaming service filter */}
+      <br />
+      <h1 style={{ color: "white", fontSize: '35px'}}>Watchlist</h1>
+      <br />
+
+      {/* Filter Section */}
       <div className="filter-section">
+        
+        {/* Streaming Service Filter */}
+        <div className="streaming-services-container"> 
           <div className="streaming-services-filter">
             {streamingServices.map((service) => (
               <button
                 key={service.id}
-                className={`service-icon ${
-                  selectedStreamingServices.includes(service.id) ? "selected" : ""
-                }`}
+                className={`service-icon ${selectedStreamingServices.includes(service.id) ? "selected" : ""}`}
                 onClick={() => toggleStreamingService(service.id)}
+                onMouseEnter={() => handleMouseEnterService(service)} // Hover event
+                onMouseLeave={handleMouseLeaveService}                // Hover leave event
+                style={{ position: "relative" }} /* Ensures modal is positioned relative to the icon */
               >
                 <img src={service.icon} alt={service.name} />
+                {/* Conditional rendering for modal */}
+                {hoveredService && hoveredService.id === service.id && (
+                  <div className="hover-modal">
+                    {service.label}
+                  </div>
+                )}
               </button>
             ))}
           </div>
+        </div> 
 
+        {/* Release Year Filter (placed below streaming services) */}
         <button className="filter-button" onClick={toggleDropdown}>
-          Release Year ▼
+          Release Year&nbsp;&nbsp;▼
         </button>
 
         {isDropdownOpen && (
@@ -171,7 +211,7 @@ export function MoviesIndex(props) {
             <div
               className="movie-item"
               key={movie.id}
-              // NEW: Add mouse enter and leave handlers
+              // Add mouse enter and leave handlers
               onMouseEnter={() => handleMouseEnter(movie.id)}
               onMouseLeave={handleMouseLeave}
             >
@@ -209,7 +249,7 @@ export function MoviesIndex(props) {
                       {/* Tooltip */}
                       <span className="tooltip-text-info">More Info</span>
                     </button>
-                    {/* NEW: Delete button */}
+                    {/* Delete button */}
                     <button
                       className="icon-button circle-button"
                       onClick={() => props.onDestroyWatchlistMovie(movie)}

@@ -8,8 +8,8 @@ export function MoviesShow(props) {
       <p>Release Year: {props.movie.release_year}</p>
       <p>IMDb ID: {props.movie.imdb_id}</p>
 
-      {/* NEW: Display streaming services directly from movie prop */}
-      {props.movie.streaming_services && props.movie.streaming_services.length > 0 && (
+      {/* Display streaming services or 'Not currently available for streaming' */}
+      {props.movie.streaming_services && props.movie.streaming_services.length > 0 ? (
         <p>
           <strong>Available on:</strong>{" "}
           {props.movie.streaming_services.map((serviceId, index) => (
@@ -19,6 +19,9 @@ export function MoviesShow(props) {
             </span>
           ))}
         </p>
+      ) : (
+        // Display message for non-streaming movies
+        <p><strong>Not currently available for streaming</strong></p> 
       )}
 
       {props.movie.image_url && (

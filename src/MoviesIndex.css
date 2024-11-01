@@ -1,4 +1,25 @@
-/* Styles for the streaming service filter */
+/* ========== Global Styles ========== */
+
+
+/* Placeholder text */
+/* Placeholder text */
+/* Placeholder text */
+
+
+
+/* ========== Streaming Service Filter ========== */
+
+.streaming-services-container {
+  background-color: #cccccc;
+  border-radius: 6px; /* Rounded corners */
+  display: inline-flex; /* Flex layout to adjust width to icon content */
+  padding: 10px 0 0px 10px; /* Padding only on left for a natural look */
+  align-items: center; /* Vertically centers icons */
+  width: fit-content; /* Keeps box limited to icon width */
+  margin-left: -130px; /* Moves container to the left */
+  padding-right: 8px; /* Adjust value as needed to increase the right side */
+}
+
 .streaming-services-filter {
   display: flex;
   gap: 10px;
@@ -19,40 +40,42 @@
 }
 
 .service-icon img {
-  width: 40px; /* Adjust size for icons */
-  height: 40px;
+  width: 50px; /* Adjust size for icons */
+  height: 50px;
 }
 
 .service-icon:not(.selected) {
   opacity: 0.4; /* Grey out unselected services */
 }
 
-/* Styles for the release year filter section */
-.header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px; /* Adjust padding for better alignment and spacing */
+.service-icon.non-streaming-icon img {
+  /* Add any specific styles if required */
 }
 
-
-.title {
-  flex-grow: 1;
-  text-align: center; /* Center the title text */
-  margin-bottom: 20px; /* Add space below the title */
-}
-
-.reset-button {
-  background-color: #808080; /* Color grey */
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
+/* Styling for hover modal */
+.hover-modal {
+  position: absolute;
+  top: 50px; /* Adjust based on button size */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #cccccc;
+  color: black;
+  padding: 1px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
   font-size: 14px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: subtle shadow */
 }
+
+
+/* ========== Release Year Filter ========== */
 
 .filter-section {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  margin-bottom: 30px;
   width: 80%; /* Adjust the width of the filter section */
   margin-left: auto;
   margin-right: auto; /* Center the filter section horizontally */
@@ -62,20 +85,48 @@
   background-color: #333;
   color: white;
   border: none;
+  border-radius: 6px;
   padding: 10px 15px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 22px;
+  margin-top: 20px;
   margin-bottom: 10px;
+  margin-left: -130px;
+  padding-right: 13px; /* Adds space between "Year" and "▼" */
+  width: 1300px; /* Set a fixed width */
 }
 
 .filter-dropdown {
+  margin-top: 15px;
   background-color: #333; /* Dark grey background */
-  padding: 10px;
+  color: white; /* Text color for visibility */
   border: 1px solid #555; /* Adjust border color for contrast */
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
+  padding: 10px;
   padding-bottom: 20px; /* Increase bottom padding */
-  color: white; /* NEW: Text color for visibility */
+}
+
+.filter-dropdown h4 {
+  font-size: 22px;
+  margin: 0;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; /* Adjust padding for better alignment and spacing */
+}
+
+.reset-button {
+  background-color: #808080; /* Color grey */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .year-labels {
@@ -106,20 +157,8 @@
 }
 
 
+/* ========== Movie Grid and Cards ========== */
 
-
-
-
-
-/* Placeholder text */
-
-
-
-
-
-
-
-/* Styles for the movie grid */
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
@@ -143,7 +182,6 @@
   transition: transform 0.3s, box-shadow 0.3s; /* Keep smooth transition */
   width: 200px; /* Ensure consistent card width */
   height: 300px; /* Fixed height to ensure all cards are the same size */
-  /* Add delay before expanding */
   transition-delay: 0.0s; /* Delay the card expansion */
 }
 
@@ -159,7 +197,7 @@
 .movie-card .card-body {
   padding: 5px;
   text-align: center;
-  background-color: #181818
+  background-color: #181818;
 }
 
 .movie-card .card-title {
@@ -169,12 +207,10 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  /* change color to white once the title backgroun is grey */
-  color: white
+  color: white; /* Set color to white for better contrast */
 }
 
 /* Hover effect for movie cards */
-/* NEW: Apply hover effects when the card has the 'hovered' class */
 .movie-card.hovered {
   position: absolute; /* Keep the hovered card from affecting others */
   transform: scale(1.35);
@@ -183,7 +219,6 @@
   transition-delay: 0.0s; /* No delay on shrinking back */
 }
 
-/* Hover icons for movie cards */
 .hover-icons {
   display: none; /* Hidden by default */
   margin-top: 5px;
@@ -191,7 +226,6 @@
   justify-content: center;
 }
 
-/* NEW: Show hover icons when the card has the 'hovered' class */
 .movie-card.hovered .hover-icons {
   display: flex;
   justify-content: center;
@@ -225,81 +259,63 @@
 
 .circle-button .icon {
   font-size: 20px;
-  color: white
+  color: white;
 }
 
-/* Tooltip styling for the Add to Favorites button */
-.tooltip-text-add {
+
+/* ========== Tooltip Styling ========== */
+
+.tooltip-text-add,
+.tooltip-text-info,
+.tooltip-text-remove {
   visibility: hidden;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-text-add {
   width: 140px;
   background-color: #e6e6e6;
   color: #000;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 2;
   bottom: 125%; /* Position above the button */
   left: 80%;
   margin-left: -50px;
-  opacity: 0;
-  transition: opacity 0.3s;
 }
 
-/* Tooltip styling for the More Info button */
 .tooltip-text-info {
-  visibility: hidden;
   width: 100px;
   background-color: #e6e6e6;
   color: #000;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 2;
   bottom: 125%; /* Position above the button */
   left: 50%;
   margin-left: -50px;
-  opacity: 0;
-  transition: opacity 0.3s;
 }
 
-/* Tooltip styling for the Remove button */
 .tooltip-text-remove {
-  visibility: hidden;
   width: 100px;
   background-color: #e6e6e6;
   color: #000;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 2;
   bottom: 125%; /* Position above the button */
   left: 20%;
   margin-left: -50px;
-  opacity: 0;
-  transition: opacity 0.3s;
 }
 
 /* Show the tooltips on hover for each button */
-.icon-button:hover .tooltip-text-add {
-  visibility: visible;
-  opacity: 1;
-}
-
-.icon-button:hover .tooltip-text-info {
-  visibility: visible;
-  opacity: 1;
-}
-
+.icon-button:hover .tooltip-text-add,
+.icon-button:hover .tooltip-text-info,
 .icon-button:hover .tooltip-text-remove {
   visibility: visible;
   opacity: 1;
 }
 
 
-/* Media queries for responsiveness */
+/* ========== Media Queries for Responsiveness ========== */
+
 @media (max-width: 1400px) {
   .movie-item {
     flex: 0 0 calc((100% - 75px) / 6); /* Maintain 6 movies per row */
