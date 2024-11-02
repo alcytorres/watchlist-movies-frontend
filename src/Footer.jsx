@@ -6,7 +6,14 @@ export function Footer() {
       <br></br>
       <br></br>
       <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <p>Copyright 2024</p>
+      <br></br>
     </footer>
   );
 }

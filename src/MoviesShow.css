@@ -1,0 +1,51 @@
+/* Set the modal container to be full width and height */
+body {
+  margin: 0; /* Remove any default body margin */
+}
+
+.movie-modal {
+  background-color: #222; /* Dark background for a modal effect */
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 0 auto; /* Center the modal horizontally */
+  box-sizing: border-box; /* Ensure padding doesn’t add extra space */
+}
+
+.movie-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2em;
+  color: #d5d5d5;
+}
+
+.movie-title,
+.movie-description,
+.movie-director,
+.movie-release-year,
+.movie-availability {
+  margin: 10px 0;
+}
+
+.movie-poster {
+  width: 200px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.movie-availability {
+  font-size: 1.2em;
+  color: #d5d5d5;
+  margin-top: 20px;
+}
+
+
+/* Target the close button in the modal */
+button.close {
+  color: #ffffff; /* Set text color to white */
+  font-size: 32px; /* Optional: Ensure the font size is set as needed */
+  background: none; /* Remove any background */
+  border: none; /* Remove any border */
+  cursor: pointer; /* Make it look like a clickable button */
+}
