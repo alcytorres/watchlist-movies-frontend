@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./MoviesNew.css";
+import "./MoviesIndex.css"; // Import MoviesIndex.css for shared styles
 
 export function MoviesNew(props) {
   const [searchResults, setSearchResults] = useState([]);
@@ -21,7 +22,7 @@ export function MoviesNew(props) {
         setSearchResults([]);
       });
   };
-  
+
   // Handle adding a movie when 'Add' button is clicked
   const handleAddMovie = (movie) => {
     const params = {
@@ -34,7 +35,7 @@ export function MoviesNew(props) {
       streaming_services: movie.streaming_services,
     };
 
-    // NEW: Send request to watchlist_movies endpoint
+    // Send request to watchlist_movies endpoint
     axios
       .post("http://localhost:3000/watchlist_movies", params)
       .then(() => {
@@ -44,6 +45,35 @@ export function MoviesNew(props) {
       .catch((error) => {
         console.error("Error adding the movie to your Watchlist", error);
       });
+  };
+
+  // NEW: State for hover effects
+  const [hoveredMovieId, setHoveredMovieId] = useState(null);
+  const [hoverTimer, setHoverTimer] = useState(null);
+
+  // NEW: Handle mouse enter with delay
+  const handleMouseEnter = (movieId) => {
+    const timer = setTimeout(() => {
+      setHoveredMovieId(movieId);
+    }, 500); // 500 milliseconds delay
+
+    setHoverTimer(timer);
+  };
+
+  // NEW: Handle mouse leave
+  const handleMouseLeave = () => {
+    if (hoverTimer) {
+      clearTimeout(hoverTimer);
+      setHoverTimer(null);
+    }
+    setHoveredMovieId(null);
+  };
+
+  // NEW: Handle showing movie details
+  const handleShowMovie = (movie) => {
+    // Implement modal or redirect to movie details page
+    // For now, we'll just alert the movie title
+    alert(`More info about ${movie.title}`);
   };
 
   return (
@@ -65,34 +95,57 @@ export function MoviesNew(props) {
         <div>
           <br />
           <h2>Search Results:</h2>
-          <ul>
+          {/* Use movie-grid to display movies in a grid */}
+          <div className="movie-grid">
             {searchResults.map((movie) => (
-              <li key={movie.tmdb_id} className="movie-item">
-                <p className="movie-title">{movie.title}</p>
-                <p>Release Year: {movie.release_year}</p>
-                <p>Director: {movie.director}</p>
-                {movie.streaming_services && movie.streaming_services.length > 0 ? (
-                  <p className="streaming-info">
-                    Available on:<ul className="streaming-services">
-                      {movie.streaming_services.map((serviceId, index) => (
-                        <li key={index}>{serviceId}</li>
-                      ))}
-                    </ul>
-                  </p>
-                ) : (
-                  <p>No streaming sources available</p>
-                )}
-                {movie.image_url && (
-                  <img src={movie.image_url} alt={movie.title} width="100" />
-                )}
-                <button className="add-movie-btn" onClick={() => handleAddMovie(movie)}>
-                  Add
-                </button>
-              </li>
+              <div
+                className="movie-item"
+                key={movie.tmdb_id}
+                onMouseEnter={() => handleMouseEnter(movie.tmdb_id)} 
+                onMouseLeave={handleMouseLeave} 
+              >
+                {/* Movie card */}
+                <div
+                  className={`card movie-card ${
+                    hoveredMovieId === movie.tmdb_id ? "hovered" : ""
+                  }`}
+                >
+                  <img
+                    src={movie.image_url}
+                    className="card-img-top"
+                    alt={movie.title}
+                  />
+                  {/* Title below the image */}
+                  <div className="card-body">
+                    <h5 className="card-title">{movie.title}</h5>
+                    {/* Icons visible only on hover */}
+                    <div className="hover-icons">
+                      <button
+                        className="icon-button circle-button"
+                        onClick={() => handleAddMovie(movie)}
+                      >
+                        {/* Add icon inside a circle */}
+                        <span className="icon">+</span>
+                        {/* Tooltip */}
+                        <span className="tooltip-text-add">Add to Watchlist</span> 
+                      </button>
+                      <button
+                        className="icon-button circle-button"
+                        onClick={() => props.onShowMovie(movie)}  // Use onShowMovie as in MoviesIndex
+                      >
+                        {/* More Info icon inside a circle */}
+                        <span className="icon">i</span>
+                        {/* Tooltip */}
+                        <span className="tooltip-text-info">More Info</span>
+                      </button>
+                      {/* REMOVE: 'Remove' button not needed */}
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
-      
       )}
     </div>
   );

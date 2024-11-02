@@ -113,7 +113,14 @@ export function Content() {
         <Route path="/login" element={<Login />} />
 
         {/* Route for MoviesNew with search functionality */}
-        <Route path="/movies/new" element={<MoviesNew />} />
+        <Route 
+          path="/movies/new" 
+          element={
+            <MoviesNew 
+              onShowMovie={handleShowMovie}  // Pass handleShowMovie to MoviesNew
+            />
+          } 
+        />
 
         {/* <Route 
           path="/movies/new" 
@@ -126,12 +133,11 @@ export function Content() {
               movies={movies} 
               onShowMovie={handleShowMovie} 
               onAddFavorite={handleShowAddFavorite} 
-              onDestroyWatchlistMovie={handleDestroyWatchlistMovie}  // NEW: Pass the function
+              onDestroyWatchlistMovie={handleDestroyWatchlistMovie}  // Pass the function
             />
           } 
         />
 
-        {/* should the route be user_movies instead of favoritemovies??? */}
         <Route 
           path="/favoritemovies" 
           element={
