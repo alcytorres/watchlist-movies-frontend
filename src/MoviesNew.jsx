@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./MoviesNew.css";
-import "./MoviesIndex.css"; // Import MoviesIndex.css for shared styles
+
+
+
+// Placeholder text
+
+// Placeholder text
+
+
+
 
 export function MoviesNew(props) {
   const [searchResults, setSearchResults] = useState([]);
+
+   // NEW: State for toast notification
+   const [toastMessage, setToastMessage] = useState("");
+   const [showToast, setShowToast] = useState(false);
+ 
 
   // Handle movie search
   const handleSearch = (event) => {
@@ -39,7 +52,18 @@ export function MoviesNew(props) {
     axios
       .post("http://localhost:3000/watchlist_movies", params)
       .then(() => {
-        alert(`${movie.title} added to your Watchlist`);
+        // REMOVE: alert(`${movie.title} added to your Watchlist`);
+
+        // NEW: Set toast message and show toast
+        setToastMessage(`Added to Watchlist`);
+        setShowToast(true);
+
+        // Hide the toast after XX seconds
+        setTimeout(() => {
+          setShowToast(false);
+        }, 5000);
+
+        // Remove the movie from search results
         setSearchResults(searchResults.filter((m) => m.tmdb_id !== movie.tmdb_id));
       })
       .catch((error) => {
@@ -47,11 +71,11 @@ export function MoviesNew(props) {
       });
   };
 
-  // NEW: State for hover effects
+  // State for hover effects
   const [hoveredMovieId, setHoveredMovieId] = useState(null);
   const [hoverTimer, setHoverTimer] = useState(null);
 
-  // NEW: Handle mouse enter with delay
+  // Handle mouse enter with delay
   const handleMouseEnter = (movieId) => {
     const timer = setTimeout(() => {
       setHoveredMovieId(movieId);
@@ -60,7 +84,7 @@ export function MoviesNew(props) {
     setHoverTimer(timer);
   };
 
-  // NEW: Handle mouse leave
+  // Handle mouse leave
   const handleMouseLeave = () => {
     if (hoverTimer) {
       clearTimeout(hoverTimer);
@@ -69,40 +93,32 @@ export function MoviesNew(props) {
     setHoveredMovieId(null);
   };
 
-  // NEW: Handle showing movie details
-  const handleShowMovie = (movie) => {
-    // Implement modal or redirect to movie details page
-    // For now, we'll just alert the movie title
-    alert(`More info about ${movie.title}`);
-  };
-
   return (
     <div>
-      <h1>Add a Movie</h1>
+      <h1 className="search">Search by Title</h1>
 
       {/* Movie search form */}
-      <form onSubmit={handleSearch}>
+      <form className="search-bar" onSubmit={handleSearch}>
         <div>
-          Search by Title: <input name="query" type="text" />
+          <input name="query" type="text" />
         </div>
         <button className="search-movie-btn" type="submit">
           Search
         </button>
       </form>
 
-      {/* Display search results */}
+      {/* Display movie search results */}
       {searchResults.length > 0 && (
         <div>
           <br />
-          <h2>Search Results:</h2>
-          {/* Use movie-grid to display movies in a grid */}
-          <div className="movie-grid">
+          <h2></h2>
+          <div className="movie-grid"> {/* Adjusted grid class to ensure card size matches MoviesIndex */}
             {searchResults.map((movie) => (
               <div
                 className="movie-item"
                 key={movie.tmdb_id}
-                onMouseEnter={() => handleMouseEnter(movie.tmdb_id)} 
-                onMouseLeave={handleMouseLeave} 
+                onMouseEnter={() => handleMouseEnter(movie.tmdb_id)}
+                onMouseLeave={handleMouseLeave}
               >
                 {/* Movie card */}
                 <div
@@ -124,27 +140,35 @@ export function MoviesNew(props) {
                         className="icon-button circle-button"
                         onClick={() => handleAddMovie(movie)}
                       >
-                        {/* Add icon inside a circle */}
+                        {/* Add to My List icon inside a circle */}
                         <span className="icon">+</span>
                         {/* Tooltip */}
-                        <span className="tooltip-text-add">Add to Watchlist</span> 
+                        <span className="tooltip-text-add">Add to Watchlist</span>
                       </button>
                       <button
                         className="icon-button circle-button"
-                        onClick={() => props.onShowMovie(movie)}  // Use onShowMovie as in MoviesIndex
+                        onClick={() => props.onShowMovie(movie)}
                       >
                         {/* More Info icon inside a circle */}
                         <span className="icon">i</span>
                         {/* Tooltip */}
                         <span className="tooltip-text-info">More Info</span>
                       </button>
-                      {/* REMOVE: 'Remove' button not needed */}
                     </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+
+
+    {/* NEW: Toast Notification */}
+      {showToast && (
+        <div className="toast-notification">
+          {toastMessage}
         </div>
       )}
     </div>

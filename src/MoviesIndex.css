@@ -2,8 +2,7 @@
 
 
 /* Placeholder text */
-/* Placeholder text */
-/* Placeholder text */
+
 
 
 
@@ -242,7 +241,7 @@
 }
 
 .icon-button:hover {
-  color: #555; /* Optional hover color */
+  color: #555; 
 }
 
 /* Circle buttons */
@@ -315,6 +314,8 @@
 
 
 /* ========== Media Queries for Responsiveness ========== */
+
+/* Dynamic grid layout that adjusts based on the screen size */
 
 @media (max-width: 1400px) {
   .movie-item {

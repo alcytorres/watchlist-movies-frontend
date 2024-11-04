@@ -1,3 +1,13 @@
+/* ========== Global Styles ========== */
+
+
+/* Placeholder text */
+
+
+
+
+/* ========== Search Bar ========== */
+
 /* Style for the search form */
 form {
   margin-bottom: 20px;
@@ -28,3 +38,244 @@ form input[type="text"] {
 .search-movie-btn:focus {
   outline: none;
 }
+
+.search {
+  color: #d5d5d5;
+}
+
+.search-bar {
+  margin-top: 20px;
+}
+
+
+
+
+
+/* ========== Movie Grid and Cards ========== */
+
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  gap: 15px;
+}
+
+.movie-item {
+  flex: 0 0 calc((100% - 75px) / 6); 
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Match movie card styling with MoviesIndex */
+.movie-card {
+  position: relative;
+  border: none;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s; /* Keep smooth transition */
+  width: 200px; /* Ensure consistent card width */
+  height: 300px; /* Fixed height to ensure all cards are the same size */
+  transition-delay: 0.0s; /* Delay the card expansion */
+}
+
+/* Ensure images fill the card area consistently */
+.movie-card .card-img-top {
+  width: 100%;
+  height: auto; /* Adjusted to match MoviesIndex */
+  object-fit: contain; /* Ensure images are not cropped */
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Adjusted card body styling */
+.movie-card .card-body {
+  padding: 5px;
+  text-align: center;
+  background-color: #181818;
+}
+
+/* Adjusted title styling for better readability */
+.movie-card .card-title {
+  margin: 3px 0;
+  font-size: 14px;
+  font-family: 'Helvetica, Arial, sans-serif';
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: white; /* Set color to white for better contrast */
+}
+
+/* Hover effect for movie cards */
+.movie-card.hovered {
+  position: absolute; /* Keep the hovered card from affecting others */
+  transform: scale(1.35);
+  z-index: 1;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition-delay: 0.0s; /* No delay on shrinking back */
+}
+
+.hover-icons {
+  display: none; /* Hidden by default */
+  margin-top: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.movie-card.hovered .hover-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000; /* Icons in black */
+  font-size: 16px;
+  position: relative; /* For tooltip positioning */
+}
+
+/* Icon button hover effect */
+.icon-button:hover {
+  color: #555;
+}
+
+/* Circle buttons (same as MoviesIndex) */
+.circle-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #181818;  /* Background color for the circle */
+  border: 1.5px solid #919191;  /* Border for the circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-button .icon {
+  font-size: 20px;
+  color: white;
+}
+
+
+
+/* ========== Tooltip Styling ========== */
+
+/* Tooltips for Add and More Info buttons */
+.tooltip-text-add,
+.tooltip-text-info {
+  visibility: hidden;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-text-add {
+  width: 140px;
+  background-color: #e6e6e6;
+  color: #000;
+  bottom: 125%; /* Position above the button */
+  left: 80%;
+  margin-left: -50px;
+}
+
+.tooltip-text-info {
+  width: 100px;
+  background-color: #e6e6e6;
+  color: #000;
+  bottom: 125%; /* Position above the button */
+  left: 50%;
+  margin-left: -50px;
+}
+
+/* Show the tooltips on hover for each button */
+.icon-button:hover .tooltip-text-add,
+.icon-button:hover .tooltip-text-info {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* Toast Notification Styles */
+.toast-notification {
+  position: fixed;
+  bottom: 30px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 18px;
+  z-index: 1000; /* Ensure it appears above other elements */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeInOut 4s ease forwards;
+}
+
+/* Animation for Toast Notification */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  10%, 80% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+}
+
+
+/* ========== Media Queries for Responsiveness ========== */
+
+/* Dynamic grid layout that adjusts based on the screen size */
+
+@media (max-width: 1400px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 75px) / 6); /* Maintain 6 movies per row */
+  }
+}
+
+@media (max-width: 1200px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 60px) / 5); /* Adjust for 5 movies per row */
+  }
+}
+
+@media (max-width: 992px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 45px) / 4); /* Adjust for 4 movies per row */
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 30px) / 3); /* Adjust for 3 movies per row */
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 15px) / 2); /* Adjust for 2 movies per row */
+  }
+}
+
+
+
+
+
+
+
+
+

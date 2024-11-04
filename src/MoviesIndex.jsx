@@ -4,7 +4,10 @@ import "./MoviesIndex.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 
+
+
 // Placeholder text
+
 
 
 const MIN_YEAR = 1900;
@@ -204,7 +207,7 @@ export function MoviesIndex(props) {
         )}
       </div>
 
-      {/* Movie List */}
+      {/* Movies List */}
       <div className="movie-grid">
         {filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => (
