@@ -1,37 +1,288 @@
-.favorite-movie-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+/* ========== Favorite Movies Header ========== */
+
+.favorite-movies {
+  color: #ffffff;
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.favorite-movie-card .card-img-top {
-  height: 575px; /* Increase the height for images */
-  object-fit: contain; /* Ensure the entire image is visible without distortion */
-}
 
-.favorite-movie-card .card-body {
+/* ========== Release Year Filter ========== */
+
+.filter-section {
   display: flex;
   flex-direction: column;
+  margin-bottom: 30px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filter-button {
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 22px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width: 1300px; /* Adjust width as needed */
+}
+
+.filter-dropdown {
+  margin-top: 15px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  padding-bottom: 20px;
+}
+
+.filter-dropdown h4 {
+  font-size: 22px;
+  margin: 0;
+}
+
+.header-row {
+  display: flex;
   justify-content: space-between;
-  flex-grow: 1; /* Allow card body to grow and fill the remaining space */
+  align-items: center;
+  padding: 0 20px;
 }
 
-.favorite-movie-card .card-title {
-  margin-bottom: 10px; /* Adjust spacing as needed */
+.reset-button {
+  background-color: #808080;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.favorite-movie-card .card-text {
+.year-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.slider-track {
+  flex-grow: 1;
+  height: 6px;
+  background: #777;
+  margin: 0 25px;
+}
+
+.slider-thumb {
+  width: 35px;
+  height: 35px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ========== No Results Styling ========== */
+
+.no-results {
+  text-align: center;
+  color: white;
+  margin-top: 50px;
+}
+
+
+/* ========== Movie Grid and Cards ========== */
+
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  gap: 15px;
+}
+
+.movie-item {
+  flex: 0 0 calc((100% - 75px) / 6); /* Arrange 6 movie cards per row */
+  margin-bottom: 20px;
+  position: relative; /* Make the item relative so its children can position absolutely */
+}
+
+.movie-card {
+  position: relative;
+  border: none;
   overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 200px; /* Ensure consistent card width */
+  height: 300px; /* Fixed height to ensure all cards are the same size */
+}
+
+.movie-card .card-img-top {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.movie-card .card-body {
+  padding: 5px;
+  text-align: center;
+  background-color: #181818;
+}
+
+.movie-card .card-title {
+  margin: 3px 0;
+  font-size: 14px;
+  font-family: 'Helvetica, Arial, sans-serif';
+  overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* Number of lines to show */
-  -webkit-box-orient: vertical;
+  color: white;
 }
 
-.favorite-movie-card .card-footer {
+/* Hover effect for movie cards */
+.movie-card.hovered {
+  position: absolute;
+  transform: scale(1.35);
+  z-index: 1;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hover-icons {
+  display: none;
+  margin-top: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.movie-card.hovered .hover-icons {
   display: flex;
-  justify-content: space-between;
-  margin-top: auto; /* Push footer to the bottom */
+  justify-content: center;
+  gap: 20px;
 }
 
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+  font-size: 16px;
+  position: relative; /* For tooltip positioning */
+}
+
+.icon-button:hover {
+  color: #555;
+}
+
+/* Circle buttons */
+.circle-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #181818;
+  border: 1.5px solid rgba(255, 255, 255, 0.5); /* Softer white border initially */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s ease; /* Smooth border color change */
+}
+
+/* Brighten border color on hover */
+.circle-button:hover {
+  border-color: rgba(255, 255, 255, 1); /* Stronger white on hover */
+}
+
+.circle-button .icon {
+  font-size: 20px;
+  color: white;
+}
+
+
+/* ========== Tooltip Styling ========== */
+
+/* Tooltips for More Info and Remove buttons */
+.tooltip-text-info,
+.tooltip-text-remove {
+  visibility: hidden;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-text-info {
+  width: 100px;
+  background-color: #e6e6e6;
+  color: #000;
+  bottom: 125%; /* Position above the button */
+  left: 50%;
+  margin-left: -50px;
+}
+
+.tooltip-text-remove {
+  width: 100px;
+  background-color: #e6e6e6;
+  color: #000;
+  bottom: 125%; /* Position above the button */
+  left: 20%;
+  margin-left: -50px;
+}
+
+/* Show the tooltips on hover for each button */
+.icon-button:hover .tooltip-text-info,
+.icon-button:hover .tooltip-text-remove {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* ========== Media Queries for Responsiveness ========== */
+
+/* Dynamic grid layout that adjusts based on the screen size */
+
+@media (max-width: 1400px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 75px) / 6);
+  }
+}
+
+@media (max-width: 1200px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 60px) / 5);
+  }
+}
+
+@media (max-width: 992px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 45px) / 4);
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 30px) / 3);
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-item {
+    flex: 0 0 calc((100% - 15px) / 2);
+  }
+}
 

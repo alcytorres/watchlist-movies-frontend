@@ -1,9 +1,11 @@
-/* ========== Global Styles ========== */
+/* ========== Watchlist Header ========== */
 
-
-/* Placeholder text */
-
-
+.watchlist {
+  color: #ffffff;
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
 
 /* ========== Streaming Service Filter ========== */
@@ -155,6 +157,14 @@
   cursor: pointer;
 }
 
+/* ========== No Results Styling ========== */
+
+.no-results {
+  text-align: center;
+  color: white;
+  margin-top: 50px;
+}
+
 
 /* ========== Movie Grid and Cards ========== */
 
@@ -181,7 +191,6 @@
   transition: transform 0.3s, box-shadow 0.3s; /* Keep smooth transition */
   width: 200px; /* Ensure consistent card width */
   height: 300px; /* Fixed height to ensure all cards are the same size */
-  transition-delay: 0.0s; /* Delay the card expansion */
 }
 
 .movie-card .card-img-top {
@@ -215,7 +224,6 @@
   transform: scale(1.35);
   z-index: 1;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  transition-delay: 0.0s; /* No delay on shrinking back */
 }
 
 .hover-icons {
@@ -235,7 +243,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #000; /* Icons in black */
+  color: #000; 
   font-size: 16px;
   position: relative; /* For tooltip positioning */
 }
@@ -249,11 +257,17 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #181818; /* Background color for the circle */
-  border: 1.5px solid #919191; /* Border for the circle */
+  background-color: #181818; 
+  border: 1.5px solid rgba(255, 255, 255, 0.5); /* Softer white border initially */
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: border-color 0.3s ease; /* Smooth border color change */
+}
+
+/* Brighten border color on hover */
+.circle-button:hover {
+  border-color: rgba(255, 255, 255, 1); /* Stronger white on hover */
 }
 
 .circle-button .icon {

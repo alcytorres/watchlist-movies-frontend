@@ -135,8 +135,7 @@ export function MoviesIndex(props) {
 
   return (
     <div>
-      <br />
-      <h1 style={{ color: "white", fontSize: '35px'}}>Watchlist</h1>
+      <h1 className="watchlist">Watchlist</h1>
       <br />
 
       {/* Filter Section */}
