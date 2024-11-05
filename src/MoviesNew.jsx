@@ -1,25 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./MoviesNew.css";
-
-
-
-// Placeholder text
-
-// Placeholder text
-
-
-
 
 export function MoviesNew(props) {
   const [searchResults, setSearchResults] = useState([]);
 
-   // NEW: State for toast notification
-   const [toastMessage, setToastMessage] = useState("");
-   const [showToast, setShowToast] = useState(false);
- 
+  // NEW: State to track Watchlist and Favorites across sessions
+  const [watchlistStatus, setWatchlistStatus] = useState({});
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
-  // Handle movie search
+  // NEW: Load Watchlist and Favorites on component mount (or user sign-in)
+  useEffect(() => {
+    axios.get("http://localhost:3000/user_collections")
+      .then((response) => {
+        const { watchlist, favorites } = response.data;
+        
+        // Set the watchlist status based on user collections
+        const initialStatus = {};
+        watchlist.forEach((imdb_id) => initialStatus[imdb_id] = true);
+        favorites.forEach((imdb_id) => initialStatus[imdb_id] = true);
+
+        setWatchlistStatus(initialStatus);
+      })
+      .catch((error) => console.error("Error fetching user collections", error));
+  }, []); // Only fetch once on mount or user sign-in
+
   const handleSearch = (event) => {
     event.preventDefault();
     const query = event.target.query.value;
@@ -36,8 +42,7 @@ export function MoviesNew(props) {
       });
   };
 
-  // Handle adding a movie when 'Add' button is clicked
-  const handleAddMovie = (movie) => {
+  const handleToggleWatchlist = (movie) => {
     const params = {
       title: movie.title,
       image_url: movie.image_url,
@@ -48,43 +53,45 @@ export function MoviesNew(props) {
       streaming_services: movie.streaming_services,
     };
 
-    // Send request to watchlist_movies endpoint
+    const url = `http://localhost:3000/watchlist_movies`;
     axios
-      .post("http://localhost:3000/watchlist_movies", params)
-      .then(() => {
-        // REMOVE: alert(`${movie.title} added to your Watchlist`);
+      .post(url, params)
+      .then((response) => {
+        const { in_watchlist, error } = response.data;
 
-        // NEW: Set toast message and show toast
-        setToastMessage(`Added to Watchlist`);
+        if (error) {
+          setToastMessage(error);
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 5000);
+          return;
+        }
+
+        // Update watchlist status based on response
+        setWatchlistStatus((prevState) => ({
+          ...prevState,
+          [movie.imdb_id]: in_watchlist,
+        }));
+
+        // Set toast message
+        setToastMessage(in_watchlist ? "Added to Watchlist" : "Removed from Watchlist");
         setShowToast(true);
-
-        // Hide the toast after XX seconds
-        setTimeout(() => {
-          setShowToast(false);
-        }, 5000);
-
-        // Remove the movie from search results
-        setSearchResults(searchResults.filter((m) => m.tmdb_id !== movie.tmdb_id));
+        setTimeout(() => setShowToast(false), 5000);
       })
       .catch((error) => {
-        console.error("Error adding the movie to your Watchlist", error);
+        console.error("Error toggling the movie in the Watchlist", error);
       });
   };
 
-  // State for hover effects
   const [hoveredMovieId, setHoveredMovieId] = useState(null);
   const [hoverTimer, setHoverTimer] = useState(null);
 
-  // Handle mouse enter with delay
   const handleMouseEnter = (movieId) => {
     const timer = setTimeout(() => {
       setHoveredMovieId(movieId);
-    }, 500); // 500 milliseconds delay
-
+    }, 500); 
     setHoverTimer(timer);
   };
 
-  // Handle mouse leave
   const handleMouseLeave = () => {
     if (hoverTimer) {
       clearTimeout(hoverTimer);
@@ -112,7 +119,7 @@ export function MoviesNew(props) {
         <div>
           <br />
           <h2></h2>
-          <div className="movie-grid"> {/* Adjusted grid class to ensure card size matches MoviesIndex */}
+          <div className="movie-grid">
             {searchResults.map((movie) => (
               <div
                 className="movie-item"
@@ -122,36 +129,34 @@ export function MoviesNew(props) {
               >
                 {/* Movie card */}
                 <div
-                  className={`card movie-card ${
-                    hoveredMovieId === movie.tmdb_id ? "hovered" : ""
-                  }`}
+                  className={`card movie-card ${hoveredMovieId === movie.tmdb_id ? "hovered" : ""}`}
                 >
                   <img
                     src={movie.image_url}
                     className="card-img-top"
                     alt={movie.title}
                   />
-                  {/* Title below the image */}
                   <div className="card-body">
                     <h5 className="card-title">{movie.title}</h5>
-                    {/* Icons visible only on hover */}
                     <div className="hover-icons">
                       <button
                         className="icon-button circle-button"
-                        onClick={() => handleAddMovie(movie)}
+                        onClick={() => handleToggleWatchlist(movie)}
                       >
-                        {/* Add to My List icon inside a circle */}
-                        <span className="icon">+</span>
-                        {/* Tooltip */}
-                        <span className="tooltip-text-add">Add to Watchlist</span>
+                        <span className="icon">
+                          {watchlistStatus[movie.imdb_id] ? "✓" : "+"}
+                        </span>
+                        <span className="tooltip-text-add">
+                          {watchlistStatus[movie.imdb_id]
+                            ? "Remove from Watchlist"
+                            : "Add to Watchlist"}
+                        </span>
                       </button>
                       <button
                         className="icon-button circle-button"
                         onClick={() => props.onShowMovie(movie)}
                       >
-                        {/* More Info icon inside a circle */}
                         <span className="icon">i</span>
-                        {/* Tooltip */}
                         <span className="tooltip-text-info">More Info</span>
                       </button>
                     </div>
@@ -163,9 +168,7 @@ export function MoviesNew(props) {
         </div>
       )}
 
-
-
-    {/* NEW: Toast Notification */}
+      {/* Toast Notification */}
       {showToast && (
         <div className="toast-notification">
           {toastMessage}
