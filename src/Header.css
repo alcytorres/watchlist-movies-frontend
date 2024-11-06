@@ -1,21 +1,33 @@
 .header {
-  background-color: #181818; /* NEW: Set dark background */
-}
-
-.header .nav-link {
-  color: #d5d5d5;
-  font-size: 16px; /* Increase font size for larger fields */
+  background-color: #181818; /* Dark background */
 }
 
 .movies-app {
   color: #d5d5d5;
-  font-size: 24px; /* Increase font size for larger fields */
   text-decoration: none; /* Remove underline */
+  font-size: 24px; /* Increase font size for "Movies App" only */
   padding-right: 20px; /* Add space between "Movies App" and "Watchlist" */
 }
 
+.header .nav-link {
+  color: #d5d5d5;
+  font-size: 16px; /* Standard size for other navbar links */
+}
+
 .header .nav-link:hover {
-  color: #a6a6a6; /* Optional: Change color on hover */
+  color: #a6a6a6; /* Change color on hover */
+}
+
+/* NEW: Ensure 'Authentication' text color remains #a6a6a6 when active or clicked */
+.header .nav-link.dropdown-toggle:focus,
+.header .nav-link.dropdown-toggle:active,
+.header .nav-link.dropdown-toggle.show {
+  color: #a6a6a6; /* Maintain color when clicked */
+}
+
+/* NEW: Remove default focus outline */
+.header .nav-link:focus {
+  outline: none;
 }
 
 .dropdown-menu {
