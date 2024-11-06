@@ -30,6 +30,12 @@
   margin-top: 20px;
   margin-bottom: 10px;
   width: 1300px; /* Adjust width as needed */
+  transition: background-color 0.3s ease; /* NEW: Add transition for smooth hover effect */
+}
+
+/* NEW: Add hover effect for the 'Filter by Release Year' button */
+.filter-button:hover {
+  background-color: #555; /* Lighter shade on hover */
 }
 
 .filter-dropdown {
@@ -63,6 +69,12 @@
   padding: 5px 10px;
   cursor: pointer;
   font-size: 14px;
+  transition: background-color 0.3s ease; /* NEW: Add transition for smooth hover effect */
+}
+
+/* NEW: Add hover effect for the 'Reset' button */
+.reset-button:hover {
+  background-color: #999; /* Lighter shade on hover */
 }
 
 .year-labels {
