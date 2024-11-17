@@ -2,7 +2,6 @@
 import { LogoutLink } from './LogoutLink';
 import './Header.css'; 
 
-
 export function Header() {
   return (
     <nav className="navbar navbar-expand-lg header"> {/* Use custom class */}
@@ -21,22 +20,8 @@ export function Header() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="/">
-                Watchlist
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/favoritemovies">
-                Favorites
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/movies/new">
-                Movies Search
-              </a>
-            </li>
-            <li className="nav-item dropdown">
+            {/* NEW: Moved Authentication menu item to be the second item */}
+            <li className="nav-item dropdown"> {/* NEW */}
               <a
                 className="nav-link dropdown-toggle"
                 href="#"
@@ -61,9 +46,32 @@ export function Header() {
                   <hr className="dropdown-divider" />
                 </li>
                 <li className="dropdown-item">
-                  <LogoutLink />
+                  <a href="#" onClick={LogoutLink} className="logout-link">
+                    Log Out
+                  </a>
                 </li>
               </ul>
+            </li> 
+            
+            {/* Watchlist menu item */}
+            <li className="nav-item">
+              <a className="nav-link" aria-current="page" href="/">
+                Watchlist
+              </a>
+            </li>
+            
+            {/* Favorites menu item */}
+            <li className="nav-item">
+              <a className="nav-link" href="/favoritemovies">
+                Favorites
+              </a>
+            </li>
+            
+            {/* Movies Search menu item */}
+            <li className="nav-item">
+              <a className="nav-link" href="/movies/new">
+                Movies Search
+              </a>
             </li>
           </ul>
         </div>
