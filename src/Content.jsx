@@ -48,9 +48,9 @@ export function Content() {
       .post("http://localhost:3000/favorite_movies.json", { movie_id: movie.id })
       .then((response) => {
         const favoriteMovie = response.data;
-        // NEW: Update favoriteMovies with the new favoriteMovie
+        // Update favoriteMovies with the new favoriteMovie
         setFavoriteMovies([...favoriteMovies, favoriteMovie]);
-        // NEW: Remove movie from Watchlist
+        // Remove movie from Watchlist
         setMovies(movies.filter((m) => m.id !== movie.id));
       })
       .catch((error) => {

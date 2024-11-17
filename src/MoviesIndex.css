@@ -1,30 +1,36 @@
 /* ========== Watchlist Header ========== */
 
+
+/* Placeholder */
+
+
+
 .watchlist {
   color: #ffffff;
   font-size: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
+  text-align: center; /* NEW: Center the header text on mobile */
 }
-
 
 /* ========== Streaming Service Filter ========== */
 
 .streaming-services-container {
   background-color: #cccccc;
-  border-radius: 6px; /* Rounded corners */
-  display: inline-flex; /* Flex layout to adjust width to icon content */
-  padding: 10px 0 0px 10px; /* Padding only on left for a natural look */
-  align-items: center; /* Vertically centers icons */
-  width: fit-content; /* Keeps box limited to icon width */
-  margin-left: -130px; /* Moves container to the left */
-  padding-right: 8px; /* Adjust value as needed to increase the right side */
+  border-radius: 6px;
+  display: inline-flex;
+  padding: 10px 0 0px 10px;
+  align-items: center;
+  width: fit-content;
+  margin-left: -130px; /* REMOVE: Adjusted in media queries */
+  padding-right: 8px;
 }
 
 .streaming-services-filter {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
+  flex-wrap: wrap; /* NEW: Allow icons to wrap on smaller screens */
 }
 
 .service-icon {
@@ -32,31 +38,28 @@
   border: none;
   padding: 0;
   cursor: pointer;
-  opacity: 0.5; /* Greyed out by default */
+  opacity: 0.5;
   transition: opacity 0.2s;
-}
-
-.service-icon.selected {
-  opacity: 1; /* Full color when selected */
-}
-
-.service-icon img {
-  width: 50px; /* Adjust size for icons */
+  width: 50px; /* NEW: Ensure consistent size for tap targets */
   height: 50px;
 }
 
+.service-icon.selected {
+  opacity: 1;
+}
+
+.service-icon img {
+  width: 100%; /* UPDATED: Adjust to fill parent size */
+  height: 100%;
+}
+
 .service-icon:not(.selected) {
-  opacity: 0.4; /* Grey out unselected services */
+  opacity: 0.4;
 }
 
-.service-icon.non-streaming-icon img {
-  /* Add any specific styles if required */
-}
-
-/* Styling for hover modal */
 .hover-modal {
   position: absolute;
-  top: 50px; /* Adjust based on button size */
+  top: 60px; /* Adjusted for larger tap targets */
   left: 50%;
   transform: translateX(-50%);
   background-color: #cccccc;
@@ -67,19 +70,19 @@
   z-index: 10;
   font-size: 14px;
   text-align: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: subtle shadow */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 
 /* ========== Release Year Filter ========== */
 
 .filter-section {
   display: flex;
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: column;
   margin-bottom: 30px;
-  width: 80%; /* Adjust the width of the filter section */
+  width: 80%;
   margin-left: auto;
-  margin-right: auto; /* Center the filter section horizontally */
+  margin-right: auto;
+  align-items: center; /* NEW: Center align elements */
 }
 
 .filter-button {
@@ -89,34 +92,35 @@
   border-radius: 6px;
   padding: 10px 15px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 18px; /* UPDATED: Slightly smaller font for mobile */
   margin-top: 20px;
   margin-bottom: 10px;
-  margin-left: -130px;
-  padding-right: 13px; /* Adds space between "Year" and "▼" */
-  width: 1300px; /* Set a fixed width */
-  transition: background-color 0.3s ease; /* NEW: Add transition for smooth hover effect */
+  padding-right: 13px;
+  width: 90%; /* UPDATED: Use percentage width for responsiveness */
+  max-width: 400px; /* NEW: Limit max width for larger screens */
+  transition: background-color 0.3s ease;
 }
 
-/* NEW: Add hover effect for the 'Filter by Release Year' button */
 .filter-button:hover {
-  background-color: #555; /* Lighter shade on hover */
+  background-color: #555;
 }
 
 .filter-dropdown {
   margin-top: 15px;
-  background-color: #333; /* Dark grey background */
-  color: white; /* Text color for visibility */
-  border: 1px solid #555; /* Adjust border color for contrast */
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
   padding: 10px;
-  padding-bottom: 20px; /* Increase bottom padding */
+  padding-bottom: 20px;
+  width: 90%; /* NAdjust width for mobile */
+  max-width: 400px; /* NEW: Limit max width */
 }
 
 .filter-dropdown h4 {
-  font-size: 22px;
+  font-size: 18px; /* UPDATED: Adjust font size */
   margin: 0;
 }
 
@@ -124,50 +128,76 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px; /* Adjust padding for better alignment and spacing */
+  padding: 0 10px; /* UPDATED: Reduce padding for mobile */
 }
 
 .reset-button {
-  background-color: #808080; /* Color grey */
+  background-color: #4c5a67 !important;
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s ease; /* NEW: Add transition for smooth hover effect */
+  transition: background-color 0.3s ease;
 }
 
-/* NEW: Add hover effect for the 'Reset' button */
 .reset-button:hover {
-  background-color: #999; /* Lighter shade on hover */
+  background-color: #999;
 }
 
 .year-labels {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 20px; /* Add space above the slider */
+  margin-top: 35px !important;
 }
 
 .slider-track {
   flex-grow: 1;
-  height: 6px;
-  background: #777; /* Darker track color */
-  margin: 0 25px; /* Space around the slider */
+  height: 6px !important;
+  background: #777;
+  margin-top: 3px !important; 
+  margin: 0 15px; /* UPDATED: Reduce margin for mobile */
 }
 
+/* Existing .slider-thumb styles */
 .slider-thumb {
-  width: 35px;
-  height: 35px;
+  width: 13px !important; /* Adjusted size as previously done */
+  height: 13px !important;
   background-color: #007bff;
-  color: white;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
   cursor: pointer;
+  position: relative; /* NEW: For positioning the tooltip */
 }
+
+/* NEW: Styles for the teardrop-shaped tooltip */
+.slider-tooltip {
+  position: absolute;
+  top: -35px; /* Position the tooltip above the thumb */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slider-tooltip-text {
+  background-color: #808080;
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.slider-tooltip-arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #808080;
+}
+
 
 /* ========== No Results Styling ========== */
 
@@ -175,15 +205,16 @@
   text-align: center;
   color: white;
   margin-top: 50px;
+  font-size: 18px; /* NEW: Increase font size for readability */
+  padding: 0 20px; /* NEW: Add padding for mobile */
 }
-
 
 /* ========== Movie Grid and Cards ========== */
 
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center; /* NEW: Center movies on mobile */
   width: 100%;
   margin: 0 auto;
   padding: 0;
@@ -191,18 +222,18 @@
 }
 
 .movie-item {
-  flex: 0 0 calc((100% - 75px) / 6); /* Subtract total gap width and divide by 6 */
+  flex: 0 0 calc((100% - 75px) / 6);
   margin-bottom: 20px;
-  position: relative; /* Make the item relative so its children can position absolutely */
+  position: relative;
 }
 
 .movie-card {
   position: relative;
   border: none;
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s; /* Keep smooth transition */
-  width: 200px; /* Ensure consistent card width */
-  height: 300px; /* Fixed height to ensure all cards are the same size */
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 200px;
+  height: 300px;
 }
 
 .movie-card .card-img-top {
@@ -227,19 +258,18 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: white; /* Set color to white for better contrast */
+  color: white;
 }
 
-/* Hover effect for movie cards */
 .movie-card.hovered {
-  position: absolute; /* Keep the hovered card from affecting others */
+  position: absolute;
   transform: scale(1.35);
   z-index: 1;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .hover-icons {
-  display: none; /* Hidden by default */
+  display: none;
   margin-top: 5px;
   align-items: center;
   justify-content: center;
@@ -255,38 +285,35 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #000; 
+  color: #000;
   font-size: 16px;
-  position: relative; /* For tooltip positioning */
+  position: relative;
 }
 
 .icon-button:hover {
-  color: #555; 
+  color: #555;
 }
 
-/* Circle buttons */
 .circle-button {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #181818; 
-  border: 1.5px solid rgba(255, 255, 255, 0.5); /* Softer white border initially */
+  background-color: #181818;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.3s ease; /* Smooth border color change */
+  transition: border-color 0.3s ease;
 }
 
-/* Brighten border color on hover */
 .circle-button:hover {
-  border-color: rgba(255, 255, 255, 1); /* Stronger white on hover */
+  border-color: rgba(255, 255, 255, 1);
 }
 
 .circle-button .icon {
   font-size: 20px;
   color: white;
 }
-
 
 /* ========== Tooltip Styling ========== */
 
@@ -307,7 +334,7 @@
   width: 140px;
   background-color: #e6e6e6;
   color: #000;
-  bottom: 125%; /* Position above the button */
+  bottom: 125%;
   left: 80%;
   margin-left: -50px;
 }
@@ -316,7 +343,7 @@
   width: 100px;
   background-color: #e6e6e6;
   color: #000;
-  bottom: 125%; /* Position above the button */
+  bottom: 125%;
   left: 50%;
   margin-left: -50px;
 }
@@ -325,12 +352,11 @@
   width: 100px;
   background-color: #e6e6e6;
   color: #000;
-  bottom: 125%; /* Position above the button */
+  bottom: 125%;
   left: 20%;
   margin-left: -50px;
 }
 
-/* Show the tooltips on hover for each button */
 .icon-button:hover .tooltip-text-add,
 .icon-button:hover .tooltip-text-info,
 .icon-button:hover .tooltip-text-remove {
@@ -338,37 +364,136 @@
   opacity: 1;
 }
 
-
 /* ========== Media Queries for Responsiveness ========== */
 
-/* Dynamic grid layout that adjusts based on the screen size */
+/* Adjust grid layout and elements for smaller screens */
 
 @media (max-width: 1400px) {
   .movie-item {
-    flex: 0 0 calc((100% - 75px) / 6); /* Maintain 6 movies per row */
+    flex: 0 0 calc((100% - 75px) / 6);
   }
 }
 
 @media (max-width: 1200px) {
   .movie-item {
-    flex: 0 0 calc((100% - 60px) / 5); /* Adjust for 5 movies per row */
+    flex: 0 0 calc((100% - 60px) / 5);
   }
 }
 
 @media (max-width: 992px) {
   .movie-item {
-    flex: 0 0 calc((100% - 45px) / 4); /* Adjust for 4 movies per row */
+    flex: 0 0 calc((100% - 45px) / 4);
   }
 }
 
 @media (max-width: 768px) {
   .movie-item {
-    flex: 0 0 calc((100% - 30px) / 3); /* Adjust for 3 movies per row */
+    flex: 0 0 calc((100% - 30px) / 2); /* UPDATED: Show 2 movies per row on small screens */
+  }
+
+  .filter-button {
+    width: 100%; /* NEW: Full width on mobile */
+  }
+
+  .filter-dropdown {
+    width: 100%; /* NEW: Full width on mobile */
+  }
+
+  .streaming-services-container {
+    margin-left: 0; /* NEW: Center the container */
+    justify-content: center;
+  }
+
+  .watchlist {
+    font-size: 32px; /* UPDATED: Slightly smaller font */
+  }
+
+  .movie-card.hovered {
+    transform: none; /* NEW: Disable hover scaling on mobile */
+    position: static; /* NEW: Keep position static */
+  }
+
+  .hover-icons {
+    display: flex; /* NEW: Always show icons on mobile */
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .movie-card {
+    width: 150px; /* NEW: Smaller card size for mobile */
+    height: 225px;
+  }
+
+  .circle-button {
+    width: 35px; /* NEW: Adjust button size */
+    height: 35px;
   }
 }
 
 @media (max-width: 576px) {
   .movie-item {
-    flex: 0 0 calc((100% - 15px) / 2); /* Adjust for 2 movies per row */
+    flex: 0 0 calc(100% / 2 - 10px); /* Adjust for smaller screens */
+  }
+
+  .movie-card {
+    width: 140px; /* Further reduce size */
+    height: 210px;
+  }
+
+  .movie-card .card-title {
+    font-size: 12px; /* Smaller font for titles */
+  }
+
+  .slider-thumb {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .hover-icons {
+    gap: 10px;
+  }
+
+  .circle-button {
+    width: 30px;
+    height: 30px;
   }
 }
+
+/* NEW: Additional media query for extra small screens */
+
+@media (max-width: 400px) {
+  .movie-item {
+    flex: 0 0 100%; /* One movie per row */
+  }
+
+  .movie-card {
+    width: 100%;
+    height: auto;
+  }
+
+  .movie-card .card-img-top {
+    height: 200px;
+  }
+
+  .watchlist {
+    font-size: 28px;
+  }
+}
+
+
+/* NEW: Adjust thumb size on smaller screens (if desired) */
+@media (max-width: 576px) {
+  .slider-thumb {
+    width: 10px;
+    height: 10px;
+  }
+  .slider-tooltip-text {
+    font-size: 12px;
+  }
+}
+
+
+
+
+

@@ -5,7 +5,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 
 
-
 // Placeholder text
 
 
@@ -182,7 +181,7 @@ export function MoviesIndex(props) {
               </button>
             </div>
             <div className="year-labels">
-              <span>{MIN_YEAR}</span>
+            <span>{MIN_YEAR}</span>
               <Range
                 step={1}
                 min={MIN_YEAR}
@@ -190,15 +189,40 @@ export function MoviesIndex(props) {
                 values={selectedYears}
                 onChange={handleYearChange}
                 renderTrack={({ props, children }) => (
-                  <div {...props} className="slider-track" style={props.style}>
+                  <div 
+                    {...props} 
+                    className="slider-track" 
+                    style={
+                      props.style}>
                     {children}
                   </div>
                 )}
-                renderThumb={({ props, index }) => (
-                  <div {...props} className="slider-thumb">
-                    {selectedYears[index]}
-                  </div>
-                )}
+                renderThumb={({
+                  props,
+                  index,
+                  isDragged, // NEW: Destructure isDragged to detect dragging
+                }) => (
+                  <div
+                    {...props}
+                    className="slider-thumb"
+                    // REMOVE: onMouseDown and onMouseUp handlers
+                    // NEW: Track which thumb is being dragged
+                    onMouseDown={() => setDraggedThumbIndex(index)}
+                    onMouseUp={() => setDraggedThumbIndex(null)}
+                    onTouchStart={() => setDraggedThumbIndex(index)}
+                    onTouchEnd={() => setDraggedThumbIndex(null)}
+                  >
+                    {/* NEW: Display tooltip only for the thumb being dragged */}
+                    {isDragged && (
+                    <div className="slider-tooltip">
+                      <div className="slider-tooltip-text">
+                        {selectedYears[index]}
+                      </div>
+                      <div className="slider-tooltip-arrow"></div>
+                    </div>
+                  )}
+                </div>
+              )}
               />
               <span>{MAX_YEAR}</span>
             </div>

@@ -29,7 +29,8 @@
   font-size: 22px;
   margin-top: 20px;
   margin-bottom: 10px;
-  width: 1300px; /* Adjust width as needed */
+  width: 90%; /* Adjust width as needed */
+  max-width: 400px; /* NEW: Limit max width for larger screens */
   transition: background-color 0.3s ease; /* NEW: Add transition for smooth hover effect */
 }
 
