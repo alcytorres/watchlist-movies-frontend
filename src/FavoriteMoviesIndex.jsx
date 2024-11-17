@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import "./FavoriteMoviesIndex.css";
 import DeleteIcon from "@mui/icons-material/Delete";
-/* NEW: Import Range component for release year filter */
+/* Import Range component for release year filter */
 import { Range } from "react-range"; 
 
-/* NEW: Define MIN_YEAR and MAX_YEAR constants */
+/* Define MIN_YEAR and MAX_YEAR constants */
 const MIN_YEAR = 1900;
 const MAX_YEAR = new Date().getFullYear();
 
 export function FavoriteMoviesIndex(props) {
-  /* NEW: State for release year filter */
+  /* State for release year filter */
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedYears, setSelectedYears] = useState([MIN_YEAR, MAX_YEAR]);
 
@@ -17,17 +17,17 @@ export function FavoriteMoviesIndex(props) {
   const [hoveredMovieId, setHoveredMovieId] = useState(null);
   const [hoverTimer, setHoverTimer] = useState(null);
 
-  /* NEW: Toggle dropdown for release year filter */
+  /* Toggle dropdown for release year filter */
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  /* NEW: Handle year filter state update */
+  /* Handle year filter state update */
   const handleYearChange = (values) => {
     setSelectedYears(values);
   };
 
-  /* NEW: Filter favorite movies based on selected years */
+  /* Filter favorite movies based on selected years */
   const filteredMovies = props.favoriteMovies.filter((favoriteMovie) => {
     const movie = favoriteMovie.movie;
     return (
@@ -58,7 +58,7 @@ export function FavoriteMoviesIndex(props) {
       <h1 className="favorite-movies">Favorite Movies</h1>
       <br />
 
-      {/* NEW: Release Year Filter */}
+      {/* Release Year Filter */}
       <div className="filter-section">
         <button className="filter-button" onClick={toggleDropdown}>
           Release Year&nbsp;&nbsp;▼
@@ -95,12 +95,12 @@ export function FavoriteMoviesIndex(props) {
                 renderThumb={({
                   props,
                   index,
-                  isDragged, // NEW: Destructure isDragged to detect dragging
+                  isDragged, // Destructure isDragged to detect dragging
                 }) => (
                   <div
                     {...props}
                     className="slider-thumb"
-                    /* NEW: Tooltip displayed when thumb is dragged */
+                    /* Tooltip displayed when thumb is dragged */
                   >
                     {isDragged && (
                       <div className="slider-tooltip">
@@ -128,8 +128,8 @@ export function FavoriteMoviesIndex(props) {
               <div
                 className="movie-item"
                 key={favoriteMovie.id}
-                onMouseEnter={() => handleMouseEnter(favoriteMovie.id)} /* NEW */
-                onMouseLeave={handleMouseLeave} /* NEW */
+                onMouseEnter={() => handleMouseEnter(favoriteMovie.id)} 
+                onMouseLeave={handleMouseLeave} 
               >
                 {/* Movie card */}
                 <div

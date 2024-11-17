@@ -200,19 +200,18 @@ export function MoviesIndex(props) {
                 renderThumb={({
                   props,
                   index,
-                  isDragged, // NEW: Destructure isDragged to detect dragging
+                  isDragged, // Destructure isDragged to detect dragging
                 }) => (
                   <div
                     {...props}
                     className="slider-thumb"
-                    // REMOVE: onMouseDown and onMouseUp handlers
-                    // NEW: Track which thumb is being dragged
+                    // Track which thumb is being dragged
                     onMouseDown={() => setDraggedThumbIndex(index)}
                     onMouseUp={() => setDraggedThumbIndex(null)}
                     onTouchStart={() => setDraggedThumbIndex(index)}
                     onTouchEnd={() => setDraggedThumbIndex(null)}
                   >
-                    {/* NEW: Display tooltip only for the thumb being dragged */}
+                    {/* Display tooltip only for the thumb being dragged */}
                     {isDragged && (
                     <div className="slider-tooltip">
                       <div className="slider-tooltip-text">

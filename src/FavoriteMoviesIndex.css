@@ -4,7 +4,7 @@
   font-size: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
-  text-align: center; /* NEW: Center the header text */
+  text-align: center; /* Center the header text */
 }
 
 /* ========== Release Year Filter ========== */
@@ -12,10 +12,10 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  width: 80%; /* UPDATED */
+  width: 80%; 
   margin-left: auto;
   margin-right: auto;
-  align-items: center; /* NEW: Center align elements */
+  align-items: center; /* Center align elements */
 }
 
 .filter-button {
@@ -25,7 +25,7 @@
   border-radius: 6px;
   padding: 10px 15px;
   cursor: pointer;
-  font-size: 18px; /* UPDATED */
+  font-size: 18px; 
   margin-top: 20px;
   margin-bottom: 10px;
   padding-right: 13px;
@@ -91,7 +91,7 @@
 }
 
 .year-labels span {
-  flex-shrink: 0; /* NEW: Ensure labels don't shrink */
+  flex-shrink: 0; /* Ensure labels don't shrink */
 }
 
 .slider-track {
@@ -144,15 +144,15 @@
   text-align: center;
   color: white;
   margin-top: 50px;
-  font-size: 18px; /* NEW: Increase font size for readability */
-  padding: 0 20px; /* NEW: Add padding for mobile */
+  font-size: 18px; /* Increase font size for readability */
+  padding: 0 20px; /* Add padding for mobile */
 }
 
 /* ========== Movie Grid and Cards ========== */
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* NEW: Center movies on mobile */
+  justify-content: center; /* Center movies on mobile */
   width: 100%;
   margin: 0 auto;
   padding: 0;

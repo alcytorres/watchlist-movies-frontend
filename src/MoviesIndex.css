@@ -10,7 +10,7 @@
   font-size: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
-  text-align: center; /* NEW: Center the header text on mobile */
+  text-align: center; /* Center the header text on mobile */
 }
 
 /* ========== Streaming Service Filter ========== */
@@ -30,7 +30,7 @@
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
-  flex-wrap: wrap; /* NEW: Allow icons to wrap on smaller screens */
+  flex-wrap: wrap; /* Allow icons to wrap on smaller screens */
 }
 
 .service-icon {
@@ -40,7 +40,7 @@
   cursor: pointer;
   opacity: 0.5;
   transition: opacity 0.2s;
-  width: 50px; /* NEW: Ensure consistent size for tap targets */
+  width: 50px; /* Ensure consistent size for tap targets */
   height: 50px;
 }
 
@@ -82,7 +82,7 @@
   width: 80%;
   margin-left: auto;
   margin-right: auto;
-  align-items: center; /* NEW: Center align elements */
+  align-items: center; /* Center align elements */
 }
 
 .filter-button {
@@ -92,12 +92,12 @@
   border-radius: 6px;
   padding: 10px 15px;
   cursor: pointer;
-  font-size: 18px; /* UPDATED: Slightly smaller font for mobile */
+  font-size: 18px; /* Slightly smaller font for mobile */
   margin-top: 20px;
   margin-bottom: 10px;
   padding-right: 13px;
   width: 90%; /* UPDATED: Use percentage width for responsiveness */
-  max-width: 400px; /* NEW: Limit max width for larger screens */
+  max-width: 400px; /* Limit max width for larger screens */
   transition: background-color 0.3s ease;
 }
 
@@ -115,8 +115,8 @@
   flex-direction: column;
   padding: 10px;
   padding-bottom: 20px;
-  width: 90%; /* NAdjust width for mobile */
-  max-width: 400px; /* NEW: Limit max width */
+  width: 90%; /* Adjust width for mobile */
+  max-width: 400px; /* Limit max width */
 }
 
 .filter-dropdown h4 {
@@ -167,10 +167,10 @@
   background-color: #007bff;
   border-radius: 50%;
   cursor: pointer;
-  position: relative; /* NEW: For positioning the tooltip */
+  position: relative; /* For positioning the tooltip */
 }
 
-/* NEW: Styles for the teardrop-shaped tooltip */
+/* Styles for the teardrop-shaped tooltip */
 .slider-tooltip {
   position: absolute;
   top: -35px; /* Position the tooltip above the thumb */
@@ -205,8 +205,8 @@
   text-align: center;
   color: white;
   margin-top: 50px;
-  font-size: 18px; /* NEW: Increase font size for readability */
-  padding: 0 20px; /* NEW: Add padding for mobile */
+  font-size: 18px; /* Increase font size for readability */
+  padding: 0 20px; /* Add padding for mobile */
 }
 
 /* ========== Movie Grid and Cards ========== */
@@ -214,7 +214,7 @@
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* NEW: Center movies on mobile */
+  justify-content: center; /* Center movies on mobile */
   width: 100%;
   margin: 0 auto;
   padding: 0;
@@ -392,15 +392,15 @@
   }
 
   .filter-button {
-    width: 100%; /* NEW: Full width on mobile */
+    width: 100%; /* Full width on mobile */
   }
 
   .filter-dropdown {
-    width: 100%; /* NEW: Full width on mobile */
+    width: 100%; /* Full width on mobile */
   }
 
   .streaming-services-container {
-    margin-left: 0; /* NEW: Center the container */
+    margin-left: 0; /* Center the container */
     justify-content: center;
   }
 
@@ -409,23 +409,23 @@
   }
 
   .movie-card.hovered {
-    transform: none; /* NEW: Disable hover scaling on mobile */
-    position: static; /* NEW: Keep position static */
+    transform: none; /* Disable hover scaling on mobile */
+    position: static; /* Keep position static */
   }
 
   .hover-icons {
-    display: flex; /* NEW: Always show icons on mobile */
+    display: flex; /* Always show icons on mobile */
     justify-content: center;
     gap: 15px;
   }
 
   .movie-card {
-    width: 150px; /* NEW: Smaller card size for mobile */
+    width: 150px; /* Smaller card size for mobile */
     height: 225px;
   }
 
   .circle-button {
-    width: 35px; /* NEW: Adjust button size */
+    width: 35px; /* Adjust button size */
     height: 35px;
   }
 }
@@ -460,7 +460,7 @@
   }
 }
 
-/* NEW: Additional media query for extra small screens */
+/* Additional media query for extra small screens */
 
 @media (max-width: 400px) {
   .movie-item {
@@ -482,7 +482,7 @@
 }
 
 
-/* NEW: Adjust thumb size on smaller screens (if desired) */
+/* Adjust thumb size on smaller screens (if desired) */
 @media (max-width: 576px) {
   .slider-thumb {
     width: 10px;

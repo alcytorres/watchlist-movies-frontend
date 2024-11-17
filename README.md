@@ -94,5 +94,5 @@
 # Additional Configuration
   - Environment Variables: Ensure that sensitive information such as API keys are stored in environment variables and not committed to version control.
   
-  - CORS Configuration: Configure Cross-Origin Resource Sharing (CORS) in your Rails backend to allow requests from your frontend if necessary.
+  - CORS Configuration: Configure Cross-Origin Resource Sharing (CORS) in your Rails backend to allow requests from your frontend.
 

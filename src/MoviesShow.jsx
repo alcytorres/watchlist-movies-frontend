@@ -1,11 +1,11 @@
 // MoviesShow.jsx
-import './MoviesShow.css'; // NEW: Importing the CSS file for styling
+import './MoviesShow.css'; // Importing the CSS file for styling
 
 export function MoviesShow(props) {
   return (
-    <div className="movie-modal"> {/* NEW: Apply modal container styling */}
+    <div className="movie-modal"> {/* Apply modal container styling */}
       
-      <div className="movie-details"> {/* NEW: Wrapping content in a styled container */}
+      <div className="movie-details"> {/* Wrapping content in a styled container */}
         <p className="movie-title">Title: {props.movie.title}</p> 
         <p className="movie-description">Description: {props.movie.description}</p> 
         <p className="movie-director">Director: {props.movie.director}</p> 

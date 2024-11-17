@@ -12,12 +12,12 @@
 .header .nav-link {
   color: #d5d5d5;
   font-size: 16px; /* Standard size for other navbar links */
-  text-decoration: none; /* NEW: Remove underline from nav links */
+  text-decoration: none; /* Remove underline from nav links */
 }
 
 .header .nav-link:hover {
   color: #a6a6a6; /* Change color on hover */
-  text-decoration: underline; /* NEW: Underline on hover */
+  text-decoration: underline; /* Underline on hover */
 }
 
 /* Ensure 'Authentication' text color remains #a6a6a6 when active or clicked */
@@ -52,23 +52,23 @@
   color: white !important; /* Dropdown text color */
   padding: 8px 16px !important; /* Increased padding */
   font-size: 15px; /* Ensure consistency with dropdown-menu */
-  text-decoration: none; /* NEW: Remove underline from dropdown items */
-  background-color: transparent !important; /* NEW: Remove default background */
+  text-decoration: none; /* Remove underline from dropdown items */
+  background-color: transparent !important; /* Remove default background */
 }
 
 .dropdown-item:hover {
-  background-color: transparent !important; /* NEW: Remove hover background */
-  text-decoration: underline; /* NEW: Underline on hover */
+  background-color: transparent !important; /* Remove hover background */
+  text-decoration: underline; /* Underline on hover */
 }
 
-/* NEW: Adjust LogoutLink to match other dropdown items */
+/* Adjust LogoutLink to match other dropdown items */
 .dropdown-item .logout-link {
-  text-decoration: none; /* NEW: Remove underline from LogoutLink */
+  text-decoration: none; /* Remove underline from LogoutLink */
   color: white !important; /* Ensure consistent text color */
 }
 
 .dropdown-item .logout-link:hover {
-  text-decoration: underline; /* NEW: Underline on hover */
+  text-decoration: underline; /* Underline on hover */
   color: #a6a6a6 !important; /* Match hover color */
 }
 

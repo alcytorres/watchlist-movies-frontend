@@ -5,12 +5,12 @@ import "./MoviesNew.css";
 export function MoviesNew(props) {
   const [searchResults, setSearchResults] = useState([]);
 
-  // NEW: State to track Watchlist and Favorites across sessions
+  // State to track Watchlist and Favorites across sessions
   const [watchlistStatus, setWatchlistStatus] = useState({});
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
 
-  // NEW: Load Watchlist and Favorites on component mount (or user sign-in)
+  // Load Watchlist and Favorites on component mount (or user sign-in)
   useEffect(() => {
     axios.get("http://localhost:3000/user_collections")
       .then((response) => {

@@ -80,9 +80,9 @@ export function Content() {
       .delete(`http://localhost:3000/favorite_movies/${favoriteMovie.id}.json`)
       .then(() => {
         const movie = favoriteMovie.movie;
-        // NEW: Add the movie back to the Watchlist
+        // Add the movie back to the Watchlist
         setMovies([...movies, movie]);
-        // NEW: Remove the movie from favoriteMovies
+        // Remove the movie from favoriteMovies
         setFavoriteMovies(favoriteMovies.filter((m) => m.id !== favoriteMovie.id));
       })
       .catch((error) => {
