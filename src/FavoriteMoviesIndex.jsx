@@ -1,30 +1,33 @@
 import React, { useState } from "react";
 import "./FavoriteMoviesIndex.css";
-
-// NEW: Import DeleteIcon if using Material UI Icons
 import DeleteIcon from "@mui/icons-material/Delete";
+/* NEW: Import Range component for release year filter */
+import { Range } from "react-range"; 
 
-// NEW: Import Range component for release year filter
-import { Range } from "react-range";
+/* NEW: Define MIN_YEAR and MAX_YEAR constants */
+const MIN_YEAR = 1900;
+const MAX_YEAR = new Date().getFullYear();
 
 export function FavoriteMoviesIndex(props) {
-  // NEW: State for release year filter
-  const MIN_YEAR = 1900;
-  const MAX_YEAR = new Date().getFullYear();
+  /* NEW: State for release year filter */
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedYears, setSelectedYears] = useState([MIN_YEAR, MAX_YEAR]);
 
-  // NEW: Toggle dropdown for release year filter
+  /* Existing state for hover effects */
+  const [hoveredMovieId, setHoveredMovieId] = useState(null);
+  const [hoverTimer, setHoverTimer] = useState(null);
+
+  /* NEW: Toggle dropdown for release year filter */
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // NEW: Handle year filter state update
+  /* NEW: Handle year filter state update */
   const handleYearChange = (values) => {
     setSelectedYears(values);
   };
 
-  // NEW: Filter favorite movies based on selected years
+  /* NEW: Filter favorite movies based on selected years */
   const filteredMovies = props.favoriteMovies.filter((favoriteMovie) => {
     const movie = favoriteMovie.movie;
     return (
@@ -33,11 +36,7 @@ export function FavoriteMoviesIndex(props) {
     );
   });
 
-  // NEW: State for hover effects with delay
-  const [hoveredMovieId, setHoveredMovieId] = useState(null);
-  const [hoverTimer, setHoverTimer] = useState(null);
-
-  // NEW: Handle mouse enter with delay
+  /* Hover handling for delayed effects */
   const handleMouseEnter = (movieId) => {
     const timer = setTimeout(() => {
       setHoveredMovieId(movieId);
@@ -46,7 +45,6 @@ export function FavoriteMoviesIndex(props) {
     setHoverTimer(timer);
   };
 
-  // NEW: Handle mouse leave
   const handleMouseLeave = () => {
     if (hoverTimer) {
       clearTimeout(hoverTimer);
@@ -86,13 +84,32 @@ export function FavoriteMoviesIndex(props) {
                 values={selectedYears}
                 onChange={handleYearChange}
                 renderTrack={({ props, children }) => (
-                  <div {...props} className="slider-track" style={props.style}>
+                  <div
+                    {...props}
+                    className="slider-track"
+                    style={props.style}
+                  >
                     {children}
                   </div>
                 )}
-                renderThumb={({ props, index }) => (
-                  <div {...props} className="slider-thumb">
-                    {selectedYears[index]}
+                renderThumb={({
+                  props,
+                  index,
+                  isDragged, // NEW: Destructure isDragged to detect dragging
+                }) => (
+                  <div
+                    {...props}
+                    className="slider-thumb"
+                    /* NEW: Tooltip displayed when thumb is dragged */
+                  >
+                    {isDragged && (
+                      <div className="slider-tooltip">
+                        <div className="slider-tooltip-text">
+                          {selectedYears[index]}
+                        </div>
+                        <div className="slider-tooltip-arrow"></div>
+                      </div>
+                    )}
                   </div>
                 )}
               />
@@ -102,7 +119,7 @@ export function FavoriteMoviesIndex(props) {
         )}
       </div>
 
-      {/* NEW: Movies List */}
+      {/* Movies List */}
       <div className="movie-grid">
         {filteredMovies.length > 0 ? (
           filteredMovies.map((favoriteMovie) => {
@@ -111,10 +128,10 @@ export function FavoriteMoviesIndex(props) {
               <div
                 className="movie-item"
                 key={favoriteMovie.id}
-                onMouseEnter={() => handleMouseEnter(favoriteMovie.id)}
-                onMouseLeave={handleMouseLeave}
+                onMouseEnter={() => handleMouseEnter(favoriteMovie.id)} /* NEW */
+                onMouseLeave={handleMouseLeave} /* NEW */
               >
-                {/* NEW: Movie card with hover effect */}
+                {/* Movie card */}
                 <div
                   className={`card movie-card ${
                     hoveredMovieId === favoriteMovie.id ? "hovered" : ""
@@ -134,15 +151,16 @@ export function FavoriteMoviesIndex(props) {
                         className="icon-button circle-button"
                         onClick={() => props.onShowMovie(movie)}
                       >
-                        {/* NEW: 'More Info' button */}
+                        {/* 'More Info' icon inside a circle */}
                         <span className="icon">i</span>
+                        {/* Tooltip */}
                         <span className="tooltip-text-info">More Info</span>
                       </button>
+                      {/* Delete button */}
                       <button
                         className="icon-button circle-button"
                         onClick={() => props.onDestroyFavoriteMovie(favoriteMovie)}
                       >
-                        {/* NEW: 'Remove' button */}
                         <DeleteIcon className="icon" />
                         <span className="tooltip-text-remove">Remove</span>
                       </button>

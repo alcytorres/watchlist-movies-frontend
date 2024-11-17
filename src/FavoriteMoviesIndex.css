@@ -1,22 +1,21 @@
 /* ========== Favorite Movies Header ========== */
-
 .favorite-movies {
   color: #ffffff;
   font-size: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
+  text-align: center; /* NEW: Center the header text */
 }
 
-
 /* ========== Release Year Filter ========== */
-
 .filter-section {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  width: 80%;
+  width: 80%; /* UPDATED */
   margin-left: auto;
   margin-right: auto;
+  align-items: center; /* NEW: Center align elements */
 }
 
 .filter-button {
@@ -26,17 +25,19 @@
   border-radius: 6px;
   padding: 10px 15px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 18px; /* UPDATED */
   margin-top: 20px;
   margin-bottom: 10px;
-  width: 90%; /* Adjust width as needed */
-  max-width: 400px; /* NEW: Limit max width for larger screens */
-  transition: background-color 0.3s ease; /* NEW: Add transition for smooth hover effect */
+  padding-right: 13px;
+  width: 90%; /* Use percentage width for responsiveness */
+  max-width: 400px; /* Limit max width for larger screens */
+  transition: background-color 0.3s ease;
+  margin-left: auto; /* Center the button */
+  margin-right: auto; /* Center the button */
 }
 
-/* NEW: Add hover effect for the 'Filter by Release Year' button */
 .filter-button:hover {
-  background-color: #555; /* Lighter shade on hover */
+  background-color: #555;
 }
 
 .filter-dropdown {
@@ -49,10 +50,15 @@
   flex-direction: column;
   padding: 10px;
   padding-bottom: 20px;
+  width: 90%; /* Adjust width for responsiveness */
+  max-width: 400px; /* Limit max width */
+  margin-left: auto; /* Center the dropdown */
+  margin-right: auto; /* Center the dropdown */
+  box-sizing: border-box;
 }
 
 .filter-dropdown h4 {
-  font-size: 22px;
+  font-size: 18px;
   margin: 0;
 }
 
@@ -60,66 +66,93 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 .reset-button {
-  background-color: #808080;
+  background-color: #4c5a67 !important;
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s ease; /* NEW: Add transition for smooth hover effect */
+  transition: background-color 0.3s ease;
 }
 
-/* NEW: Add hover effect for the 'Reset' button */
 .reset-button:hover {
-  background-color: #999; /* Lighter shade on hover */
+  background-color: #999;
 }
 
 .year-labels {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 35px !important;
+}
+
+.year-labels span {
+  flex-shrink: 0; /* NEW: Ensure labels don't shrink */
 }
 
 .slider-track {
   flex-grow: 1;
-  height: 6px;
+  height: 6px !important;
   background: #777;
-  margin: 0 25px;
+  margin-top: 3px !important;
+  margin: 0 15px;
 }
 
 .slider-thumb {
-  width: 35px;
-  height: 35px;
+  width: 13px !important;
+  height: 13px !important;
   background-color: #007bff;
-  color: white;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
   cursor: pointer;
+  position: relative; /* For positioning the tooltip */
+}
+
+/* Styles for the teardrop-shaped tooltip */
+.slider-tooltip {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slider-tooltip-text {
+  background-color: #808080;
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.slider-tooltip-arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #808080;
 }
 
 /* ========== No Results Styling ========== */
-
 .no-results {
   text-align: center;
   color: white;
   margin-top: 50px;
+  font-size: 18px; /* NEW: Increase font size for readability */
+  padding: 0 20px; /* NEW: Add padding for mobile */
 }
 
-
 /* ========== Movie Grid and Cards ========== */
-
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center; /* NEW: Center movies on mobile */
   width: 100%;
   margin: 0 auto;
   padding: 0;
@@ -127,7 +160,7 @@
 }
 
 .movie-item {
-  flex: 0 0 calc((100% - 75px) / 6); /* Arrange 6 movie cards per row */
+  flex: 0 0 calc((100% - 75px) / 6);
   margin-bottom: 20px;
   position: relative; /* Make the item relative so its children can position absolutely */
 }
@@ -223,10 +256,7 @@
   color: white;
 }
 
-
 /* ========== Tooltip Styling ========== */
-
-/* Tooltips for More Info and Remove buttons */
 .tooltip-text-info,
 .tooltip-text-remove {
   visibility: hidden;
@@ -243,7 +273,7 @@
   width: 100px;
   background-color: #e6e6e6;
   color: #000;
-  bottom: 125%; /* Position above the button */
+  bottom: 125%;
   left: 50%;
   margin-left: -50px;
 }
@@ -252,22 +282,18 @@
   width: 100px;
   background-color: #e6e6e6;
   color: #000;
-  bottom: 125%; /* Position above the button */
+  bottom: 125%;
   left: 20%;
   margin-left: -50px;
 }
 
-/* Show the tooltips on hover for each button */
 .icon-button:hover .tooltip-text-info,
 .icon-button:hover .tooltip-text-remove {
   visibility: visible;
   opacity: 1;
 }
 
-
 /* ========== Media Queries for Responsiveness ========== */
-
-/* Dynamic grid layout that adjusts based on the screen size */
 
 @media (max-width: 1400px) {
   .movie-item {
@@ -289,13 +315,109 @@
 
 @media (max-width: 768px) {
   .movie-item {
-    flex: 0 0 calc((100% - 30px) / 3);
+    flex: 0 0 calc((100% - 30px) / 2);
+  }
+
+  .filter-button,
+  .filter-dropdown {
+    width: 100%; /* Full width on mobile */
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .favorite-movies {
+    font-size: 32px;
+  }
+
+  .movie-card.hovered {
+    transform: none;
+    position: static;
+  }
+
+  .hover-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .movie-card {
+    width: 150px;
+    height: 225px;
+  }
+
+  .circle-button {
+    width: 35px;
+    height: 35px;
   }
 }
 
 @media (max-width: 576px) {
   .movie-item {
-    flex: 0 0 calc((100% - 15px) / 2);
+    flex: 0 0 calc(100% / 2 - 10px);
+  }
+
+  .movie-card {
+    width: 140px;
+    height: 210px;
+  }
+
+  .movie-card .card-title {
+    font-size: 12px;
+  }
+
+  .slider-thumb {
+    width: 10px;
+    height: 10px;
+    font-size: 12px;
+  }
+
+  .hover-icons {
+    gap: 10px;
+  }
+
+  .circle-button {
+    width: 30px;
+    height: 30px;
   }
 }
 
+/* Adjustments for screens 430px wide or less */
+@media (max-width: 430px) {
+  .filter-section {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .filter-button,
+  .filter-dropdown {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .filter-dropdown {
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .year-labels {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px !important;
+  }
+
+  .year-labels span {
+    margin-bottom: 10px;
+  }
+
+  .slider-track {
+    width: 100%;
+    margin: 0;
+  }
+
+  .favorite-movies {
+    font-size: 28px;
+  }
+}
