@@ -4,11 +4,6 @@ import "./MoviesIndex.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 
-
-// Placeholder text
-
-
-
 const MIN_YEAR = 1900;
 const MAX_YEAR = new Date().getFullYear(); // Capture the current year dynamically
 
@@ -28,6 +23,7 @@ const streamingServices = [
 export function MoviesIndex(props) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedYears, setSelectedYears] = useState([MIN_YEAR, MAX_YEAR]);
+  const [draggedThumbIndex, setDraggedThumbIndex] = useState(null);
 
   // Initial state: all streaming services are selected
   const [selectedStreamingServices, setSelectedStreamingServices] = useState(
@@ -198,30 +194,36 @@ export function MoviesIndex(props) {
                   </div>
                 )}
                 renderThumb={({
-                  props,
+                  props: thumbProps,
                   index,
                   isDragged, // Destructure isDragged to detect dragging
-                }) => (
-                  <div
-                    {...props}
-                    className="slider-thumb"
-                    // Track which thumb is being dragged
-                    onMouseDown={() => setDraggedThumbIndex(index)}
-                    onMouseUp={() => setDraggedThumbIndex(null)}
-                    onTouchStart={() => setDraggedThumbIndex(index)}
-                    onTouchEnd={() => setDraggedThumbIndex(null)}
-                  >
-                    {/* Display tooltip only for the thumb being dragged */}
-                    {isDragged && (
-                    <div className="slider-tooltip">
-                      <div className="slider-tooltip-text">
-                        {selectedYears[index]}
-                      </div>
-                      <div className="slider-tooltip-arrow"></div>
+                }) => {
+                  // Extract the key from props
+                  const { key, ...restProps } = thumbProps;
+                  
+                  return (
+                    <div
+                      key={key}
+                      {...restProps}
+                      className="slider-thumb"
+                      // Track which thumb is being dragged
+                      onMouseDown={() => setDraggedThumbIndex(index)}
+                      onMouseUp={() => setDraggedThumbIndex(null)}
+                      onTouchStart={() => setDraggedThumbIndex(index)}
+                      onTouchEnd={() => setDraggedThumbIndex(null)}
+                    >
+                      {/* Display tooltip only for the thumb being dragged */}
+                      {isDragged && (
+                        <div className="slider-tooltip">
+                          <div className="slider-tooltip-text">
+                            {selectedYears[index]}
+                          </div>
+                          <div className="slider-tooltip-arrow"></div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              )}
+                  );
+                }}
               />
               <span>{MAX_YEAR}</span>
             </div>
