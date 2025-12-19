@@ -421,3 +421,202 @@
     font-size: 28px;
   }
 }
+
+
+
+
+
+
+
+
+/* ========== Recommendations Feature ========== */
+
+/* Recommendations Button */
+.recommendations-button {
+  margin-left: 10px;
+}
+
+.recommendations-button.selection-mode {
+  background-color: #007bff;
+  color: white;
+}
+
+.recommendations-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: 10px;
+}
+
+.change-selections-button {
+  background-color: #6c757d;
+}
+
+/* Get Recommendations Container */
+.get-recommendations-container {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.get-recommendations-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: auto;
+  min-width: 250px;
+}
+
+.get-recommendations-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.get-recommendations-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.selection-hint {
+  color: #ffc107;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+/* Selected Movie Styling */
+.movie-card.selected {
+  border: 3px solid #007bff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+.selection-checkmark {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 10;
+  border: 2px solid white;
+}
+
+.selection-checkmark.checked {
+  background-color: #007bff;
+}
+
+/* Recommendations Section */
+.recommendations-section {
+  margin-top: 60px;
+  padding-top: 40px;
+}
+
+.recommendations-divider {
+  text-align: center;
+  margin: 40px 0 20px 0;
+  position: relative;
+}
+
+.recommendations-divider::before,
+.recommendations-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 30%;
+  height: 1px;
+  background: #555;
+}
+
+.recommendations-divider::before {
+  left: 0;
+}
+
+.recommendations-divider::after {
+  right: 0;
+}
+
+.recommendations-divider span {
+  color: #ffffff;
+  font-size: 40px;
+  background-color: #181818;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.based-on-text {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  margin: 10px 0 30px 0;
+  font-style: italic;
+}
+
+/* Recommendation Cards */
+.recommendation-card {
+  border: 2px solid #444;
+}
+
+.recommendation-explanation {
+  font-size: 12px;
+  color: #aaa;
+  font-style: italic;
+  margin: 5px 0;
+  line-height: 1.4;
+  min-height: 32px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.loading-message {
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  padding: 40px;
+}
+
+.add-to-watchlist-button:hover {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .recommendations-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .recommendations-button,
+  .change-selections-button {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  
+  .recommendations-divider span {
+    font-size: 28px;
+  }
+  
+  .get-recommendations-container {
+    width: 100%;
+  }
+  
+  .get-recommendations-button {
+    width: 100%;
+  }
+}
