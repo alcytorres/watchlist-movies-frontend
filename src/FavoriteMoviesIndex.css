@@ -433,7 +433,9 @@
 
 /* Recommendations Button */
 .recommendations-button {
-  margin-left: 10px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block; /* Ensure it's a block element for centering */
 }
 
 .recommendations-button.selection-mode {
@@ -444,7 +446,9 @@
 .recommendations-actions {
   display: flex;
   gap: 10px;
-  margin-left: 10px;
+  margin-left: 0; /* Remove left margin */
+  justify-content: center; /* Center the buttons */
+  width: 100%; /* Full width to center properly */
 }
 
 .change-selections-button {

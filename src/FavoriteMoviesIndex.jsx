@@ -165,34 +165,7 @@ export function FavoriteMoviesIndex(props) {
           Release Year&nbsp;&nbsp;▼
         </button>
 
-        {/* Recommendations Button */}
-        {!showRecommendations ? (
-          <button 
-            className={`filter-button recommendations-button ${isSelectionMode ? 'selection-mode' : ''}`}
-            onClick={handleGetRecommendations}
-          >
-            {isSelectionMode 
-              ? `Select Movies (${selectedMovies.length}/6)` 
-              : "Get AI Recommendations"}
-          </button>
-        ) : (
-          <div className="recommendations-actions">
-            <button 
-              className="filter-button recommendations-button"
-              onClick={handleGetNewRecommendations}
-              disabled={isLoading}
-            >
-              {isLoading ? "Loading..." : "Get New Recommendations"}
-            </button>
-            <button 
-              className="filter-button change-selections-button"
-              onClick={handleChangeSelections}
-            >
-              Change Selections
-            </button>
-          </div>
-        )}
-
+        {/* Release Year Dropdown - MOVED HERE */}
         {isDropdownOpen && (
           <div className="filter-dropdown">
             <div className="header-row">
@@ -232,6 +205,34 @@ export function FavoriteMoviesIndex(props) {
               />
               <span>{MAX_YEAR}</span>
             </div>
+          </div>
+        )}
+
+        {/* Recommendations Button */}
+        {!showRecommendations ? (
+          <button 
+            className={`filter-button recommendations-button ${isSelectionMode ? 'selection-mode' : ''}`}
+            onClick={handleGetRecommendations}
+          >
+            {isSelectionMode 
+              ? `Select Movies (${selectedMovies.length}/6)` 
+              : "Get AI Recommendations"}
+          </button>
+        ) : (
+          <div className="recommendations-actions">
+            <button 
+              className="filter-button recommendations-button"
+              onClick={handleGetNewRecommendations}
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Get New Recommendations"}
+            </button>
+            <button 
+              className="filter-button change-selections-button"
+              onClick={handleChangeSelections}
+            >
+              Change Selections
+            </button>
           </div>
         )}
 
