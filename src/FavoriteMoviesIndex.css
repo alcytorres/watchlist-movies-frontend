@@ -518,8 +518,15 @@
 
 /* Recommendations Section */
 .recommendations-section {
-  margin-top: 60px;
-  padding-top: 40px;
+  margin-top: 0;
+  margin-bottom: 60px;
+  padding-top: 0;
+  padding-bottom: 40px;
+}
+
+/* Add spacing between recommendations and favorites */
+.movie-grid:first-of-type {
+  margin-bottom: 40px;
 }
 
 .recommendations-divider {
