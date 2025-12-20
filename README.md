@@ -3,9 +3,13 @@
 # Watchlist Movies App
 
 # Description
-  The Watchlist Movies App enables users to sign up or log in, search for movies, access detailed information—including streaming availability—and manage their watchlist and favorites. By integrating with the TMDb (The Movie Database) API, the app provides up-to-date movie details and streaming options, ensuring users know where to watch.
+  A full-stack movie discovery and tracking app that lets users sign up, search for movies, view detailed information (including where to stream), and curate personal watchlists and favorites.
 
-  With a clean and user-friendly interface, the app helps movie enthusiasts track their favorite films, plan upcoming viewings, and discover new movies.
+  Built with Ruby on Rails as a API backend and React for a responsive frontend, the app integrates the TMDb API to provide real-time movie data and streaming availability.
+
+  The highlight is an AI-powered recommendation engine powered by OpenAI. By analyzing a user's selected favorites, it generates personalized movie suggestions complete with thoughtful explanations bringing an intelligent, Netflix like discovery experience to the app.
+
+  With a clean, intuitive interface, users can easily organize films they love, plan what to watch next, and discover new titles tailored to their preferences.
 
 # Getting Started
   These instructions will get you a copy of the project up and running on your local machine.
@@ -17,6 +21,7 @@
       - Rails version: 7.1.3.4
       - PostgreSQL
       - TMDb API Key: Obtain an API key from TMDb: https://developer.themoviedb.org/docs/getting-started#:~:text=To%20register%20for%20an%20API,to%20our%20terms%20of%20use
+      - OpenAI API Key: Obtain an API key from OpenAI: https://platform.openai.com/api-keys (Required for movie recommendations)
     Frontend
       - Node.js version: v22.2.0
       - npm: 10.7.0
@@ -26,12 +31,15 @@
     - Ruby on Rails
     - PostgreSQL
     - TMDb API (The Movie Database API)
+    - OpenAI API (for AI-powered movie recommendations)
     - Dotenv (for environment variables)
+    - JWT (for authentication)
 
   Frontend
     - React
     - Axios
     - Bootstrap
+    - React Router
 
 # Backend Installation
   1. Clone the backend (Ruby on Rails) repository:
@@ -46,14 +54,16 @@
   4. Set up the database:
        rails db:setup
 
-  5. Obtain a TMDb API Key:
-       Sign up at TMDb to obtain an API key.
+  5. Obtain API Keys:
+       - TMDb API Key: Sign up at TMDb to obtain an API key.
+       - OpenAI API Key: Sign up at OpenAI to obtain an API key for movie recommendations.
 
-  6. Configure the TMDb API Key:
+  6. Configure API Keys:
        Create a .env file in the root directory of the backend project.
-       Add your TMDb API key to the .env file:
+       Add your API keys to the .env file:
 
        TMDB_API_KEY=your_tmdb_api_key_here
+       OPENAI_API_KEY=your_openai_api_key_here
 
        Ensure the dotenv-rails gem is installed to load environment variables from .env.
 
@@ -81,18 +91,22 @@
   3. Add movies to your watchlist or favorites.
   4. View detailed information about movies, including streaming availability.
   5. View and manage your list of favorite movies and watchlist.
-  6. Remove movies from your favorites or watchlist.
+  6. Get AI-powered recommendations: Select 2-6 favorite movies and receive personalized movie recommendations with explanations.
+  7. Remove movies from your favorites or watchlist.
 
 # Key Features 
-  -  User Authentication and Authorization: Secure user registration and login.
+  - User Authentication and Authorization: Secure user registration and login using JWT.
   - Search for Movies: Search for movies using the TMDb API.
   - Fetch Streaming Data: Retrieve streaming availability and other movie details from TMDb.
+  - AI-Powered Movie Recommendations: Get personalized movie recommendations based on your favorite movies using OpenAI's API. The system analyzes your preferences and suggests similar movies with personalized explanations.
   - Add Movies to Watchlist and Favorites: Save movies to your favorites list or watchlist.
   - Manage Favorites and Watchlist: View and remove movies from your favorites and watchlist.
-  - View Movie Details: Access detailed information about movies, including synopsis, director, release_year, and the poster.
+  - View Movie Details: Access detailed information about movies, including synopsis, director, release year, and the poster.
+  - Filter Movies: Filter favorites and watchlist by release year and streaming service.
 
 # Additional Configuration
-  - Environment Variables: Ensure that sensitive information such as API keys are stored in environment variables and not committed to version control.
+  - Environment Variables: Ensure that sensitive information such as API keys (TMDb and OpenAI) are stored in environment variables and not committed to version control.
   
   - CORS Configuration: Configure Cross-Origin Resource Sharing (CORS) in your Rails backend to allow requests from your frontend.
 
+  - OpenAI API: The app uses OpenAI's GPT-3.5-turbo model for generating personalized movie recommendations. If OpenAI API is unavailable or rate-limited, the system automatically falls back to TMDb's recommendation algorithm.
