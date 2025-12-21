@@ -591,6 +591,11 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  position: relative;
+}
+
+.recommendation-explanation:hover {
+  color: #fff; /* Slightly brighter on hover to indicate interactivity */
 }
 
 .loading-message {
