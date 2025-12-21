@@ -258,7 +258,8 @@
 
 /* ========== Tooltip Styling ========== */
 .tooltip-text-info,
-.tooltip-text-remove {
+.tooltip-text-remove,
+.tooltip-text-add {
   visibility: hidden;
   text-align: center;
   border-radius: 6px;
@@ -287,8 +288,28 @@
   margin-left: -50px;
 }
 
+/* Default tooltip for "Add to Favorites" (watchlist cards) - position to avoid left clipping */
+.tooltip-text-add {
+  width: 140px;
+  background-color: #e6e6e6;
+  color: #000;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -50px; /* Shift right to prevent left clipping */
+  white-space: nowrap;
+}
+
+/* Tooltip for "Add to Watchlist" (recommendation cards) - position to avoid right clipping */
+.add-to-watchlist-button .tooltip-text-add {
+  left: auto; /* Override the left positioning */
+  right: -45px; /* Align to right edge of button */
+  margin-left: 0; /* Remove the left margin */
+  transform: translateX(0); /* No transform needed */
+}
+
 .icon-button:hover .tooltip-text-info,
-.icon-button:hover .tooltip-text-remove {
+.icon-button:hover .tooltip-text-remove,
+.icon-button:hover .tooltip-text-add {
   visibility: visible;
   opacity: 1;
 }
