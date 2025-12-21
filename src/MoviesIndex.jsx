@@ -259,7 +259,7 @@ export function MoviesIndex(props) {
                   {/* Icons visible only on hover */}
                   <div className="hover-icons">
                     <button
-                      className="icon-button circle-button"
+                      className="icon-button circle-button add-to-favorites-button"
                       onClick={() => props.onAddFavorite(movie)}
                     >
                       {/* Add to My List icon inside a circle */}
