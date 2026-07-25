@@ -1,16 +1,17 @@
+html,
+body {
+  background-color: #141414; /* keep dark even when hover cards overflow the page */
+  margin: 0;
+  padding: 0;
+}
+
 #root {
   max-width: 1800px;
   padding: 1rem;
   text-align: center;
 }
 
-body {
-  background-color: #141414; /* Netflix dark background color */
-  margin: 0;
-  padding: 0;
-}
-
 .app-container {
-  background-color: #141414; /* Netflix dark background color */
-  min-height: 100vh; /* Ensures the container covers the full viewport height */
+  background-color: #141414;
+  min-height: 100vh;
 }

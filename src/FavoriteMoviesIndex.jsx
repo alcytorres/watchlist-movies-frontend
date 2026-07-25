@@ -291,7 +291,7 @@ export function FavoriteMoviesIndex(props) {
                     />
                     <div className="card-body">
                       <h5 className="card-title">{movie.title}</h5>
-                      <p className="recommendation-explanation" title={movie.explanation}>
+                      <p className="recommendation-explanation">
                         {movie.explanation}
                       </p>
                       <div className="hover-icons">

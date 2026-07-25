@@ -155,7 +155,7 @@
   justify-content: center; /* Center movies on mobile */
   width: 100%;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 0 120px; /* room for last-row hover expansion */
   gap: 15px;
 }
 
@@ -595,9 +595,10 @@
   font-style: italic;
 }
 
-/* Recommendation Cards */
+/* Recommendation Cards — taller fixed height so all cards stay uniform */
 .recommendation-card {
   border: 2px solid #444;
+  height: 400px;
 }
 
 .recommendation-explanation {
@@ -606,17 +607,10 @@
   font-style: italic;
   margin: 5px 0;
   line-height: 1.4;
-  min-height: 32px;
+  white-space: normal;
+  overflow-wrap: break-word;
+  height: 5.6em; /* reserve ~4 lines so shorter explanations leave empty space */
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  position: relative;
-}
-
-.recommendation-explanation:hover {
-  color: #fff; /* Slightly brighter on hover to indicate interactivity */
 }
 
 .loading-message {

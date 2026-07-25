@@ -51,7 +51,7 @@ form input[type="text"] {
   justify-content: flex-start;
   width: 100%;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 0 120px; /* room for last-row hover expansion */
   gap: 15px;
 }
 
