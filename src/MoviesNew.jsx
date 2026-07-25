@@ -79,6 +79,13 @@ export function MoviesNew(props) {
       })
       .catch((error) => {
         console.error("Error toggling the movie in the Watchlist", error);
+        const message =
+          error.response?.data?.errors?.join(", ") ||
+          error.response?.data?.error ||
+          "Failed to update Watchlist";
+        setToastMessage(message);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000);
       });
   };
 
