@@ -1,12 +1,13 @@
-// import { Link } from "react-router-dom";
 import { LogoutLink } from './LogoutLink';
 import './Header.css'; 
 
 export function Header() {
+  const isLoggedIn = !!localStorage.getItem("jwt");
+
   return (
-    <nav className="navbar navbar-expand-lg header"> {/* Use custom class */}
+    <nav className="navbar navbar-expand-lg header">
       <div className="container-fluid">
-        <a className="movies-app" href="/">Movies App</a>
+        <a className="movies-app" href={isLoggedIn ? "/" : "/login"}>Movies App</a>
         <button
           className="navbar-toggler"
           type="button"
@@ -28,50 +29,51 @@ export function Header() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Authentication
+                Account
               </a>
               <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="/login">
-                    Sign In
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="/signup">
-                    Sign Up
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li className="dropdown-item">
-                  <a href="#" onClick={LogoutLink} className="logout-link">
-                    Log Out
-                  </a>
-                </li>
+                {isLoggedIn ? (
+                  <li className="dropdown-item">
+                    <LogoutLink />
+                  </li>
+                ) : (
+                  <>
+                    <li>
+                      <a className="dropdown-item" href="/login">
+                        Sign In
+                      </a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="/signup">
+                        Sign Up
+                      </a>
+                    </li>
+                  </>
+                )}
               </ul>
             </li> 
             
-            {/* Watchlist menu item */}
-            <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="/">
-                Watchlist
-              </a>
-            </li>
-            
-            {/* Favorites menu item */}
-            <li className="nav-item">
-              <a className="nav-link" href="/favoritemovies">
-                Favorites
-              </a>
-            </li>
-            
-            {/* Movies Search menu item */}
-            <li className="nav-item">
-              <a className="nav-link" href="/movies/new">
-                Movies Search
-              </a>
-            </li>
+            {isLoggedIn && (
+              <>
+                <li className="nav-item">
+                  <a className="nav-link" aria-current="page" href="/">
+                    Watchlist
+                  </a>
+                </li>
+                
+                <li className="nav-item">
+                  <a className="nav-link" href="/favoritemovies">
+                    Favorites
+                  </a>
+                </li>
+                
+                <li className="nav-item">
+                  <a className="nav-link" href="/movies/new">
+                    Movies Search
+                  </a>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

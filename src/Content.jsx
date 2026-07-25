@@ -8,9 +8,9 @@ import { Modal } from "./Modal";
 import { Routes, Route } from "react-router-dom";
 import { Signup } from './Signup';
 import { Login } from './Login';
-import { LogoutLink } from './LogoutLink';
 import { About } from "./About";
 import { MoviesNew } from "./MoviesNew";
+import { RequireAuth } from "./RequireAuth";
 
 export function Content() {
   const [movies, setMovies] = useState([]);
@@ -102,8 +102,11 @@ export function Content() {
     setIsMoviesShowVisible(false);
   };
 
-  useEffect(handleIndexMovies, []); // All the movies
-  useEffect(favoriteMovieIndex, []); // Filtered movies
+  useEffect(() => {
+    if (!localStorage.getItem("jwt")) return;
+    handleIndexMovies();
+    favoriteMovieIndex();
+  }, []);
 
   return (
     <div className="container">
@@ -112,40 +115,41 @@ export function Content() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Route for MoviesNew with search functionality */}
         <Route 
           path="/movies/new" 
           element={
-            <MoviesNew 
-              onShowMovie={handleShowMovie}  // Pass handleShowMovie to MoviesNew
-            />
+            <RequireAuth>
+              <MoviesNew 
+                onShowMovie={handleShowMovie}
+              />
+            </RequireAuth>
           } 
         />
-
-        {/* <Route 
-          path="/movies/new" 
-          element={<MoviesNew onCreateMovie={handleCreateMovie} />} /> */}
 
         <Route 
           path="/" 
           element={
-            <MoviesIndex 
-              movies={movies} 
-              onShowMovie={handleShowMovie} 
-              onAddFavorite={handleShowAddFavorite} 
-              onDestroyWatchlistMovie={handleDestroyWatchlistMovie}  // Pass the function
-            />
+            <RequireAuth>
+              <MoviesIndex 
+                movies={movies} 
+                onShowMovie={handleShowMovie} 
+                onAddFavorite={handleShowAddFavorite} 
+                onDestroyWatchlistMovie={handleDestroyWatchlistMovie}
+              />
+            </RequireAuth>
           } 
         />
 
         <Route 
           path="/favoritemovies" 
           element={
-            <FavoriteMoviesIndex 
-              favoriteMovies={favoriteMovies} 
-              onShowMovie={handleShowMovie} 
-              onDestroyFavoriteMovie={handleDestroyFavoriteMovie} 
-            />
+            <RequireAuth>
+              <FavoriteMoviesIndex 
+                favoriteMovies={favoriteMovies} 
+                onShowMovie={handleShowMovie} 
+                onDestroyFavoriteMovie={handleDestroyFavoriteMovie} 
+              />
+            </RequireAuth>
           } 
         />
       </Routes>
