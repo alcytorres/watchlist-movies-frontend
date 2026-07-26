@@ -59,7 +59,12 @@ export function MoviesIndex(props) {
 
   // Toggle streaming services dynamically
   const toggleStreamingService = (id) => {
-    if (selectedStreamingServices.includes(id)) {
+    const allSelected = selectedStreamingServices.length === streamingServices.length;
+
+    if (allSelected) {
+      // From the default "show everything" state, focus only the clicked service
+      setSelectedStreamingServices([id]);
+    } else if (selectedStreamingServices.includes(id)) {
       if (selectedStreamingServices.length > 1) {
         // Deselect the service
         setSelectedStreamingServices(
