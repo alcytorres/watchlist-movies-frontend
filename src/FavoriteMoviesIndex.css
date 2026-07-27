@@ -427,7 +427,8 @@
 /* ========== Tooltip Styling ========== */
 .tooltip-text-info,
 .tooltip-text-remove,
-.tooltip-text-add {
+.tooltip-text-add,
+.tooltip-text-favorite {
   visibility: hidden;
   text-align: center;
   border-radius: 6px;
@@ -467,17 +468,20 @@
   white-space: nowrap;
 }
 
-/* Tooltip for "Add to Watchlist" (recommendation cards) - position to avoid right clipping */
-.add-to-watchlist-button .tooltip-text-add {
-  left: auto; /* Override the left positioning */
-  right: -45px; /* Align to right edge of button */
-  margin-left: 0; /* Remove the left margin */
-  transform: translateX(0); /* No transform needed */
+.tooltip-text-favorite {
+  width: 140px;
+  background-color: #e6e6e6;
+  color: #000;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -70px;
+  white-space: nowrap;
 }
 
 .icon-button:hover .tooltip-text-info,
 .icon-button:hover .tooltip-text-remove,
-.icon-button:hover .tooltip-text-add {
+.icon-button:hover .tooltip-text-add,
+.icon-button:hover .tooltip-text-favorite {
   visibility: visible;
   opacity: 1;
 }
@@ -788,14 +792,40 @@
   padding: 40px;
 }
 
-.add-to-watchlist-button:hover {
-  background-color: #28a745;
-  border-color: #28a745;
+.add-to-favorites-button:hover {
+  background-color: #d80000;
+  border-color: #d80000;
 }
 
-.add-to-favorites-button:hover {
-  background-color: #28a745;
-  border-color: #28a745;
+/* Toast Notification Styles (mirrored from Search) */
+.toast-notification {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 18px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeInOut 4s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  10%, 80% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
 }
 
 /* Responsive adjustments */

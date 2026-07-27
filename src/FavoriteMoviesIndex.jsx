@@ -45,6 +45,17 @@ export function FavoriteMoviesIndex(props) {
   const [basedOnMovies, setBasedOnMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showRecommendations, setShowRecommendations] = useState(false);
+  // Track which recommended movies were favorited from this session
+  const [favoritedRecommendations, setFavoritedRecommendations] = useState({});
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+
+  // Bottom toast (same pattern as Search) — no blocking browser alert
+  const showToastMessage = (message) => {
+    setToastMessage(message);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 5000);
+  };
 
   // Toggle dropdown
   const toggleDropdown = () => {
@@ -193,7 +204,7 @@ export function FavoriteMoviesIndex(props) {
   // Get recommendations from backend
   const fetchRecommendations = () => {
     if (selectedMovies.length < 2) {
-      alert("Please select at least 2 movies");
+      showToastMessage("Please select at least 2 movies");
       return;
     }
 
@@ -218,7 +229,7 @@ export function FavoriteMoviesIndex(props) {
     })
     .catch((error) => {
       console.error("Error fetching recommendations:", error);
-      alert(error.response?.data?.error || "Failed to get recommendations");
+      showToastMessage(error.response?.data?.error || "Failed to get recommendations");
       setIsLoading(false);
     });
   };
@@ -243,11 +254,57 @@ export function FavoriteMoviesIndex(props) {
         }
       })
       .then((response) => {
-        alert("Added to Watchlist!");
+        showToastMessage("Added to Watchlist");
       })
       .catch((error) => {
         console.error("Error adding to watchlist:", error);
-        alert("Failed to add to watchlist");
+        showToastMessage("Failed to add to Watchlist");
+      });
+  };
+
+  // Add a recommended movie straight to Favorites
+  const handleAddFavorite = (movie) => {
+    if (favoritedRecommendations[movie.imdb_id]) {
+      showToastMessage("Already in Favorites");
+      return;
+    }
+
+    const params = {
+      title: movie.title,
+      image_url: movie.image_url,
+      description: movie.description,
+      director: movie.director,
+      release_year: movie.release_year,
+      imdb_id: movie.imdb_id,
+      streaming_services: movie.streaming_services,
+    };
+
+    const jwt = localStorage.getItem("jwt");
+    axios
+      .post("http://localhost:3000/favorite_movies.json", params, {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      })
+      .then((response) => {
+        if (response.data.error) {
+          showToastMessage(response.data.error);
+          return;
+        }
+
+        setFavoritedRecommendations((prev) => ({
+          ...prev,
+          [movie.imdb_id]: true,
+        }));
+        showToastMessage("Added to Favorites");
+      })
+      .catch((error) => {
+        console.error("Error adding to favorites:", error);
+        const message =
+          error.response?.data?.errors?.join(", ") ||
+          error.response?.data?.error ||
+          "Failed to add to Favorites";
+        showToastMessage(message);
       });
   };
 
@@ -470,18 +527,31 @@ export function FavoriteMoviesIndex(props) {
                       </p>
                       <div className="hover-icons">
                         <button
-                          className="icon-button circle-button"
-                          onClick={() => props.onShowMovie(movie)}
-                        >
-                          <span className="icon">i</span>
-                          <span className="tooltip-text-info">More Info</span>
-                        </button>
-                        <button
                           className="icon-button circle-button add-to-watchlist-button"
                           onClick={() => handleAddToWatchlist(movie)}
                         >
                           <span className="icon">+</span>
                           <span className="tooltip-text-add">Add to Watchlist</span>
+                        </button>
+                        <button
+                          className="icon-button circle-button add-to-favorites-button"
+                          onClick={() => handleAddFavorite(movie)}
+                        >
+                          <span className="icon">
+                            {favoritedRecommendations[movie.imdb_id] ? "♥" : "♡"}
+                          </span>
+                          <span className="tooltip-text-favorite">
+                            {favoritedRecommendations[movie.imdb_id]
+                              ? "In Favorites"
+                              : "Add to Favorites"}
+                          </span>
+                        </button>
+                        <button
+                          className="icon-button circle-button"
+                          onClick={() => props.onShowMovie(movie)}
+                        >
+                          <span className="icon">i</span>
+                          <span className="tooltip-text-info">More Info</span>
                         </button>
                       </div>
                     </div>
@@ -558,6 +628,12 @@ export function FavoriteMoviesIndex(props) {
         )}
       </div>
 
+      {/* Toast Notification (same bottom toast as Search) */}
+      {showToast && (
+        <div className="toast-notification">
+          {toastMessage}
+        </div>
+      )}
     </div>
   );
 }

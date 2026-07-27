@@ -210,6 +210,11 @@ form input[type="text"] {
   opacity: 1;
 }
 
+.add-to-favorites-button:hover {
+  background-color: #d80000;
+  border-color: #d80000;
+}
+
 
 /* Toast Notification Styles */
 .toast-notification {

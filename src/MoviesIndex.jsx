@@ -348,7 +348,7 @@ export function MoviesIndex(props) {
                       onClick={() => props.onAddFavorite(movie)}
                     >
                       {/* Add to My List icon inside a circle */}
-                      <span className="icon">+</span>
+                      <span className="icon">♡</span>
                       {/* Tooltip */}
                       <span className="tooltip-text-add">Add to Favorites</span>
                     </button>
