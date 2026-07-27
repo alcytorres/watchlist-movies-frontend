@@ -137,6 +137,76 @@
   max-width: 400px; /* Limit max width */
 }
 
+/* ========== Release Year + Sort by Year controls row ========== */
+
+.watchlist-controls-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Each control stacks its button and dropdown so the dropdown opens
+   directly beneath its button (in normal flow, pushing content down) */
+.watchlist-controls-row .release-year-filter,
+.watchlist-controls-row .sort-by-year {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* In the row, buttons size to their content instead of the full-width default */
+.watchlist-controls-row .filter-button {
+  width: auto;
+  max-width: none;
+  min-width: 190px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Release year dropdown anchored under its button */
+.watchlist-controls-row .filter-dropdown {
+  margin: 8px 0 0 0;
+  width: 320px;
+  max-width: 90vw;
+}
+
+.sort-dropdown {
+  margin-top: 8px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  min-width: 190px;
+}
+
+.sort-option {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.sort-option:hover {
+  background-color: #555;
+}
+
+.sort-option.active {
+  background-color: #4c5a67;
+  font-weight: 700;
+}
+
 .filter-dropdown h4 {
   font-size: 18px; /* UPDATED: Adjust font size */
   margin: 0;

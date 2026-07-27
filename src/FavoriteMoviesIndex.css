@@ -96,7 +96,7 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Release Year + Get AI Recommendations sit side by side below the streaming filter */
+/* Release Year + Sort by Year sit side by side below the streaming filter */
 .favorites-actions-row {
   display: flex;
   gap: 10px;
@@ -125,6 +125,65 @@
   margin: 8px 0 0 0;
   width: 320px;
   max-width: 90vw;
+}
+
+/* Sort by Year sits beside Release Year and stacks its dropdown below the button */
+.sort-by-year {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sort-by-year-button {
+  white-space: nowrap;
+  padding-left: 24px;
+  padding-right: 24px;
+  min-width: 190px;
+}
+
+.sort-dropdown {
+  margin-top: 8px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  min-width: 190px;
+}
+
+.sort-option {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.sort-option:hover {
+  background-color: #555;
+}
+
+.sort-option.active {
+  background-color: #4c5a67;
+  font-weight: 700;
+}
+
+/* Get Recommendations gets its own centered row below the year controls */
+.favorites-recommendations-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  width: 100%;
 }
 
 .filter-button {

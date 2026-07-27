@@ -25,6 +25,10 @@ export function MoviesIndex(props) {
   const [selectedYears, setSelectedYears] = useState([MIN_YEAR, MAX_YEAR]);
   const [draggedThumbIndex, setDraggedThumbIndex] = useState(null);
 
+  // Sort by release year: 'default' | 'newest' | 'oldest'
+  const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState("default");
+
   // Initial state: all streaming services are selected
   const [selectedStreamingServices, setSelectedStreamingServices] = useState(
     streamingServices.map((service) => service.id)
@@ -50,6 +54,18 @@ export function MoviesIndex(props) {
   // Toggle dropdown for release year filter
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+    setIsSortDropdownOpen(false);
+  };
+
+  // Toggle dropdown for the "Sort by Year" control
+  const toggleSortDropdown = () => {
+    setIsSortDropdownOpen(!isSortDropdownOpen);
+    setIsDropdownOpen(false);
+  };
+
+  const selectSortOrder = (order) => {
+    setSortOrder(order);
+    setIsSortDropdownOpen(false);
   };
 
   // Handle year filter state update
@@ -112,6 +128,29 @@ export function MoviesIndex(props) {
   return yearFilter && streamingFilter;
 });
 
+  // Apply "Sort by Year" on top of the filtered list.
+  // Movies with an unknown/non-numeric year always go to the bottom.
+  const sortedMovies = (() => {
+    if (sortOrder === "default") return filteredMovies;
+
+    const withYear = [];
+    const withoutYear = [];
+    filteredMovies.forEach((movie) => {
+      const year = parseInt(movie.release_year, 10);
+      if (Number.isNaN(year)) {
+        withoutYear.push(movie);
+      } else {
+        withYear.push({ movie, year });
+      }
+    });
+
+    withYear.sort((a, b) =>
+      sortOrder === "newest" ? b.year - a.year : a.year - b.year
+    );
+
+    return [...withYear.map((entry) => entry.movie), ...withoutYear];
+  })();
+
   // Handle mouse enter with delay
   const handleMouseEnter = (movieId) => {
     // Start a timer to set the hovered movie after 0.5 seconds
@@ -171,12 +210,15 @@ export function MoviesIndex(props) {
           </div>
         </div> 
 
-        {/* Release Year Filter (placed below streaming services) */}
-        <button className="filter-button" onClick={toggleDropdown}>
-          Release Year&nbsp;&nbsp;▼
-        </button>
+        {/* Release Year + Sort by Year controls */}
+        <div className="watchlist-controls-row">
+          {/* Release Year Filter */}
+          <div className="release-year-filter">
+            <button className="filter-button release-year-button" onClick={toggleDropdown}>
+              Release Year&nbsp;&nbsp;▼
+            </button>
 
-        {isDropdownOpen && (
+            {isDropdownOpen && (
           <div className="filter-dropdown">
             <div className="header-row">
               <h4>Release Year</h4>
@@ -239,13 +281,45 @@ export function MoviesIndex(props) {
               <span>{MAX_YEAR}</span>
             </div>
           </div>
-        )}
+            )}
+          </div>
+
+          {/* Sort by Year */}
+          <div className="sort-by-year">
+            <button className="filter-button sort-by-year-button" onClick={toggleSortDropdown}>
+              Sort by Year&nbsp;&nbsp;▼
+            </button>
+
+            {isSortDropdownOpen && (
+              <div className="sort-dropdown">
+                <button
+                  className={`sort-option ${sortOrder === "newest" ? "active" : ""}`}
+                  onClick={() => selectSortOrder("newest")}
+                >
+                  Newest → Oldest
+                </button>
+                <button
+                  className={`sort-option ${sortOrder === "oldest" ? "active" : ""}`}
+                  onClick={() => selectSortOrder("oldest")}
+                >
+                  Oldest → Newest
+                </button>
+                <button
+                  className={`sort-option ${sortOrder === "default" ? "active" : ""}`}
+                  onClick={() => selectSortOrder("default")}
+                >
+                  Default
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Movies List */}
       <div className="movie-grid">
-        {filteredMovies.length > 0 ? (
-          filteredMovies.map((movie) => (
+        {sortedMovies.length > 0 ? (
+          sortedMovies.map((movie) => (
             <div
               className="movie-item"
               key={movie.id}

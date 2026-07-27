@@ -34,6 +34,10 @@ export function FavoriteMoviesIndex(props) {
   const [hoveredService, setHoveredService] = useState(null);
   const [serviceHoverTimer, setServiceHoverTimer] = useState(null);
 
+  // Sort by release year: 'default' | 'newest' | 'oldest'
+  const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState("default");
+
   // New state for recommendations
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedMovies, setSelectedMovies] = useState([]);
@@ -45,6 +49,18 @@ export function FavoriteMoviesIndex(props) {
   // Toggle dropdown
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+    setIsSortDropdownOpen(false);
+  };
+
+  // Toggle dropdown for the "Sort by Year" control
+  const toggleSortDropdown = () => {
+    setIsSortDropdownOpen(!isSortDropdownOpen);
+    setIsDropdownOpen(false);
+  };
+
+  const selectSortOrder = (order) => {
+    setSortOrder(order);
+    setIsSortDropdownOpen(false);
   };
 
   // Handle year filter
@@ -110,6 +126,29 @@ export function FavoriteMoviesIndex(props) {
 
     return yearFilter && streamingFilter;
   });
+
+  // Apply "Sort by Year" on top of the filtered list.
+  // Favorites with an unknown/non-numeric year always go to the bottom.
+  const sortedMovies = (() => {
+    if (sortOrder === "default") return filteredMovies;
+
+    const withYear = [];
+    const withoutYear = [];
+    filteredMovies.forEach((favoriteMovie) => {
+      const year = parseInt(favoriteMovie.movie.release_year, 10);
+      if (Number.isNaN(year)) {
+        withoutYear.push(favoriteMovie);
+      } else {
+        withYear.push({ favoriteMovie, year });
+      }
+    });
+
+    withYear.sort((a, b) =>
+      sortOrder === "newest" ? b.year - a.year : a.year - b.year
+    );
+
+    return [...withYear.map((entry) => entry.favoriteMovie), ...withoutYear];
+  })();
 
   // Hover handling
   const handleMouseEnter = (movieId) => {
@@ -310,7 +349,39 @@ export function FavoriteMoviesIndex(props) {
             )}
           </div>
 
-          {/* Recommendations Button */}
+          {/* Sort by Year */}
+          <div className="sort-by-year">
+            <button className="filter-button sort-by-year-button" onClick={toggleSortDropdown}>
+              Sort by Year&nbsp;&nbsp;▼
+            </button>
+
+            {isSortDropdownOpen && (
+              <div className="sort-dropdown">
+                <button
+                  className={`sort-option ${sortOrder === "newest" ? "active" : ""}`}
+                  onClick={() => selectSortOrder("newest")}
+                >
+                  Newest → Oldest
+                </button>
+                <button
+                  className={`sort-option ${sortOrder === "oldest" ? "active" : ""}`}
+                  onClick={() => selectSortOrder("oldest")}
+                >
+                  Oldest → Newest
+                </button>
+                <button
+                  className={`sort-option ${sortOrder === "default" ? "active" : ""}`}
+                  onClick={() => selectSortOrder("default")}
+                >
+                  Default
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Get Recommendations on its own row */}
+        <div className="favorites-recommendations-row">
           {!showRecommendations ? (
             <button 
               className={`filter-button recommendations-button ${isSelectionMode ? 'selection-mode' : ''}`}
@@ -318,7 +389,7 @@ export function FavoriteMoviesIndex(props) {
             >
               {isSelectionMode 
                 ? `Select Movies (${selectedMovies.length}/6)` 
-                : "Get AI Recommendations"}
+                : "Get Recommendations"}
             </button>
           ) : (
             <div className="recommendations-actions">
@@ -424,8 +495,8 @@ export function FavoriteMoviesIndex(props) {
 
       {/* Movies List */}
       <div className="movie-grid">
-        {filteredMovies.length > 0 ? (
-          filteredMovies.map((favoriteMovie) => {
+        {sortedMovies.length > 0 ? (
+          sortedMovies.map((favoriteMovie) => {
             const movie = favoriteMovie.movie;
             const isSelected = selectedMovies.includes(favoriteMovie.id);
             
