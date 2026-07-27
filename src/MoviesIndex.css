@@ -57,6 +57,24 @@
   opacity: 0.4;
 }
 
+.streaming-reset-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  padding: 0 8px;
+  height: 50px;
+  align-self: center;
+  transition: color 0.2s;
+}
+
+.streaming-reset-button:hover {
+  color: #334155;
+}
+
 .hover-modal {
   position: absolute;
   top: 60px; /* Adjusted for larger tap targets */

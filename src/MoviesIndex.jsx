@@ -162,6 +162,12 @@ export function MoviesIndex(props) {
                 )}
               </button>
             ))}
+            <button
+              className="streaming-reset-button"
+              onClick={() => setSelectedStreamingServices(streamingServices.map((service) => service.id))}
+            >
+              ✕ RESET
+            </button>
           </div>
         </div> 
 
