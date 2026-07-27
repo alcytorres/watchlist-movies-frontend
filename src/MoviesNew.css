@@ -161,8 +161,9 @@ form input[type="text"] {
 
 /* ========== Tooltip Styling ========== */
 
-/* Tooltips for Add and More Info buttons */
+/* Tooltips for Add, Favorites and More Info buttons */
 .tooltip-text-add,
+.tooltip-text-favorite,
 .tooltip-text-info {
   visibility: hidden;
   text-align: center;
@@ -172,6 +173,15 @@ form input[type="text"] {
   z-index: 2;
   opacity: 0;
   transition: opacity 0.3s;
+}
+
+.tooltip-text-favorite {
+  width: 140px;
+  background-color: #e6e6e6;
+  color: #000;
+  bottom: 125%; /* Position above the button */
+  left: 50%;
+  margin-left: -70px;
 }
 
 .tooltip-text-add {
@@ -194,6 +204,7 @@ form input[type="text"] {
 
 /* Show the tooltips on hover for each button */
 .icon-button:hover .tooltip-text-add,
+.icon-button:hover .tooltip-text-favorite,
 .icon-button:hover .tooltip-text-info {
   visibility: visible;
   opacity: 1;

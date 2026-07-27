@@ -5,8 +5,10 @@ import "./MoviesNew.css";
 export function MoviesNew(props) {
   const [searchResults, setSearchResults] = useState([]);
 
-  // State to track Watchlist and Favorites across sessions
+  // State to track Watchlist and Favorites across sessions (kept separate so each
+  // button reflects its own list)
   const [watchlistStatus, setWatchlistStatus] = useState({});
+  const [favoriteStatus, setFavoriteStatus] = useState({});
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
 
@@ -15,13 +17,14 @@ export function MoviesNew(props) {
     axios.get("http://localhost:3000/user_collections")
       .then((response) => {
         const { watchlist, favorites } = response.data;
-        
-        // Set the watchlist status based on user collections
-        const initialStatus = {};
-        watchlist.forEach((imdb_id) => initialStatus[imdb_id] = true);
-        favorites.forEach((imdb_id) => initialStatus[imdb_id] = true);
 
-        setWatchlistStatus(initialStatus);
+        const initialWatchlist = {};
+        const initialFavorites = {};
+        watchlist.forEach((imdb_id) => (initialWatchlist[imdb_id] = true));
+        favorites.forEach((imdb_id) => (initialFavorites[imdb_id] = true));
+
+        setWatchlistStatus(initialWatchlist);
+        setFavoriteStatus(initialFavorites);
       })
       .catch((error) => console.error("Error fetching user collections", error));
   }, []); // Only fetch once on mount or user sign-in
@@ -83,6 +86,61 @@ export function MoviesNew(props) {
           error.response?.data?.errors?.join(", ") ||
           error.response?.data?.error ||
           "Failed to update Watchlist";
+        setToastMessage(message);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000);
+      });
+  };
+
+  // Add a movie straight from search to Favorites (mutually exclusive with Watchlist)
+  const handleAddFavorite = (movie) => {
+    if (favoriteStatus[movie.imdb_id]) {
+      setToastMessage("Already in Favorites");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 5000);
+      return;
+    }
+
+    const params = {
+      title: movie.title,
+      image_url: movie.image_url,
+      description: movie.description,
+      director: movie.director,
+      release_year: movie.release_year,
+      imdb_id: movie.imdb_id,
+      streaming_services: movie.streaming_services,
+    };
+
+    axios
+      .post("http://localhost:3000/favorite_movies.json", params)
+      .then((response) => {
+        if (response.data.error) {
+          setToastMessage(response.data.error);
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 5000);
+          return;
+        }
+
+        // Mark as favorite; backend drops it from the Watchlist, so reflect that here
+        setFavoriteStatus((prevState) => ({
+          ...prevState,
+          [movie.imdb_id]: true,
+        }));
+        setWatchlistStatus((prevState) => ({
+          ...prevState,
+          [movie.imdb_id]: false,
+        }));
+
+        setToastMessage("Added to Favorites");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000);
+      })
+      .catch((error) => {
+        console.error("Error adding the movie to Favorites", error);
+        const message =
+          error.response?.data?.errors?.join(", ") ||
+          error.response?.data?.error ||
+          "Failed to add to Favorites";
         setToastMessage(message);
         setShowToast(true);
         setTimeout(() => setShowToast(false), 5000);
@@ -157,6 +215,19 @@ export function MoviesNew(props) {
                           {watchlistStatus[movie.imdb_id]
                             ? "Remove from Watchlist"
                             : "Add to Watchlist"}
+                        </span>
+                      </button>
+                      <button
+                        className="icon-button circle-button add-to-favorites-button"
+                        onClick={() => handleAddFavorite(movie)}
+                      >
+                        <span className="icon">
+                          {favoriteStatus[movie.imdb_id] ? "♥" : "♡"}
+                        </span>
+                        <span className="tooltip-text-favorite">
+                          {favoriteStatus[movie.imdb_id]
+                            ? "In Favorites"
+                            : "Add to Favorites"}
                         </span>
                       </button>
                       <button

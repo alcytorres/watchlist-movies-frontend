@@ -74,14 +74,11 @@ export function Content() {
     });
   };
 
-  // Remove movie from favorites and add back to "Watchlist"
+  // Remove movie from favorites (no longer auto-adds it back to the Watchlist)
   const handleDestroyFavoriteMovie = (favoriteMovie) => {
     axios
       .delete(`http://localhost:3000/favorite_movies/${favoriteMovie.id}.json`)
       .then(() => {
-        const movie = favoriteMovie.movie;
-        // Add the movie back to the Watchlist
-        setMovies([...movies, movie]);
         // Remove the movie from favoriteMovies
         setFavoriteMovies(favoriteMovies.filter((m) => m.id !== favoriteMovie.id));
       })
