@@ -7,12 +7,32 @@ import { Range } from "react-range";
 const MIN_YEAR = 1900;
 const MAX_YEAR = new Date().getFullYear();
 
+// Streaming service icons (kept in sync with the Watchlist page)
+const streamingServices = [
+  { id: 'max', name: 'Max', icon: '/icons/max.svg', label: 'Max' },
+  { id: 'netflix', name: 'Netflix', icon: '/icons/netflix.svg', label: 'Netflix' },
+  { id: 'amazon', name: 'Prime Video', icon: '/icons/amazon.svg', label: 'Prime Video' },
+  { id: 'disney', name: 'Disney+', icon: '/icons/disney.svg', label: 'Disney+' },
+  { id: 'apple', name: 'Apple TV+', icon: '/icons/apple.svg', label: 'Apple TV+' },
+  { id: 'paramount', name: 'Paramount+', icon: '/icons/paramount.svg', label: 'Paramount+' },
+  { id: 'hulu', name: 'Hulu', icon: '/icons/hulu.svg', label: 'Hulu' },
+  { id: 'other', name: 'Other', icon: '/icons/other.svg', label: 'Other' },
+  { id: 'non-streaming', name: 'Non-streaming', icon: '/icons/non-streaming.svg', label: 'Non Streaming' }
+];
+
 export function FavoriteMoviesIndex(props) {
   // Existing state
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedYears, setSelectedYears] = useState([MIN_YEAR, MAX_YEAR]);
   const [hoveredMovieId, setHoveredMovieId] = useState(null);
   const [hoverTimer, setHoverTimer] = useState(null);
+
+  // Streaming service filter (default: all selected)
+  const [selectedStreamingServices, setSelectedStreamingServices] = useState(
+    streamingServices.map((service) => service.id)
+  );
+  const [hoveredService, setHoveredService] = useState(null);
+  const [serviceHoverTimer, setServiceHoverTimer] = useState(null);
 
   // New state for recommendations
   const [isSelectionMode, setIsSelectionMode] = useState(false);
@@ -32,13 +52,63 @@ export function FavoriteMoviesIndex(props) {
     setSelectedYears(values);
   };
 
+  // Streaming service hover (delayed label, same as Watchlist)
+  const handleMouseEnterService = (service) => {
+    const timer = setTimeout(() => setHoveredService(service), 500);
+    setServiceHoverTimer(timer);
+  };
+
+  const handleMouseLeaveService = () => {
+    clearTimeout(serviceHoverTimer);
+    setHoveredService(null);
+  };
+
+  // Toggle streaming services (same behavior as Watchlist)
+  const toggleStreamingService = (id) => {
+    const allSelected = selectedStreamingServices.length === streamingServices.length;
+
+    if (allSelected) {
+      // From the default "show everything" state, focus only the clicked service
+      setSelectedStreamingServices([id]);
+    } else if (selectedStreamingServices.includes(id)) {
+      if (selectedStreamingServices.length > 1) {
+        setSelectedStreamingServices(
+          selectedStreamingServices.filter((service) => service !== id)
+        );
+      } else {
+        // Unchecking the last remaining service resets to all
+        setSelectedStreamingServices(streamingServices.map((service) => service.id));
+      }
+    } else {
+      setSelectedStreamingServices([...selectedStreamingServices, id]);
+    }
+  };
+
   // Filter favorite movies
   const filteredMovies = props.favoriteMovies.filter((favoriteMovie) => {
     const movie = favoriteMovie.movie;
-    return (
+    const movieStreamingServices = movie.streaming_services || [];
+
+    const yearFilter =
       movie.release_year >= selectedYears[0] &&
-      movie.release_year <= selectedYears[1]
-    );
+      movie.release_year <= selectedYears[1];
+
+    const allServicesSelected =
+      selectedStreamingServices.length === streamingServices.length;
+
+    let streamingFilter;
+    if (allServicesSelected) {
+      streamingFilter = true;
+    } else if (movieStreamingServices.length === 0) {
+      // Movie is non-streaming
+      streamingFilter = selectedStreamingServices.includes('non-streaming');
+    } else {
+      streamingFilter = movieStreamingServices.some((service) =>
+        selectedStreamingServices.includes(service)
+      );
+    }
+
+    return yearFilter && streamingFilter;
   });
 
   // Hover handling
@@ -160,81 +230,114 @@ export function FavoriteMoviesIndex(props) {
 
       {/* Filter Section */}
       <div className="filter-section">
-        {/* Release Year Filter */}
-        <button className="filter-button" onClick={toggleDropdown}>
-          Release Year&nbsp;&nbsp;▼
-        </button>
-
-        {/* Release Year Dropdown - MOVED HERE */}
-        {isDropdownOpen && (
-          <div className="filter-dropdown">
-            <div className="header-row">
-              <h4>Release Year</h4>
+        {/* Streaming Service Filter */}
+        <div className="streaming-services-container">
+          <div className="streaming-services-filter">
+            {streamingServices.map((service) => (
               <button
-                className="reset-button"
-                onClick={() => setSelectedYears([MIN_YEAR, MAX_YEAR])}
+                key={service.id}
+                className={`service-icon ${selectedStreamingServices.includes(service.id) ? "selected" : ""}`}
+                onClick={() => toggleStreamingService(service.id)}
+                onMouseEnter={() => handleMouseEnterService(service)}
+                onMouseLeave={handleMouseLeaveService}
+                style={{ position: "relative" }}
               >
-                RESET
-              </button>
-            </div>
-            <div className="year-labels">
-              <span>{MIN_YEAR}</span>
-              <Range
-                step={1}
-                min={MIN_YEAR}
-                max={MAX_YEAR}
-                values={selectedYears}
-                onChange={handleYearChange}
-                renderTrack={({ props, children }) => (
-                  <div {...props} className="slider-track" style={props.style}>
-                    {children}
+                <img src={service.icon} alt={service.name} />
+                {hoveredService && hoveredService.id === service.id && (
+                  <div className="hover-modal">
+                    {service.label}
                   </div>
                 )}
-                renderThumb={({ props, index, isDragged }) => (
-                  <div {...props} className="slider-thumb">
-                    {isDragged && (
-                      <div className="slider-tooltip">
-                        <div className="slider-tooltip-text">
-                          {selectedYears[index]}
-                        </div>
-                        <div className="slider-tooltip-arrow"></div>
+              </button>
+            ))}
+            <button
+              className="streaming-reset-button"
+              onClick={() => setSelectedStreamingServices(streamingServices.map((service) => service.id))}
+            >
+              ✕ RESET
+            </button>
+          </div>
+        </div>
+
+        {/* Release Year + Recommendations side by side */}
+        <div className="favorites-actions-row">
+          {/* Release Year Filter (dropdown anchored directly below this button) */}
+          <div className="release-year-filter">
+            <button className="filter-button release-year-button" onClick={toggleDropdown}>
+              Release Year&nbsp;&nbsp;▼
+            </button>
+
+            {isDropdownOpen && (
+              <div className="filter-dropdown">
+                <div className="header-row">
+                  <h4>Release Year</h4>
+                  <button
+                    className="reset-button"
+                    onClick={() => setSelectedYears([MIN_YEAR, MAX_YEAR])}
+                  >
+                    RESET
+                  </button>
+                </div>
+                <div className="year-labels">
+                  <span>{MIN_YEAR}</span>
+                  <Range
+                    step={1}
+                    min={MIN_YEAR}
+                    max={MAX_YEAR}
+                    values={selectedYears}
+                    onChange={handleYearChange}
+                    renderTrack={({ props, children }) => (
+                      <div {...props} className="slider-track" style={props.style}>
+                        {children}
                       </div>
                     )}
-                  </div>
-                )}
-              />
-              <span>{MAX_YEAR}</span>
-            </div>
+                    renderThumb={({ props, index, isDragged }) => (
+                      <div {...props} className="slider-thumb">
+                        {isDragged && (
+                          <div className="slider-tooltip">
+                            <div className="slider-tooltip-text">
+                              {selectedYears[index]}
+                            </div>
+                            <div className="slider-tooltip-arrow"></div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  />
+                  <span>{MAX_YEAR}</span>
+                </div>
+              </div>
+            )}
           </div>
-        )}
 
-        {/* Recommendations Button */}
-        {!showRecommendations ? (
-          <button 
-            className={`filter-button recommendations-button ${isSelectionMode ? 'selection-mode' : ''}`}
-            onClick={handleGetRecommendations}
-          >
-            {isSelectionMode 
-              ? `Select Movies (${selectedMovies.length}/6)` 
-              : "Get AI Recommendations"}
-          </button>
-        ) : (
-          <div className="recommendations-actions">
+          {/* Recommendations Button */}
+          {!showRecommendations ? (
             <button 
-              className="filter-button recommendations-button"
-              onClick={handleGetNewRecommendations}
-              disabled={isLoading}
+              className={`filter-button recommendations-button ${isSelectionMode ? 'selection-mode' : ''}`}
+              onClick={handleGetRecommendations}
             >
-              {isLoading ? "Loading..." : "Get New Recommendations"}
+              {isSelectionMode 
+                ? `Select Movies (${selectedMovies.length}/6)` 
+                : "Get AI Recommendations"}
             </button>
-            <button 
-              className="filter-button change-selections-button"
-              onClick={handleChangeSelections}
-            >
-              Change Selections
-            </button>
-          </div>
-        )}
+          ) : (
+            <div className="recommendations-actions">
+              <button 
+                className="filter-button recommendations-button"
+                onClick={handleGetNewRecommendations}
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : "Get New Recommendations"}
+              </button>
+              <button 
+                className="filter-button change-selections-button"
+                onClick={handleChangeSelections}
+              >
+                Change Selections
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Get Recommendations Button (in selection mode) */}
         {isSelectionMode && (
