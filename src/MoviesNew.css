@@ -105,6 +105,7 @@ form input[type="text"] {
   transform: scale(1.35);
   z-index: 1;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  overflow: visible; /* Let longer tooltips (e.g. Remove from Watchlist) show fully */
 }
 
 .hover-icons {
@@ -176,21 +177,29 @@ form input[type="text"] {
 }
 
 .tooltip-text-favorite {
-  width: 140px;
+  width: auto;
+  min-width: 140px;
+  white-space: nowrap;
   background-color: #e6e6e6;
   color: #000;
   bottom: 125%; /* Position above the button */
   left: 50%;
-  margin-left: -70px;
+  transform: translateX(-50%);
+  margin-left: 0;
+  z-index: 5;
 }
 
 .tooltip-text-add {
-  width: 140px;
+  width: auto;
+  min-width: 140px;
+  white-space: nowrap;
   background-color: #e6e6e6;
   color: #000;
   bottom: 125%; /* Position above the button */
-  left: 80%;
-  margin-left: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: 0;
+  z-index: 5;
 }
 
 .tooltip-text-info {

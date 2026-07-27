@@ -262,13 +262,8 @@ export function FavoriteMoviesIndex(props) {
       });
   };
 
-  // Add a recommended movie straight to Favorites
-  const handleAddFavorite = (movie) => {
-    if (favoritedRecommendations[movie.imdb_id]) {
-      showToastMessage("Already in Favorites");
-      return;
-    }
-
+  // Toggle a recommended movie in Favorites (same add/remove pattern as Search)
+  const handleToggleFavorite = (movie) => {
     const params = {
       title: movie.title,
       image_url: movie.image_url,
@@ -287,23 +282,25 @@ export function FavoriteMoviesIndex(props) {
         }
       })
       .then((response) => {
-        if (response.data.error) {
-          showToastMessage(response.data.error);
+        const { in_favorites, error } = response.data;
+
+        if (error) {
+          showToastMessage(error);
           return;
         }
 
         setFavoritedRecommendations((prev) => ({
           ...prev,
-          [movie.imdb_id]: true,
+          [movie.imdb_id]: in_favorites,
         }));
-        showToastMessage("Added to Favorites");
+        showToastMessage(in_favorites ? "Added to Favorites" : "Removed from Favorites");
       })
       .catch((error) => {
-        console.error("Error adding to favorites:", error);
+        console.error("Error toggling favorites:", error);
         const message =
           error.response?.data?.errors?.join(", ") ||
           error.response?.data?.error ||
-          "Failed to add to Favorites";
+          "Failed to update Favorites";
         showToastMessage(message);
       });
   };
@@ -535,14 +532,14 @@ export function FavoriteMoviesIndex(props) {
                         </button>
                         <button
                           className="icon-button circle-button add-to-favorites-button"
-                          onClick={() => handleAddFavorite(movie)}
+                          onClick={() => handleToggleFavorite(movie)}
                         >
                           <span className="icon">
                             {favoritedRecommendations[movie.imdb_id] ? "♥" : "♡"}
                           </span>
                           <span className="tooltip-text-favorite">
                             {favoritedRecommendations[movie.imdb_id]
-                              ? "In Favorites"
+                              ? "Remove from Favorites"
                               : "Add to Favorites"}
                           </span>
                         </button>

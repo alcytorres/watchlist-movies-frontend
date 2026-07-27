@@ -92,15 +92,8 @@ export function MoviesNew(props) {
       });
   };
 
-  // Add a movie straight from search to Favorites (mutually exclusive with Watchlist)
-  const handleAddFavorite = (movie) => {
-    if (favoriteStatus[movie.imdb_id]) {
-      setToastMessage("Already in Favorites");
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 5000);
-      return;
-    }
-
+  // Toggle Favorites from search (mirrors Watchlist: click once to add, again to remove)
+  const handleToggleFavorite = (movie) => {
     const params = {
       title: movie.title,
       image_url: movie.image_url,
@@ -114,33 +107,38 @@ export function MoviesNew(props) {
     axios
       .post("http://localhost:3000/favorite_movies.json", params)
       .then((response) => {
-        if (response.data.error) {
-          setToastMessage(response.data.error);
+        const { in_favorites, error } = response.data;
+
+        if (error) {
+          setToastMessage(error);
           setShowToast(true);
           setTimeout(() => setShowToast(false), 5000);
           return;
         }
 
-        // Mark as favorite; backend drops it from the Watchlist, so reflect that here
         setFavoriteStatus((prevState) => ({
           ...prevState,
-          [movie.imdb_id]: true,
-        }));
-        setWatchlistStatus((prevState) => ({
-          ...prevState,
-          [movie.imdb_id]: false,
+          [movie.imdb_id]: in_favorites,
         }));
 
-        setToastMessage("Added to Favorites");
+        // Adding to Favorites removes it from the Watchlist on the backend
+        if (in_favorites) {
+          setWatchlistStatus((prevState) => ({
+            ...prevState,
+            [movie.imdb_id]: false,
+          }));
+        }
+
+        setToastMessage(in_favorites ? "Added to Favorites" : "Removed from Favorites");
         setShowToast(true);
         setTimeout(() => setShowToast(false), 5000);
       })
       .catch((error) => {
-        console.error("Error adding the movie to Favorites", error);
+        console.error("Error toggling the movie in Favorites", error);
         const message =
           error.response?.data?.errors?.join(", ") ||
           error.response?.data?.error ||
-          "Failed to add to Favorites";
+          "Failed to update Favorites";
         setToastMessage(message);
         setShowToast(true);
         setTimeout(() => setShowToast(false), 5000);
@@ -219,14 +217,14 @@ export function MoviesNew(props) {
                       </button>
                       <button
                         className="icon-button circle-button add-to-favorites-button"
-                        onClick={() => handleAddFavorite(movie)}
+                        onClick={() => handleToggleFavorite(movie)}
                       >
                         <span className="icon">
                           {favoriteStatus[movie.imdb_id] ? "♥" : "♡"}
                         </span>
                         <span className="tooltip-text-favorite">
                           {favoriteStatus[movie.imdb_id]
-                            ? "In Favorites"
+                            ? "Remove from Favorites"
                             : "Add to Favorites"}
                         </span>
                       </button>
