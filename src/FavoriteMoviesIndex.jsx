@@ -472,7 +472,7 @@ export function FavoriteMoviesIndex(props) {
               onClick={fetchRecommendations}
               disabled={selectedMovies.length < 2 || isLoading}
             >
-              {isLoading ? "Finding Recommendations..." : `Get ${selectedMovies.length >= 2 ? '6' : ''} Recommendations`}
+              {isLoading ? "Finding Recommendations..." : "Get Recommendations"}
             </button>
             {selectedMovies.length < 2 && (
               <p className="selection-hint">Select at least 2 movies</p>
