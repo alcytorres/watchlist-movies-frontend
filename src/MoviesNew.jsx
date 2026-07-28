@@ -4,6 +4,7 @@ import "./MoviesNew.css";
 
 export function MoviesNew(props) {
   const [searchResults, setSearchResults] = useState([]);
+  const [query, setQuery] = useState("");
 
   // State to track Watchlist and Favorites across sessions (kept separate so each
   // button reflects its own list)
@@ -31,10 +32,11 @@ export function MoviesNew(props) {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    const query = event.target.query.value;
+    const trimmed = query.trim();
+    if (!trimmed) return;
 
     axios
-      .get(`http://localhost:3000/search_tmdb?query=${encodeURIComponent(query)}`)
+      .get(`http://localhost:3000/search_tmdb?query=${encodeURIComponent(trimmed)}`)
       .then((response) => {
         const movies = response.data.movies || [];
         setSearchResults(movies);
@@ -43,6 +45,10 @@ export function MoviesNew(props) {
         console.error("Error searching for the movie", error);
         setSearchResults([]);
       });
+  };
+
+  const handleClearQuery = () => {
+    setQuery("");
   };
 
   const handleToggleWatchlist = (movie) => {
@@ -169,8 +175,35 @@ export function MoviesNew(props) {
 
       {/* Movie search form */}
       <form className="search-bar" onSubmit={handleSearch}>
-        <div>
-          <input name="query" type="text" />
+        <div className="search-field">
+          <span className="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="7" />
+              <line x1="16.5" y1="16.5" x2="21" y2="21" />
+            </svg>
+          </span>
+          <input
+            name="query"
+            type="text"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search by title"
+            autoComplete="off"
+            aria-label="Search by title"
+          />
+          {query.length > 0 && (
+            <button
+              type="button"
+              className="search-clear-btn"
+              onClick={handleClearQuery}
+              aria-label="Clear search"
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="6" y1="6" x2="18" y2="18" />
+                <line x1="18" y1="6" x2="6" y2="18" />
+              </svg>
+            </button>
+          )}
         </div>
         <button className="search-movie-btn" type="submit">
           Search

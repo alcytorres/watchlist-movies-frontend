@@ -23,28 +23,35 @@ export function Signup() {
   };
 
   return (
-    <div id="signup">
+    <div id="signup" className="auth-card">
       <h1>Sign Up</h1>
-      <ul>
-        {errors.map((error) => (
-          <li key={error}>{error}</li>
-        ))}
-      </ul>
+      {errors.length > 0 && (
+        <ul className="auth-errors">
+          {errors.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      )}
       <form onSubmit={handleSubmit}>
-        <div>
-          First Name <input name="first_name" type="text" />
+        <div className="auth-field">
+          <label htmlFor="signup-first-name">First Name</label>
+          <input id="signup-first-name" name="first_name" type="text" autoComplete="given-name" />
         </div>
-        <div>
-          Last Name <input name="last_name" type="text" />
+        <div className="auth-field">
+          <label htmlFor="signup-last-name">Last Name</label>
+          <input id="signup-last-name" name="last_name" type="text" autoComplete="family-name" />
         </div>
-        <div>
-          Email <input name="email" type="email" />
+        <div className="auth-field">
+          <label htmlFor="signup-email">Email</label>
+          <input id="signup-email" name="email" type="email" autoComplete="email" />
         </div>
-        <div>
-          Password <input name="password" type="password" />
+        <div className="auth-field">
+          <label htmlFor="signup-password">Password</label>
+          <input id="signup-password" name="password" type="password" autoComplete="new-password" />
         </div>
-        <div>
-          Password confirmation <input name="password_confirmation" type="password" />
+        <div className="auth-field">
+          <label htmlFor="signup-password-confirmation">Password confirmation</label>
+          <input id="signup-password-confirmation" name="password_confirmation" type="password" autoComplete="new-password" />
         </div>
         <button type="submit">Signup</button>
       </form>

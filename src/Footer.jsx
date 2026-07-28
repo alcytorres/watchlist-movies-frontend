@@ -12,7 +12,7 @@ export function Footer() {
       <br></br>
       <br></br>
       <br></br>
-      <p>Copyright 2024</p>
+      <p>© {new Date().getFullYear()} Alcy Torres</p>
       <br></br>
     </footer>
   );

@@ -30,19 +30,23 @@ export function Login() {
   };
 
   return (
-    <div id="login">
+    <div id="login" className="auth-card">
       <h1>Sign In</h1>
-      <ul>
-        {errors.map((error) => (
-          <li key={error}>{error}</li>
-        ))}
-      </ul>
+      {errors.length > 0 && (
+        <ul className="auth-errors">
+          {errors.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      )}
       <form onSubmit={handleSubmit}>
-        <div>
-          Email <input name="email" type="email" />
+        <div className="auth-field">
+          <label htmlFor="login-email">Email</label>
+          <input id="login-email" name="email" type="email" autoComplete="email" />
         </div>
-        <div>
-          Password <input name="password" type="password" />
+        <div className="auth-field">
+          <label htmlFor="login-password">Password</label>
+          <input id="login-password" name="password" type="password" autoComplete="current-password" />
         </div>
         <button type="submit">Login</button>
       </form>
