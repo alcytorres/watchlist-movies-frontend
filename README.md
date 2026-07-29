@@ -2,6 +2,8 @@
 
 # Watchlist Movies App
 
+![App demo](demo.gif)
+
 # Description
   A full-stack movie discovery and tracking app that lets users sign up, search for movies, view detailed information (including where to stream), and curate personal watchlists and favorites.
 
