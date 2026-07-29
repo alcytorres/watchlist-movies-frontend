@@ -5,7 +5,7 @@ A full-stack movie app to search films, see where to stream them, build a watchl
 ![App demo](demo.gif)
 
 ## What It Does
-Sign up, search the TMDb catalog, and view details like streaming availability. Save movies to a watchlist or favorites, then filter and sort them. The highlight: pick a few favorites and an OpenAI-powered engine returns personalized recommendations with short explanations — a Netflix-style discovery experience.
+Search the TMDb catalog and view details like streaming availability. Save movies to your watchlist or favorites, then filter and sort them. Pick a few favorite movies, and the app uses OpenAI to recommend similar films and explain why they're a good match.
 
 ## Tech Stack
 - **Frontend:** React, React Router, Axios, Bootstrap
@@ -20,7 +20,7 @@ Sign up, search the TMDb catalog, and view details like streaming availability. 
 - AI recommendations from 2–6 selected favorites (falls back to TMDb if OpenAI is unavailable)
 
 ## Related Repo
-This is the **React frontend**. The **Rails API** lives here: [capstone-favorite-movies-api](https://github.com/alcytorres/capstone-favorite-movies-api).
+This is the **React frontend**. The **Rails API backend** lives here: [capstone-favorite-movies-api](https://github.com/alcytorres/capstone-favorite-movies-api).
 You need both running to use the app.
 
 ## Getting Started
