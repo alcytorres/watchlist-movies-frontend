@@ -20,15 +20,15 @@ Search the TMDb catalog and view details like streaming availability. Save movie
 - AI recommendations from 2–6 selected favorites (falls back to TMDb if OpenAI is unavailable)
 
 ## Related Repo
-This is the **React frontend**. The **Rails API backend** lives here: [capstone-favorite-movies-api](https://github.com/alcytorres/capstone-favorite-movies-api).
+This is the **React frontend**. The **Rails API backend** lives here: [watchlist-movies-api](https://github.com/alcytorres/watchlist-movies-api).
 You need both running to use the app.
 
 ## Getting Started
-Requires Node.js v22.2.0 and npm 10.7.0. Start the [API](https://github.com/alcytorres/capstone-favorite-movies-api) first, then:
+Requires Node.js v22.2.0 and npm 10.7.0. Start the [API](https://github.com/alcytorres/watchlist-movies-api) first, then:
 
 ```bash
-git clone https://github.com/alcytorres/capstone-favorite-movies-frontend.git
-cd capstone-favorite-movies-frontend
+git clone https://github.com/alcytorres/watchlist-movies-frontend.git
+cd watchlist-movies-frontend
 npm install
 npm run dev
 ```
