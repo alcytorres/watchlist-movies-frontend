@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { MoviesIndex } from "./MoviesIndex";
 import { MoviesShow } from "./MoviesShow";
-import { FavoriteMoviesNew } from "./FavoriteMoviesNew";
 import { FavoriteMoviesIndex } from "./FavoriteMoviesIndex";
 import { Modal } from "./Modal";
 import { Routes, Route } from "react-router-dom";
